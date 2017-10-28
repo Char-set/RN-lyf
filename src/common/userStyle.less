@@ -1,0 +1,117 @@
+//用户中心样式
+
+.user-style{
+  .container{
+    background:#f0f0f0;
+    padding-bottom: 44pt;
+    // height:'100%';
+  }
+  .my-info{
+    height:170pt;
+    padding-top:10pt;
+    flex: 1;
+    align-items: center;
+  }
+  .login-status{
+    width: 60vw;
+    background: transparent;
+    display: flex;
+    flex-direction: row;
+    margin-top: 50pt;
+    &-li{
+      height: 60pt;
+      flex: 1;
+      justify-content: center;
+      align-items: center;
+      &-span{
+        border-radius: 15pt;
+        background: #ffc600;
+        padding: 0 4pt;
+        // font-size: 12pt;
+        width: 45pt;
+        align-items: center;
+        // color: #fff;
+        &-text{
+          color: #fff;
+          font-size: 14pt;
+        }
+      }
+      &-text{
+        color:#fff;
+        margin-top: 5pt;
+      }
+      &-img{
+        height: 60pt;
+        width: 60pt;
+        border-radius: 30pt;
+      }
+    }
+  }
+  .login-btn{
+    display: flex;
+    flex-direction: row;
+    background: transparent;
+    margin-top: 10pt;
+    &-text{
+      color: #fff;
+      padding-right: 5pt;
+      font-size: 14pt;
+    }
+  }
+  .panel{
+    margin-top: 10pt;
+    padding-bottom: 10pt;
+    background-color: #fff;
+    &-include{
+      padding-right: 15pt;
+      margin-left: 15pt;
+      height: 44pt;
+      align-items: center;
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+      border-bottom: 1pt solid #ddd;
+    }
+    &-icon{
+      width: 15pt;
+      height: 20pt;
+      margin-right: 10pt;
+    }
+    &-text{
+      font-size: 14pt;
+    }
+    &-tips{
+      color: #808080;
+      position: absolute;
+      right: 30pt;
+    }
+    &-tips-img{
+      width: 8pt;
+      height: 15pt;
+      position: absolute;
+      right: 15pt;
+    }
+  }
+  .panel-content{
+    padding: 10pt 0;
+    background: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    &-li{
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      &-icon{
+        width: 30pt;
+        height: 25pt;
+      }
+      &-text{
+        color: #333;
+        font-size: 12pt;
+        margin-top: 5pt;
+      }
+    }
+  }
+}
