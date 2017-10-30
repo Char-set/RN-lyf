@@ -63,7 +63,6 @@ module.exports = SmartStyleSheet.create({
             "fontSize": "14pt"
         },
         "panel": {
-            "marginTop": "10pt",
             "paddingBottom": "10pt",
             "backgroundColor": "#fff"
         },
@@ -81,8 +80,8 @@ module.exports = SmartStyleSheet.create({
         },
         "panel-icon": {
             "width": "15pt",
-            "height": "20pt",
-            "marginRight": "10pt"
+            "height": "18pt",
+            "marginRight": "9pt"
         },
         "panel-text": {
             "fontSize": "14pt"
@@ -99,15 +98,16 @@ module.exports = SmartStyleSheet.create({
             "right": "15pt"
         },
         "panel-content": {
-            "paddingTop": "10pt",
-            "paddingBottom": "10pt",
+            "paddingTop": 0,
             "paddingRight": 0,
+            "paddingBottom": "10pt",
             "paddingLeft": 0,
             "backgroundColor": "#fff",
             "display": "flex",
             "flexDirection": "row",
             "alignItems": "center",
-            "justifyContent": "center"
+            "justifyContent": "center",
+            "marginBottom": "10pt"
         },
         "panel-content-li": {
             "flex": 1,
@@ -115,13 +115,30 @@ module.exports = SmartStyleSheet.create({
             "justifyContent": "center"
         },
         "panel-content-li-icon": {
-            "width": "30pt",
-            "height": "25pt"
+            "width": "24pt",
+            "height": "24pt"
         },
         "panel-content-li-text": {
             "color": "#333",
             "fontSize": "12pt",
             "marginTop": "5pt"
+        },
+        "panel-content-li-tips": {
+            "position": "absolute",
+            "paddingTop": 0,
+            "paddingBottom": 0,
+            "paddingRight": "4pt",
+            "paddingLeft": "4pt",
+            "borderRadius": "7pt",
+            "backgroundColor": "#ff6900",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "right": "15pt",
+            "top": -5
+        },
+        "panel-content-li-tips-text": {
+            "color": "#fff",
+            "fontSize": "12pt"
         }
     }
 });

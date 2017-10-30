@@ -155,19 +155,19 @@ class my extends Component {
       {imgUrl:require('../images/myOrderEvaluateds.png'),title:'待评价'},
       {imgUrl:require('../images/myOrderReturns.png'),title:'退换货'},
     ]
-    return array.map(item => {
+    return array.map((item,index) => {
       return (
-        <View style={userStyle.panelContentLi}>
+        <View style={userStyle.panelContentLi} key={index}>
           <Image style={userStyle.panelContentLiIcon} source={item.imgUrl} />
           <Text style={userStyle.panelContentLiText}>{item.title}</Text>
+          <View style={userStyle.panelContentLiTips}>
+            <Text style={userStyle.panelContentLiTipsText}>1</Text>
+          </View>
         </View>
       )
     })
   }
   render() {
-    let {isLoggedIn} = this.props;
-    console.log(this.props);
-    console.log(this.state);
     return(
       <ScrollView style = {userStyle.container}>
         <LinearGradient colors={['#ffb300','#ff6c00']} style={userStyle.myInfo}>
@@ -210,20 +210,19 @@ class my extends Component {
         <View style={userStyle.panelContent}>
             {this._renderPanelContentLi()}
         </View>
+        <View style={userStyle.panel}>
+            <View style={userStyle.panelInclude}>
+              <Image style={userStyle.panelIcon} source={require('../images/my_purse.png')} />
+              <Text style={userStyle.panelText}>我的钱包</Text>
+              <Text style={userStyle.panelTips}>查看全部</Text>
+              <Image style={userStyle.panelTipsImg} source={require('../images/myOrderNexts.png')} />
+            </View>
+        </View>
+        <View style={userStyle.panelContent}>
+            {this._renderPanelContentLi()}
+        </View>
       </ScrollView>
-      // <View style = {styles.container}>
-      //   <Image style={styles.headPicUrl} source={{uri:
-      //     this.state.userInfo&&this.state.userInfo.headPicUrl?this.state.userInfo.headPicUrl:''
-      //   }}/>
-      //   <Text>{this.state.userInfo.nickname}</Text>
-      //   <View style={styles.loginOut}>
-      //     <Button onPress={() => {
-      //       this._loginOut();
-      //     }} title="退出登录" />
-      //   </View>
-      // </View>
     )
-      
   }
 }
 

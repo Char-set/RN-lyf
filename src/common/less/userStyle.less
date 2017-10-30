@@ -1,5 +1,5 @@
 //用户中心样式
-
+@import "./variable.less";
 .user-style{
   .container{
     background:#f0f0f0;
@@ -59,7 +59,6 @@
     }
   }
   .panel{
-    margin-top: 10pt;
     padding-bottom: 10pt;
     background-color: #fff;
     &-include{
@@ -74,8 +73,8 @@
     }
     &-icon{
       width: 15pt;
-      height: 20pt;
-      margin-right: 10pt;
+      height: 18pt;
+      margin-right: 9pt;
     }
     &-text{
       font-size: 14pt;
@@ -93,24 +92,41 @@
     }
   }
   .panel-content{
-    padding: 10pt 0;
+    padding: 0 0 10pt 0;
     background: #fff;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    margin-bottom: 10pt;
     &-li{
       flex: 1;
       align-items: center;
       justify-content: center;
       &-icon{
-        width: 30pt;
-        height: 25pt;
+        width: 24pt;
+        height: 24pt;
       }
       &-text{
         color: #333;
         font-size: 12pt;
         margin-top: 5pt;
+      }
+      &-tips{
+        position: absolute;
+        padding: 0 4pt;
+        // width: 14pt;
+        // height: 12pt;
+        border-radius: 7pt;
+        background-color: @themeColor;
+        justify-content: center;
+        align-items: center;
+        right: 15pt;
+        top: -5;
+        &-text{
+          color: #fff;
+          font-size: 12pt;
+        }
       }
     }
   }
