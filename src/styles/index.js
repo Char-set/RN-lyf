@@ -123,6 +123,10 @@ module.exports = SmartStyleSheet.create({
             "fontSize": "12pt",
             "marginTop": "5pt"
         },
+        "panel-content-li-accounts": {
+            "color": "#ff6900",
+            "fontSize": "16pt"
+        },
         "panel-content-li-tips": {
             "position": "absolute",
             "paddingTop": 0,

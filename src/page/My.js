@@ -38,7 +38,14 @@ class my extends Component {
       userInfo:{},
       hasLogin:false,
       ut:'',
-      bean:0
+      bean:0,
+      orderStatus: [{imgUrl:require('../images/myOrderPayments.png'),title:'待付款',num:0},
+      {imgUrl:require('../images/myOrderShippeds.png'),title:'待发货',num:0},
+      {imgUrl:require('../images/myOrderReceipts.png'),title:'待收货',num:0},
+      {imgUrl:require('../images/myOrderEvaluateds.png'),title:'待评价',num:0},
+      {imgUrl:require('../images/myOrderReturns.png'),title:'退换货',num:0},],
+      wallet:[{title:'悠点卡',num:'0'},{title:'伊点卡',num:'- -'},
+              {title:'积分',num:'- -'},{title:'优惠券',num:'- -'},]
     }
     console.log(this.props)
   }
@@ -78,8 +85,7 @@ class my extends Component {
           hasLogin:nextProps.isLoggedIn,
           ut:nextProps.ut
         },() => {
-          this._getUserAmount();
-          this._getUserInfo();
+          this._init();
         });
       } else{
         this.setState({
@@ -110,25 +116,54 @@ class my extends Component {
       hasLogin:this.props.isLoggedIn,
       ut:this.props.ut
     },() => {
-      if(this.state.hasLogin){
-        this._getUserInfo();
-        this._getUserAmount();
+      this._init();
+    })
+  }
+  _getOrderStatus() {
+    let url = Config.apiHost + '/api/my/order/summary';
+    let params = {
+      ut:this.state.ut
+    }
+    NetUtil.get(url,params,(res) => {
+      if(res.data){
+        this.setState({
+          orderStatus:[
+            {imgUrl:require('../images/myOrderPayments.png'),title:'待付款',num:res.data.unpay},
+            {imgUrl:require('../images/myOrderShippeds.png'),title:'待发货',num:res.data.undelivery},
+            {imgUrl:require('../images/myOrderReceipts.png'),title:'待收货',num:res.data.unreceive},
+            {imgUrl:require('../images/myOrderEvaluateds.png'),title:'待评价',num:res.data.unEvaluate},
+            {imgUrl:require('../images/myOrderReturns.png'),title:'退换货',num:res.data.isAfter},
+          ],
+          bean:res.data.yBean
+        })
       }
     })
   }
-  _getUserAmount() {
+  _getWallet() {
     let url = Config.apiHost + '/api/my/wallet/summary';
     let params = {
-        ut:this.state.ut,
-        platformId:3,
-        isBean:1
+      ut:this.state.ut,
+      isECard:1,
+      isYCard:1,
+      isBean:1,
+      isCoupon:1,
+      isPoint:1
     }
     NetUtil.get(url,params,(res) => {
-      this.setState({
-        bean:res.data.yBean
-      })
-    },(res) => {
-    });
+      if(res.data){
+        this.setState({
+          wallet:[{title:'悠点卡',num:res.data.yCardBalance},{title:'伊点卡',num:res.data.eCardBalance},
+          {title:'积分',num:res.data.point},{title:'优惠券',num:res.data.coupon}]
+        })
+      }
+    })
+  }
+  _init(){
+    if(this.state.hasLogin){
+      this._getUserInfo();
+      this._getWallet();
+      this._getOrderStatus();    
+    }
   }
   _renderLoginTab() {
     if(!this.state.hasLogin){
@@ -147,22 +182,25 @@ class my extends Component {
       )
     }
   }
-  _renderPanelContentLi(){
-    var array = [
-      {imgUrl:require('../images/myOrderPayments.png'),title:'待付款'},
-      {imgUrl:require('../images/myOrderShippeds.png'),title:'待发货'},
-      {imgUrl:require('../images/myOrderReceipts.png'),title:'待收货'},
-      {imgUrl:require('../images/myOrderEvaluateds.png'),title:'待评价'},
-      {imgUrl:require('../images/myOrderReturns.png'),title:'退换货'},
-    ]
-    return array.map((item,index) => {
+  _renderMyOrder(){
+    return this.state.orderStatus.map((item,index) => {
       return (
         <View style={userStyle.panelContentLi} key={index}>
           <Image style={userStyle.panelContentLiIcon} source={item.imgUrl} />
           <Text style={userStyle.panelContentLiText}>{item.title}</Text>
-          <View style={userStyle.panelContentLiTips}>
-            <Text style={userStyle.panelContentLiTipsText}>1</Text>
-          </View>
+          {this.state.hasLogin&&item.num>0?(<View style={userStyle.panelContentLiTips}>
+            <Text style={userStyle.panelContentLiTipsText}>{item.num}</Text>
+          </View>):(<View style={userStyle.panelContentLiTips}></View>)}
+        </View>
+      )
+    })
+  }
+  _renderMyWallet(){
+    return this.state.wallet.map((item,index) => {
+      return (
+        <View style={userStyle.panelContentLi} key={index}>
+          <Text style={userStyle.panelContentLiAccounts}>{this.state.hasLogin?item.num:'- -'}</Text>
+          <Text style={userStyle.panelContentLiText}>{item.title}</Text>
         </View>
       )
     })
@@ -208,7 +246,7 @@ class my extends Component {
             </View>
         </View>
         <View style={userStyle.panelContent}>
-            {this._renderPanelContentLi()}
+            {this._renderMyOrder()}
         </View>
         <View style={userStyle.panel}>
             <View style={userStyle.panelInclude}>
@@ -219,7 +257,7 @@ class my extends Component {
             </View>
         </View>
         <View style={userStyle.panelContent}>
-            {this._renderPanelContentLi()}
+            {this._renderMyWallet()}
         </View>
       </ScrollView>
     )
