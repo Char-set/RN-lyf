@@ -77,17 +77,16 @@ class my extends Component {
         this.setState({
           hasLogin:nextProps.isLoggedIn,
           ut:nextProps.ut
+        },() => {
+          this._getUserAmount();
+          this._getUserInfo();
         });
-        this._getUserAmount();
-        this._getUserInfo();
       } else{
         this.setState({
           hasLogin:nextProps.isLoggedIn,
           ut:''
         })
       }
-      
-      
   }
   //组件是否需要更新
   shouldComponentUpdate(nextProps, nextState){
@@ -110,11 +109,12 @@ class my extends Component {
     this.setState({
       hasLogin:this.props.isLoggedIn,
       ut:this.props.ut
+    },() => {
+      if(this.state.hasLogin){
+        this._getUserInfo();
+        this._getUserAmount();
+      }
     })
-    if(this.props.isLoggedIn){
-      this._getUserInfo();
-      this._getUserAmount();
-    }
   }
   _getUserAmount() {
     let url = Config.apiHost + '/api/my/wallet/summary';
