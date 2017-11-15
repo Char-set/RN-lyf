@@ -10,6 +10,8 @@ import {
   TouchableWithoutFeedback
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { ifIphoneX, isIphoneX } from 'react-native-iphone-x-helper';
+import {commonStyle} from '../styles';//样式文件引入
 /**
  * 自定义工具引入
  */
@@ -153,7 +155,7 @@ export default class Category extends Component {
   }
   render () {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container,commonStyle.container,isIphoneX()?commonStyle.pdT45:'']}>
         <ScrollView showsVerticalScrollIndicator={false} style={styles.categoryView}>
           <View style={styles.categoryWraper}>
             {this._buildCategory()}

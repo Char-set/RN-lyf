@@ -133,8 +133,7 @@ class my extends Component {
             {imgUrl:require('../images/myOrderReceipts.png'),title:'待收货',num:res.data.unreceive},
             {imgUrl:require('../images/myOrderEvaluateds.png'),title:'待评价',num:res.data.unEvaluate},
             {imgUrl:require('../images/myOrderReturns.png'),title:'退换货',num:res.data.isAfter},
-          ],
-          bean:res.data.yBean
+          ]
         })
       }
     })
@@ -153,7 +152,8 @@ class my extends Component {
       if(res.data){
         this.setState({
           wallet:[{title:'悠点卡',num:res.data.yCardBalance},{title:'伊点卡',num:res.data.eCardBalance},
-          {title:'积分',num:res.data.point},{title:'优惠券',num:res.data.coupon}]
+          {title:'积分',num:res.data.point},{title:'优惠券',num:res.data.coupon}],
+          bean:res.data.yBean
         })
       }
     })
@@ -227,7 +227,7 @@ class my extends Component {
                   {this.state.hasLogin?this.state.bean:'- -'}
                 </Text>
               </View>
-              <Text style={userStyle.loginStatusLiText}>积分</Text>
+              <Text style={userStyle.loginStatusLiText}>伊豆</Text>
             </View>
           </View>
           {this._renderLoginTab()}

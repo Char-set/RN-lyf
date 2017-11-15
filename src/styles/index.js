@@ -1,8 +1,17 @@
 import SmartStyleSheet from "./SmartStyleSheet.js";
 
 module.exports = SmartStyleSheet.create({
-    "hide": {
-        "display": "none"
+    "common-style": {
+        "container": {
+            "backgroundColor": "#fff",
+            "paddingTop": 20
+        },
+        "pdT20": {
+            "paddingTop": "20pt"
+        },
+        "pdT45": {
+            "paddingTop": "45pt"
+        }
     },
     "user-style": {
         "container": {

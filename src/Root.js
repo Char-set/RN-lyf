@@ -24,7 +24,7 @@ const LoginViewScreen = ({ navigation}) => (
 )
 
 const FindScreen = ({ navigation }) => (
-  <Category banner="Home Tab" navigation={navigation} />
+  <WebViewContent params={{webUrl:'http://m.laiyifen.com/view/h5/30.html'}} navigation={navigation} />
 );
 FindScreen.navigationOptions = {
   tabBarLabel: '',

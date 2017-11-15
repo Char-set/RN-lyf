@@ -14,6 +14,7 @@ import {
   Dimensions
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { ifIphoneX, isIphoneX } from 'react-native-iphone-x-helper';
 /**
  * 自定义工具引入
  */
@@ -27,6 +28,7 @@ import Footer from '../component/footer';
 import Carousel from '../component/Carousel'
 import ChannelItem from '../component/ChannelItem'
 
+import {commonStyle} from '../styles';//样式文件引入
 
 export default class index extends Component {
   constructor(props) {
@@ -64,7 +66,7 @@ export default class index extends Component {
       channelArray.push(<ChannelItem key={index} navigation={this.props.navigation} item={item}/>);
     })
     return (
-      <ScrollView style = {styles.container}>
+      <ScrollView style = {[commonStyle.container,isIphoneX()?commonStyle.pdT45:'']}>
           <View>
             <Carousel navigation={this.props.navigation} images={this.state.imagesArray} /> 
           </View>
@@ -77,12 +79,12 @@ export default class index extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor:'#fff',
-    paddingTop:20,
-    paddingBottom:44,
-    height:'100%'
-  },
+  // container: {
+  //   backgroundColor:'#fff',
+  //   paddingTop:20,
+  //   paddingBottom:44,
+  //   height:'100%'
+  // },
   carousel:{
     height:150,
     width:Dimensions.get('window').width
