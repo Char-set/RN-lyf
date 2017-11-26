@@ -111,7 +111,7 @@ export default class Category extends Component {
               this._switch(item);
             }}>
             <View style={[item.choosed ? styles.categoryItemActive:styles.categoryItem]} key={item.categoryId}>
-              <Image style={styles.categoryItemImg} source={{uri:item.pictureUrl}} />
+              <Image style={styles.categoryItemImg} source={{uri:(item.pictureUrl || 'http://m.static.laiyifen.com/images/logo-laiyifen.png')}} />
               <Text style={[item.choosed ? styles.categoryItemTextActive:styles.categoryItemText]}>{item.categoryName}</Text>
             </View>
           </TouchableWithoutFeedback>
@@ -132,7 +132,7 @@ export default class Category extends Component {
               }}>
               <View style={styles.categoryContentItemChild}> 
                 <View style={styles.categoryContentItemChildContent}>
-                  <Image style={styles.categoryContentItemChildImg} source={{uri:itemTwo.pictureUrl}} />
+                  <Image style={styles.categoryContentItemChildImg} source={{uri:(itemTwo.pictureUrl || 'http://m.static.laiyifen.com/images/logo-laiyifen.png')}} />
                   <Text numberOfLines={1} style={styles.categoryContentItemChildText}>{itemTwo.categoryName}</Text>
                 </View>
               </View>
