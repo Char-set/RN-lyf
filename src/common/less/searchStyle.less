@@ -1,0 +1,118 @@
+@import "./variable.less";
+.search-style{
+  .topSearch{
+    height: 44pt;
+    width: 100vw;
+    padding: 0 15pt;
+    justify-content: center;
+    position: relative;
+    &-back{
+      position: absolute;
+      margin-left: 8pt;
+    }
+    &-scan{
+      position: absolute;
+      right: 10pt;
+    }
+    &-view{
+      position: absolute;
+      height: 30pt;
+      justify-content: center;
+      // width: 100%;
+      left: 43pt;
+      right: 80pt;
+      background-color: #f0f0f0;
+      border-radius: 5pt;
+      &-icon{
+        position: absolute;
+        margin-left: 10pt;
+      }
+    }
+    &-input{
+      margin: 0 10pt;
+      margin-left: 30pt;
+      font-size: 14pt;
+    }
+    &-confirm{
+      position: absolute;
+      right: 30pt;
+      width: 50pt;
+      height: 30pt;
+      justify-content: center;
+      align-content: center;
+      &-text{
+        text-align: center;
+      }
+    }
+  }
+  .proScroll{
+    // margin: 0 4vw;
+    width:100vw;
+    background-color: #f0f0f0;
+    margin-bottom: 45pt;
+  }
+  .pro{
+    // margin-top: 10pt;
+    margin: 10pt 4vw;
+    // margin: 0 15pt;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background: red;
+    width: 92vw;
+    justify-content: space-between;
+    background-color: #f0f0f0;
+    &-li{
+      background-color: #fff;
+      width: 45vw;
+      // height: 249pt;
+      align-content: center;
+      margin-bottom: 10pt;
+      padding: 9pt 9pt 12pt;
+      // flex: 1;
+      &-img{
+        height: 150pt;
+      }
+      &-title{
+        color: #333;
+        font-size: 13pt;
+        margin-top: 15pt;
+      }
+      &-promotion{
+        height: 27pt;
+        // justify-content: center;
+        align-content: center;
+        display: flex;
+        flex-direction: row;
+        &-icon{
+          height: 15pt;
+          width: 27pt;
+          margin-right: 3pt;
+          margin-top: 6pt;
+        }
+      }
+      &-comment{
+        display: flex;
+        flex-direction: row;
+        margin-top: 6pt;
+        &-item{
+          display: flex;
+          flex-direction: row;
+          &-ber{
+            color: @themeColor;
+            font-size: 10pt;
+          }
+          &-text{
+            color: #999;
+            font-size: 10pt;
+          }
+        }
+      }
+      &-addCart{
+        position: absolute;
+        bottom: 9pt;
+        right: 8pt;
+      }
+    }
+  }
+}

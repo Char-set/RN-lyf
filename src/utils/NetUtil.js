@@ -3,9 +3,8 @@
  * https://github.com/facebook/react-native
  */
 import React, { Component } from 'react';
-import {
-    Alert
-} from 'react-native';
+
+import utils from './ComUtils';
 
 import configureStore from '../store/index';
 import { user_logIn, user_logOut } from '../actions/user';
@@ -150,10 +149,7 @@ export default class NetUtil extends React.Component{
      */
     static _hanleError(response) {
         let msg = response && response.message ? response.message : "请求出错，请稍后再试";
-        Alert.alert(
-            '提示',
-            msg
-        )
+        utils.showTips(msg)
     }
 }
 function toQueryString(obj) {

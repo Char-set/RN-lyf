@@ -5,6 +5,7 @@ import { AlertIOS } from 'react-native';
  * 自定义工具引入
  */
 import NetUtil from '../utils/NetUtil';//网络请求
+import utils from '../utils/ComUtils';//网络请求
 import Config from '../config/Default';//默认配置
 
 import * as TYPES from './types';
@@ -37,7 +38,7 @@ export function user_logIn(opt,navigation){
 			dispatch({'type': TYPES.LOGGED_IN, user: res.data,ut:res.ut});
 			navigation.goBack();
     },(res) => {
-      AlertIOS.alert(res.message);
+			utils.showTips(res.message);
       dispatch({'type': TYPES.LOGGED_ERROR, error: res});
     });
 	}

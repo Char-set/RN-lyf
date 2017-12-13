@@ -83,7 +83,7 @@ export default class Category extends Component {
   }
   _openLink(item){
     var url = Config.apiHost + '/search.html?from=c&categoryId=' + item.categoryId;
-    this.props.navigation.navigate('WebView',{webUrl:url})
+    this.props.navigation.navigate('SearchView',{categoryId:item.categoryId})
 }
   _switch(item){
     if(this.state.currentCategoryId != item.categoryId){

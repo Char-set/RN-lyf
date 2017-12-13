@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import Index from './page/Index';
 import My from './page/My';
 import Category from './page/Category'
+import Search from './page/Search';
 import WebViewContent from './component/WebViewContent'
 import LoginCompoent from './component/Login'
  
@@ -18,6 +19,9 @@ const IndexScreen = ({ navigation }) => (
 );
 const WebViewScreen = ({ navigation}) => (
   <WebViewContent params={navigation.state.params} navigation={navigation} />
+)
+const SearchViewScreen = ({ navigation}) => (
+  <Search params={navigation.state.params} navigation={navigation} />
 )
 const LoginViewScreen = ({ navigation}) => (
   <LoginCompoent navigation={navigation} />
@@ -46,7 +50,7 @@ CateScreen.navigationOptions = {
   ),
 };
 const CartScreen = ({ navigation }) => (
-  <Category banner="Home Tab" navigation={navigation} />
+  <Search params={navigation.state.params} navigation={navigation} />
 );
 CartScreen.navigationOptions = {
   tabBarLabel: '',
@@ -131,6 +135,13 @@ const App = StackNavigator(
       screen:WebViewScreen,
       navigationOptions: {
         title:'首页',
+        header:null
+      }
+    },
+    SearchView:{
+      screen:SearchViewScreen,
+      navigationOptions: {
+        title:'搜索页',
         header:null
       }
     },
