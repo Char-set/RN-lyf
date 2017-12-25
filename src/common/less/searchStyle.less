@@ -6,6 +6,8 @@
     padding: 0 15pt;
     justify-content: center;
     position: relative;
+    background-color: #fff;
+    z-index: 10;
     &-back{
       position: absolute;
       margin-left: 8pt;
@@ -49,11 +51,14 @@
     // margin: 0 4vw;
     width:100vw;
     background-color: #f0f0f0;
-    margin-bottom: 45pt;
+    margin-bottom: 90pt;
+    position: relative;
+    top: -50;
   }
   .pro{
     // margin-top: 10pt;
     margin: 10pt 4vw;
+    margin-bottom: 0;
     // margin: 0 15pt;
     display: flex;
     flex-direction: row;
@@ -62,12 +67,14 @@
     width: 92vw;
     justify-content: space-between;
     background-color: #f0f0f0;
+    position: relative;
+    // top: -10;
     &-li{
       background-color: #fff;
       width: 45vw;
       // height: 249pt;
       align-content: center;
-      margin-bottom: 10pt;
+      // margin-bottom: 10pt;
       padding: 9pt 9pt 12pt;
       // flex: 1;
       &-img{
@@ -114,5 +121,32 @@
         right: 8pt;
       }
     }
+  }
+  .refreshView{
+    height: 50pt;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    &-img{
+      height: 50pt;
+      width: 50pt;
+    }
+    &-text{
+      margin-top: 10pt;
+      &-status{
+        color: #000;
+      }
+      &-time{
+        margin-top: 5pt;
+        font-size: 12pt;
+        &-f,&-s{
+          color: #999;
+        }
+      }
+    }
+  }
+  .transformY0{
+    transform: translateY(50)
   }
 }

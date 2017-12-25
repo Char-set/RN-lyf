@@ -6,11 +6,12 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "less": "webpack --config webpack.config.js -w",
-    "bundle-ios": "node node_modules/react-native/local-cli/cli.js bundle --entry-file index.js  --platform ios --dev false --bundle-output ./ios/bundle/index.ios.jsbundle --assets-dest ./ios/bundle"
+    "bundle-ios": "node node_modules/react-native/local-cli/cli.js bundle --entry-file index.js  --platform ios --dev false --bundle-output ./ios/bundle/index.ios.jsbundle --assets-dest ./ios/bundle",
+    "react-devtools": "react-devtools"
   },
   "dependencies": {
     "react": "16.0.0-beta.5",
-    "react-native": "0.49.5",
+    "react-native": "0.50",
     "react-native-cookies": "^3.2.0",
     "react-native-iphone-x-helper": "^1.0.1",
     "react-native-linear-gradient": "^2.3.0",

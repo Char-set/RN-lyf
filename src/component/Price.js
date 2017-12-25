@@ -26,7 +26,6 @@ export default class Price extends Component{
     return newPrice;
   }
   componentDidMount(){
-    console.log(this.props)
     if(!this.props.params) return;
     this.setState({
       availablePrice:this._filterPrice(this.props.params.availablePrice),

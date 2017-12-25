@@ -5,6 +5,8 @@ import {
   Text,
   View,
   ScrollView,
+  FlatList,
+  Animated,
   Dimensions,
   Image,
   TouchableWithoutFeedback,
@@ -17,6 +19,8 @@ import { ifIphoneX, isIphoneX } from 'react-native-iphone-x-helper';
 import {commonStyle,searchStyle} from '../styles';//样式文件引入
 
 const s = searchStyle;
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+const { timing } = Animated
 /**
  * 自定义工具引入
  */
@@ -50,6 +54,11 @@ class Search extends Component {
       shoppingGuideJson:'',//系列属性筛选
       pageNo:1,//当前页数
       pageSize:10,//一页请求数量
+      refreshStatus:1,//1、下拉即可刷新，2、松开即可刷新，3、正在刷新中
+      scrollDistance:new Animated.Value(0),//需要滚动的距离
+      disabledScroll:false,//正在下拉中，禁用其他操作
+      dragEndFlag:false,//下拉结束标识
+      refreshLastTime:'12-13 19:33',//页面最后刷新时间
     }
   }
   componentDidMount() {
@@ -62,7 +71,8 @@ class Search extends Component {
       })
     }
   }
-
+  componentWillUpdate(){
+  }
   _loadSearch(){
     if(!this.state.categoryId && !this.state.searchWord){
       Utils.showTips('请输入搜索词');
@@ -95,11 +105,120 @@ class Search extends Component {
       if(res.data && res.data.totalCount > 0){
         this.setState({
           proList:res.data.productList
-        })
+        });
+        if(this.state.refreshStatus == 3){
+          this.setState({
+            refreshStatus:1,
+            disabledScroll:false,
+            dragEndFlag:false
+          });
+          timing(
+            this.state.scrollDistance,
+            { toValue: 0, duration: 200, useNativeDriver: true }
+          ).start()
+        }
       } else{
         Utils.showTips('没有找到搜索结果');
       }
     })
+  }
+  _buildRefreshText(){
+    let text = '';
+    switch (this.state.refreshStatus) {
+      case 1:
+        text = '下拉即可刷新';
+        break;
+      case 2:
+        text = '松开即可刷新';
+        break;
+      case 3:
+        text = '正在刷新中...';
+        break;
+    
+      default:
+        text = '下拉即可刷新';
+        break;
+    }
+    return text;
+  }
+  _buildRefreshHeader(){
+    return(
+      <View style={s.refreshView}>
+        <Image style={s.refreshViewImg} source={require('../images/loading.gif')} />
+        <View style={s.refreshViewText}>
+          <Text style={s.refreshViewTextStatus}>
+            {this._buildRefreshText()}
+          </Text>
+          <Text style={s.refreshViewTextTime}>
+            <Text style={s.refreshViewTextTimeF}>最后更新：</Text>
+            <Text style={[s.refreshViewTextTimeS,commonStyle.pl5]}>
+              {this.state.refreshLastTime}
+            </Text>
+          </Text>
+        </View>
+      </View>
+    )
+  }
+  _buildProItem(proItem){
+    let item = proItem.item;
+    let index = proItem.index;
+    return (
+      <View style={s.proLi} key={index}>
+        <Image style={s.proLiImg} source={{uri:item.picUrl}} />
+        <Text numberOfLines={1} style={s.proLiTitle}>{item.name}</Text>
+        <View style={s.proLiPromotion}>
+          {this._buildPromotionIcon(item.promotionInfo)}
+        </View>
+        <View style={s.proLiPrice}>
+          <PriceComponent params={{availablePrice:item.promotionPrice,originalPrice:item.price}} />
+        </View>
+        <View style={s.proLiComment}>
+          <View style={[s.proLiCommentItem,commonStyle.mr5]}>
+            <Text style={s.proLiCommentItemBer}>{item.commentInfo.commentNum}</Text>
+            <Text style={s.proLiCommentItemText}>评论</Text>
+          </View>
+          <View style={s.proLiCommentItem}>
+            <Text style={s.proLiCommentItemText}>好评</Text>
+            <Text style={s.proLiCommentItemBer}>{item.commentInfo.goodRate + '%'}</Text>
+          </View>
+        </View>
+        <Image style={s.proLiAddCart} source={require('../images/common_btn_addtoshoppingcart.png')}/>
+      </View>
+    )
+  }
+  _handleScroll(event){
+    console.log(event.nativeEvent.contentOffset.y);
+    let scrollDistance = event.nativeEvent.contentOffset.y;
+    if(scrollDistance < -80 && !this.state.disabledScroll){
+      this.setState({
+        refreshStatus:2,
+        disabledScroll:true
+      });
+      // setTimeout(() => {
+      //   timing(
+      //     this.state.scrollDistance,
+      //     { toValue: 0, duration: 200, useNativeDriver: true }
+      //   ).start()
+      // }, 2000);
+    }
+    if(scrollDistance >= -55 && this.state.disabledScroll && this.state.dragEndFlag){
+      timing(
+        this.state.scrollDistance,
+        { toValue: 50, duration: 100, useNativeDriver: true }
+      ).start()
+    }
+  }
+  _handleTouchEnd(event){
+    if(this.state.refreshStatus == 2 && this.state.disabledScroll){
+      this.setState({
+        refreshStatus:3,
+        dragEndFlag:true
+      },() => {
+        setTimeout(() => {
+          this._loadSearch();
+        }, 1000);
+      });
+    }
   }
   _buildProList(){
     var proList = [];
@@ -170,11 +289,20 @@ class Search extends Component {
             <Image style={s.topSearchScan} source={require('../images/search_btn_qrcode.png')} />
           </TouchableWithoutFeedback>
         </View>
-        <ScrollView style={s.proScroll} showsVerticalScrollIndicator={false}>
-          <View style={s.pro}>
-            {this._buildProList()}
-          </View>
-        </ScrollView>
+        <Animated.View style={[s.proScroll,{transform:[{translateY:this.state.scrollDistance}]}]}>
+          <FlatList 
+            horizontal={false} 
+            numColumns={2}
+            initialNumToRender={6}
+            keyExtractor={(item,index) => index} 
+            columnWrapperStyle={s.pro} 
+            data={this.state.proList} 
+            renderItem={(item) => this._buildProItem(item)}
+            ListHeaderComponent={() => this._buildRefreshHeader()}
+            onScroll={(event) => this._handleScroll(event)}
+            onScrollEndDrag={(event) => this._handleTouchEnd(event)}
+          />
+        </Animated.View>
       </View>
     )
   }

@@ -323,7 +323,9 @@ module.exports = SmartStyleSheet.create({
             "paddingRight": "15pt",
             "paddingLeft": "15pt",
             "justifyContent": "center",
-            "position": "relative"
+            "position": "relative",
+            "backgroundColor": "#fff",
+            "zIndex": 10
         },
         "topSearch-back": {
             "position": "absolute",
@@ -367,11 +369,13 @@ module.exports = SmartStyleSheet.create({
         "proScroll": {
             "width": "100vw",
             "backgroundColor": "#f0f0f0",
-            "marginBottom": "45pt"
+            "marginBottom": "90pt",
+            "position": "relative",
+            "top": -50
         },
         "pro": {
             "marginTop": "10pt",
-            "marginBottom": "10pt",
+            "marginBottom": 0,
             "marginRight": "4vw",
             "marginLeft": "4vw",
             "display": "flex",
@@ -379,13 +383,13 @@ module.exports = SmartStyleSheet.create({
             "flexWrap": "wrap",
             "backgroundColor": "#f0f0f0",
             "width": "92vw",
-            "justifyContent": "space-between"
+            "justifyContent": "space-between",
+            "position": "relative"
         },
         "pro-li": {
             "backgroundColor": "#fff",
             "width": "45vw",
             "alignContent": "center",
-            "marginBottom": "10pt",
             "paddingLeft": "9pt",
             "paddingRight": "9pt",
             "paddingTop": "9pt",
@@ -432,6 +436,40 @@ module.exports = SmartStyleSheet.create({
             "position": "absolute",
             "bottom": "9pt",
             "right": "8pt"
+        },
+        "refreshView": {
+            "height": "50pt",
+            "display": "flex",
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "alignContent": "center"
+        },
+        "refreshView-img": {
+            "height": "50pt",
+            "width": "50pt"
+        },
+        "refreshView-text": {
+            "marginTop": "10pt"
+        },
+        "refreshView-text-status": {
+            "color": "#000"
+        },
+        "refreshView-text-time": {
+            "marginTop": "5pt",
+            "fontSize": "12pt"
+        },
+        "refreshView-text-time-f": {
+            "color": "#999"
+        },
+        "refreshView-text-time-s": {
+            "color": "#999"
+        },
+        "transformY0": {
+            "transform": [
+                {
+                    "translateY": 50
+                }
+            ]
         }
     }
 });
