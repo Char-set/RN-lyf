@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "lyf-tvOS.app"
-               BlueprintName = "lyf-tvOS"
-               ReferencedContainer = "container:lyf.xcodeproj">
+               BuildableName = "lyfs-tvOS.app"
+               BlueprintName = "lyfs-tvOS"
+               ReferencedContainer = "container:lyfs.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "lyf-tvOSTests.xctest"
-               BlueprintName = "lyf-tvOSTests"
-               ReferencedContainer = "container:lyf.xcodeproj">
+               BuildableName = "lyfs-tvOSTests.xctest"
+               BlueprintName = "lyfs-tvOSTests"
+               ReferencedContainer = "container:lyfs.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -54,7 +54,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
@@ -62,9 +61,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "lyf-tvOSTests.xctest"
-               BlueprintName = "lyf-tvOSTests"
-               ReferencedContainer = "container:lyf.xcodeproj">
+               BuildableName = "lyfs-tvOSTests.xctest"
+               BlueprintName = "lyfs-tvOSTests"
+               ReferencedContainer = "container:lyfs.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -72,9 +71,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "lyf-tvOS.app"
-            BlueprintName = "lyf-tvOS"
-            ReferencedContainer = "container:lyf.xcodeproj">
+            BuildableName = "lyfs-tvOS.app"
+            BlueprintName = "lyfs-tvOS"
+            ReferencedContainer = "container:lyfs.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -84,7 +83,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -96,9 +94,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "lyf-tvOS.app"
-            BlueprintName = "lyf-tvOS"
-            ReferencedContainer = "container:lyf.xcodeproj">
+            BuildableName = "lyfs-tvOS.app"
+            BlueprintName = "lyfs-tvOS"
+            ReferencedContainer = "container:lyfs.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -115,9 +113,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "lyf-tvOS.app"
-            BlueprintName = "lyf-tvOS"
-            ReferencedContainer = "container:lyf.xcodeproj">
+            BuildableName = "lyfs-tvOS.app"
+            BlueprintName = "lyfs-tvOS"
+            ReferencedContainer = "container:lyfs.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

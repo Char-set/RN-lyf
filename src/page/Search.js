@@ -202,10 +202,10 @@ class Search extends Component {
       // }, 2000);
     }
     if(scrollDistance >= -55 && this.state.disabledScroll && this.state.dragEndFlag){
-      timing(
-        this.state.scrollDistance,
-        { toValue: 50, duration: 100, useNativeDriver: true }
-      ).start()
+      // timing(
+      //   this.state.scrollDistance,
+      //   { toValue: 50, duration: 100, useNativeDriver: true }
+      // ).start()
     }
   }
   _handleTouchEnd(event){
@@ -214,6 +214,12 @@ class Search extends Component {
         refreshStatus:3,
         dragEndFlag:true
       },() => {
+        if(this.state.disabledScroll && this.state.dragEndFlag){
+          timing(
+            this.state.scrollDistance,
+            { toValue: 50, duration: 500, useNativeDriver: true }
+          ).start()
+        }
         setTimeout(() => {
           this._loadSearch();
         }, 1000);
@@ -263,7 +269,9 @@ class Search extends Component {
     var url = Config.apiHost + '/search.html?from=c&categoryId=' + item.categoryId;
     this.props.navigation.navigate('WebView',{webUrl:url})
   }
- 
+  _pullUp(event){
+    Utils.showTips('22222')
+  }
   render () {
     return (
       <View style={[commonStyle.container,isIphoneX()?commonStyle.pdT45:'']}>
@@ -301,6 +309,8 @@ class Search extends Component {
             ListHeaderComponent={() => this._buildRefreshHeader()}
             onScroll={(event) => this._handleScroll(event)}
             onScrollEndDrag={(event) => this._handleTouchEnd(event)}
+            onEndReachedThreshold={0.1}
+            onEndReached={(event) => this._pullUp(event)}
           />
         </Animated.View>
       </View>

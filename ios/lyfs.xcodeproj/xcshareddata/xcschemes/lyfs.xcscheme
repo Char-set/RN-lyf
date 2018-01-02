@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "lyf.app"
-               BlueprintName = "lyf"
-               ReferencedContainer = "container:lyf.xcodeproj">
+               BuildableName = "lyfs.app"
+               BlueprintName = "lyfs"
+               ReferencedContainer = "container:lyfs.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "lyfTests.xctest"
-               BlueprintName = "lyfTests"
-               ReferencedContainer = "container:lyf.xcodeproj">
+               BuildableName = "lyfsTests.xctest"
+               BlueprintName = "lyfsTests"
+               ReferencedContainer = "container:lyfs.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -62,9 +62,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "lyfTests.xctest"
-               BlueprintName = "lyfTests"
-               ReferencedContainer = "container:lyf.xcodeproj">
+               BuildableName = "lyfsTests.xctest"
+               BlueprintName = "lyfsTests"
+               ReferencedContainer = "container:lyfs.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -72,16 +72,16 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "lyf.app"
-            BlueprintName = "lyf"
-            ReferencedContainer = "container:lyf.xcodeproj">
+            BuildableName = "lyfs.app"
+            BlueprintName = "lyfs"
+            ReferencedContainer = "container:lyfs.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       language = ""
@@ -96,9 +96,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "lyf.app"
-            BlueprintName = "lyf"
-            ReferencedContainer = "container:lyf.xcodeproj">
+            BuildableName = "lyfs.app"
+            BlueprintName = "lyfs"
+            ReferencedContainer = "container:lyfs.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -115,9 +115,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "lyf.app"
-            BlueprintName = "lyf"
-            ReferencedContainer = "container:lyf.xcodeproj">
+            BuildableName = "lyfs.app"
+            BlueprintName = "lyfs"
+            ReferencedContainer = "container:lyfs.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

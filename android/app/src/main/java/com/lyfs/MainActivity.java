@@ -1,4 +1,4 @@
-package com.lyf;
+package com.lyfs;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "lyf";
+        return "lyfs";
     }
 }

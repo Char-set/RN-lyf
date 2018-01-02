@@ -1,4 +1,4 @@
-package com.lyf;
+package com.lyfs;
 
 import android.app.Application;
 
