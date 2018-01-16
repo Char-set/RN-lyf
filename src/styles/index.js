@@ -316,7 +316,7 @@ module.exports = SmartStyleSheet.create({
     },
     "search-style": {
         "topSearch": {
-            "height": "44pt",
+            "height": "50pt",
             "width": "100vw",
             "paddingTop": 0,
             "paddingBottom": 0,

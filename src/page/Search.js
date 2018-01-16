@@ -10,7 +10,9 @@ import {
   Dimensions,
   Image,
   TouchableWithoutFeedback,
-  TextInput
+  TextInput,
+  UIManager,
+  findNodeHandle
 } from 'react-native';
 import { connect } from 'react-redux';
 import Toast from 'react-native-root-toast';
@@ -26,6 +28,7 @@ const { timing } = Animated
  */
 import NetUtil from '../utils/NetUtil';//网络请求
 import Utils from '../utils/ComUtils';//网络请求
+import timeFormat from '../utils/TimeFormat';//时间格式化
 import Config from '../config/Default';//默认配置
 
 /**
@@ -62,7 +65,6 @@ class Search extends Component {
     }
   }
   componentDidMount() {
-    console.log(this.props);
     if(this.props.params && this.props.params.categoryId){
       this.setState({
         categoryId:this.props.params.categoryId
@@ -73,7 +75,8 @@ class Search extends Component {
   }
   componentWillUpdate(){
   }
-  _loadSearch(){
+  //flag为真是，表示是滚动加载
+  _loadSearch(flag){
     if(!this.state.categoryId && !this.state.searchWord){
       Utils.showTips('请输入搜索词');
       return;
@@ -103,9 +106,24 @@ class Search extends Component {
     }
     NetUtil.get(url,params,(res) => {
       if(res.data && res.data.totalCount > 0){
-        this.setState({
-          proList:res.data.productList
-        });
+        switch(flag){
+          case true:
+            let productList = this.state.proList.concat(res.data.productList);
+            this.setState({
+              proList:productList
+            });
+            break;
+          case false:
+            this.setState({
+              proList:res.data.productList
+            });
+            break;
+          default:
+            this.setState({
+              proList:res.data.productList
+            });
+            break;
+        }
         if(this.state.refreshStatus == 3){
           this.setState({
             refreshStatus:1,
@@ -117,6 +135,11 @@ class Search extends Component {
             { toValue: 0, duration: 200, useNativeDriver: true }
           ).start()
         }
+        let timeStr = '';
+        timeStr = timeFormat.dateformat(new Date(),'MM-dd hh:mm');
+        this.setState({
+          refreshLastTime:timeStr
+        })
       } else{
         Utils.showTips('没有找到搜索结果');
       }
@@ -182,7 +205,9 @@ class Search extends Component {
             <Text style={s.proLiCommentItemBer}>{item.commentInfo.goodRate + '%'}</Text>
           </View>
         </View>
-        <Image style={s.proLiAddCart} source={require('../images/common_btn_addtoshoppingcart.png')}/>
+        <TouchableWithoutFeedback onPress={() => this._addCart(item)}>
+          <Image style={s.proLiAddCart} source={require('../images/common_btn_addtoshoppingcart.png')}/>
+        </TouchableWithoutFeedback>
       </View>
     )
   }
@@ -212,7 +237,8 @@ class Search extends Component {
     if(this.state.refreshStatus == 2 && this.state.disabledScroll){
       this.setState({
         refreshStatus:3,
-        dragEndFlag:true
+        dragEndFlag:true,
+        pageNo:1
       },() => {
         if(this.state.disabledScroll && this.state.dragEndFlag){
           timing(
@@ -270,7 +296,28 @@ class Search extends Component {
     this.props.navigation.navigate('WebView',{webUrl:url})
   }
   _pullUp(event){
-    Utils.showTips('22222')
+    // Utils.showTips('22222')
+    // let listRef = findNodeHandle(this.refs.pro_list);
+    // console.log(listRef);
+    // UIManager.measure(listRef, (x, y, width, height, pageX, pageY) => {
+    //   debugger
+    // });
+    // let pageNo = this.data.pageNo + 1;
+    this.setState({
+      pageNo:this.state.pageNo + 1
+    },()=>{
+      this._loadSearch(true);
+    })
+  }
+  //检查是否是系列品
+  _checkSerialPro(item){
+    
+  }
+  _addCart(item){
+    let url = Config.apiHost + '/api/cart/addItem';
+    let params = {
+      
+    }
   }
   render () {
     return (
@@ -298,7 +345,8 @@ class Search extends Component {
           </TouchableWithoutFeedback>
         </View>
         <Animated.View style={[s.proScroll,{transform:[{translateY:this.state.scrollDistance}]}]}>
-          <FlatList 
+          <FlatList
+            ref="pro_list"
             horizontal={false} 
             numColumns={2}
             initialNumToRender={6}
