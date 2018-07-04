@@ -12,7 +12,7 @@ import Category from './page/Category'
 import Search from './page/Search';
 import WebViewContent from './component/WebViewContent'
 import LoginCompoent from './component/Login'
- 
+import Detail from './page/Details';
 
 const IndexScreen = ({ navigation }) => (
   <Index banner="Home Tab" navigation={navigation} />
@@ -22,6 +22,9 @@ const WebViewScreen = ({ navigation}) => (
 )
 const SearchViewScreen = ({ navigation}) => (
   <Search params={navigation.state.params} navigation={navigation} />
+)
+const DetailViewScreen = ({ navigation}) => (
+  <Detail params={navigation.state.params} navigation={navigation} />
 )
 const LoginViewScreen = ({ navigation}) => (
   <LoginCompoent navigation={navigation} />
@@ -50,7 +53,8 @@ CateScreen.navigationOptions = {
   ),
 };
 const CartScreen = ({ navigation }) => (
-  <Search params={navigation.state.params} navigation={navigation} />
+  // <Search params={navigation.state.params} navigation={navigation} />
+  <WebViewContent params={{webUrl:'http://m.laiyifen.com/cart.html'}} navigation={navigation} />
 );
 CartScreen.navigationOptions = {
   tabBarLabel: '',
@@ -114,9 +118,9 @@ const mainTab = TabNavigator(
       style:{
         backgroundColor:'#fff',
       },
-      // labelStyle:{
-      //   color:"#333"
-      // }
+      labelStyle:{
+        fontSize:12
+      }
     },
   }
 );
@@ -142,6 +146,13 @@ const App = StackNavigator(
       screen:SearchViewScreen,
       navigationOptions: {
         title:'搜索页',
+        header:null
+      }
+    },
+    DetailView:{
+      screen:DetailViewScreen,
+      navigationOptions: {
+        title:'详情页',
         header:null
       }
     },

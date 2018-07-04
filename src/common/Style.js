@@ -68,7 +68,10 @@ const commonStyle = StyleSheet.create({
     pR20:{paddingRight:20},
     hide:{display:'none'},
     textCenter:{alignItems:'center'},
-    alignCenter:{justifyContent:"center"}
+    alignCenter:{justifyContent:"center"},
+    percent: {
+        width:'100%'
+    }
 });
 
 export default commonStyle;

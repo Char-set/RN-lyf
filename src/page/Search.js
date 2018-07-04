@@ -30,7 +30,7 @@ import NetUtil from '../utils/NetUtil';//网络请求
 import Utils from '../utils/ComUtils';//网络请求
 import timeFormat from '../utils/TimeFormat';//时间格式化
 import Config from '../config/Default';//默认配置
-
+import Cookie from '../utils/Cookies';
 /**
  * 自定义组件引入
  */
@@ -142,6 +142,9 @@ class Search extends Component {
         })
       } else{
         Utils.showTips('没有找到搜索结果');
+        this.setState({
+          proList:[]
+        });
       }
     })
   }
@@ -182,12 +185,17 @@ class Search extends Component {
       </View>
     )
   }
+  _goDetais(item){
+    this.props.navigation.navigate('DetailView',{mpId:item.mpId});
+  }
   _buildProItem(proItem){
     let item = proItem.item;
     let index = proItem.index;
     return (
       <View style={s.proLi} key={index}>
-        <Image style={s.proLiImg} source={{uri:item.picUrl}} />
+        <TouchableWithoutFeedback onPress={() => this._goDetais(item)}>
+          <Image style={s.proLiImg} source={{uri:item.picUrl}} />
+        </TouchableWithoutFeedback>
         <Text numberOfLines={1} style={s.proLiTitle}>{item.name}</Text>
         <View style={s.proLiPromotion}>
           {this._buildPromotionIcon(item.promotionInfo)}
@@ -205,7 +213,7 @@ class Search extends Component {
             <Text style={s.proLiCommentItemBer}>{item.commentInfo.goodRate + '%'}</Text>
           </View>
         </View>
-        <TouchableWithoutFeedback onPress={() => this._addCart(item)}>
+        <TouchableWithoutFeedback onPress={() => this._checkSerialPro(item)}>
           <Image style={s.proLiAddCart} source={require('../images/common_btn_addtoshoppingcart.png')}/>
         </TouchableWithoutFeedback>
       </View>
@@ -311,13 +319,42 @@ class Search extends Component {
   }
   //检查是否是系列品
   _checkSerialPro(item){
-    
-  }
-  _addCart(item){
-    let url = Config.apiHost + '/api/cart/addItem';
+    let url = Config.apiHost + '/api/product/baseInfo';
     let params = {
-      
-    }
+      mpIds:item.mpId
+    };
+    NetUtil.get(url,params,res => {
+      if(res.data && res.data.length > 0){
+        switch (res.data[0].isSeries) {
+          case 0:
+            // Utils.showTips('商品为普通商品');
+            this._addCart(item.mpId);
+            break;
+          case 1:
+            Utils.showTips('商品为系列品');
+            break;
+        }
+      } else{
+        Utils.showTips('未获取到有效的商品信息');
+      };
+    })
+  }
+  _addCart(mpId){
+    // Utils.showTips(JSON.stringify(item));
+    // console.info(item);
+    Cookie.getAllCookie('sessionId').then(res => {
+      let url = Config.apiHost + '/api/cart/addItem';
+      let params = {
+        sessionId:res,
+        mpId:mpId,
+        num:1,
+        ut:this.state.ut || ''
+      };
+      NetUtil.postForm(url,params,res => {
+        Utils.showTips('添加成功');
+      })
+    });
+
   }
   render () {
     return (
@@ -344,7 +381,7 @@ class Search extends Component {
             <Image style={s.topSearchScan} source={require('../images/search_btn_qrcode.png')} />
           </TouchableWithoutFeedback>
         </View>
-        <Animated.View style={[s.proScroll,{transform:[{translateY:this.state.scrollDistance}]}]}>
+        {this.state.proList.length>0?<Animated.View style={[s.proScroll,{transform:[{translateY:this.state.scrollDistance}]}]}>
           <FlatList
             ref="pro_list"
             horizontal={false} 
@@ -360,7 +397,7 @@ class Search extends Component {
             onEndReachedThreshold={0.1}
             onEndReached={(event) => this._pullUp(event)}
           />
-        </Animated.View>
+        </Animated.View>:<View></View>}
       </View>
     )
   }

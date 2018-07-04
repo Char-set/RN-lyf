@@ -5,7 +5,8 @@ module.exports = SmartStyleSheet.create({
         "container": {
             "backgroundColor": "#fff",
             "paddingTop": 20,
-            "position": "relative"
+            "position": "relative",
+            "height": "100vh"
         },
         "pdT20": {
             "paddingTop": "20pt"
@@ -171,6 +172,50 @@ module.exports = SmartStyleSheet.create({
             "fontSize": "10pt",
             "textDecorationLine": "line-through",
             "paddingTop": "5pt"
+        },
+        "bg7279f9": {
+            "backgroundColor": "#7279f9"
+        },
+        "bgff3939": {
+            "backgroundColor": "#ff3939"
+        },
+        "bgfe2b2b": {
+            "backgroundColor": "#fe2b2b"
+        },
+        "bgd9c62a": {
+            "backgroundColor": "#d9c62a"
+        },
+        "bg9d9afe": {
+            "backgroundColor": "#9d9afe"
+        },
+        "bgb3be07": {
+            "backgroundColor": "#b3be07"
+        },
+        "bge9a5a5": {
+            "backgroundColor": "#e9a5a5"
+        },
+        "bgd1cf14": {
+            "backgroundColor": "#d1cf14"
+        },
+        "bg9ba0fe": {
+            "backgroundColor": "#9ba0fe"
+        },
+        "bgb9be67": {
+            "backgroundColor": "#b9be67"
+        },
+        "bge18b66": {
+            "backgroundColor": "#e18b66"
+        },
+        "bgff6900": {
+            "backgroundColor": "#ff6900"
+        },
+        "bgff6400": {
+            "backgroundColor": "#ff6400"
+        },
+        "borderB": {
+            "borderBottomWidth": ".5pt",
+            "borderStyle": "solid",
+            "borderBottomColor": "#808080"
         }
     },
     "user-style": {
@@ -369,7 +414,6 @@ module.exports = SmartStyleSheet.create({
         "proScroll": {
             "width": "100vw",
             "backgroundColor": "#f0f0f0",
-            "marginBottom": "90pt",
             "position": "relative",
             "top": -50
         },
@@ -422,7 +466,9 @@ module.exports = SmartStyleSheet.create({
         },
         "pro-li-comment-item": {
             "display": "flex",
-            "flexDirection": "row"
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "alignItems": "center"
         },
         "pro-li-comment-item-ber": {
             "color": "#ff6900",
@@ -470,6 +516,491 @@ module.exports = SmartStyleSheet.create({
                     "translateY": 50
                 }
             ]
+        }
+    },
+    "detail-style": {
+        "pdB100": {
+            "paddingBottom": "100pt"
+        },
+        "ipxScrollHeight": {
+            "height": "calc(100vh - 139pt)"
+        },
+        "scrollHeight": {
+            "height": "calc(100vh - 114pt)"
+        },
+        "next": {
+            "position": "absolute",
+            "right": "15pt"
+        },
+        "bgf0": {
+            "backgroundColor": "#f0f0f0"
+        },
+        "topTab": {
+            "position": "relative",
+            "width": "100vw",
+            "backgroundColor": "#fff",
+            "height": "45pt",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "display": "flex",
+            "flexDirection": "row"
+        },
+        "topTab-back": {
+            "position": "absolute",
+            "left": "8pt"
+        },
+        "topTab-title": {
+            "textAlign": "center",
+            "fontSize": "16pt",
+            "color": "#666",
+            "fontWeight": "bold"
+        },
+        "topTab-title-active": {
+            "color": "#ff6900"
+        },
+        "topTab-r49": {
+            "marginRight": "49pt"
+        },
+        "topTab-view": {
+            "height": "45pt",
+            "justifyContent": "center",
+            "position": "relative"
+        },
+        "topTab-bor": {
+            "position": "absolute",
+            "height": "3pt",
+            "backgroundColor": "#ff6900",
+            "bottom": 0
+        },
+        "swiperView": {
+            "height": "375pt"
+        },
+        "swiperView-img": {
+            "height": "375pt",
+            "width": "375pt"
+        },
+        "info": {
+            "backgroundColor": "#fff",
+            "paddingTop": "12pt",
+            "paddingBottom": "12pt",
+            "paddingRight": "15pt",
+            "paddingLeft": "15pt"
+        },
+        "info-title": {
+            "display": "flex",
+            "flexDirection": "row",
+            "alignItems": "center"
+        },
+        "info-title-text": {
+            "fontSize": "16pt",
+            "color": "#333"
+        },
+        "info-title-icon": {
+            "width": "30pt",
+            "height": "16pt",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "borderWidth": "2px",
+            "borderStyle": "solid",
+            "borderColor": "#ff6900",
+            "marginRight": "6pt",
+            "display": "flex"
+        },
+        "info-title-icon-text": {
+            "color": "#ff6900",
+            "fontSize": "12pt"
+        },
+        "info-subTitle": {
+            "marginTop": "9pt"
+        },
+        "info-subTitle-text": {
+            "color": "#ff6900",
+            "fontSize": "12pt",
+            "lineHeight": 14
+        },
+        "info-price": {
+            "display": "flex",
+            "flexDirection": "row",
+            "marginTop": "12pt",
+            "alignItems": "center"
+        },
+        "info-price-real": {
+            "fontSize": "18pt",
+            "fontWeight": "bold",
+            "color": "#ff6900",
+            "marginRight": "6pt"
+        },
+        "info-price-gray": {
+            "fontSize": "12pt",
+            "color": "#b2b2b2",
+            "textDecorationLine": "line-through"
+        },
+        "info-sale": {
+            "marginTop": "12pt",
+            "display": "flex",
+            "flexDirection": "row",
+            "alignItems": "center",
+            "justifyContent": "space-between"
+        },
+        "info-sale-num": {
+            "fontSize": "12pt",
+            "color": "#808080"
+        },
+        "info-sale-add": {
+            "fontSize": "12pt",
+            "color": "#808080"
+        },
+        "promo": {
+            "marginTop": "9pt",
+            "backgroundColor": "#fff",
+            "paddingTop": 0,
+            "paddingBottom": 0,
+            "paddingRight": "15pt",
+            "paddingLeft": "15pt",
+            "display": "flex"
+        },
+        "promo-item": {
+            "height": "40pt",
+            "display": "flex",
+            "flexDirection": "row",
+            "alignItems": "center",
+            "position": "relative"
+        },
+        "promo-item-border-b": {
+            "borderBottomWidth": "1pt",
+            "borderStyle": "solid",
+            "borderBottomColor": "#ddd"
+        },
+        "promo-item-icon": {
+            "width": "27pt",
+            "height": "15pt",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "backgroundColor": "#49bbff",
+            "marginRight": "10pt"
+        },
+        "promo-item-icon-text": {
+            "color": "#fff",
+            "fontSize": "10pt"
+        },
+        "promo-item-text": {
+            "color": "#333",
+            "fontSize": "12pt"
+        },
+        "promo-item-next": {
+            "position": "absolute",
+            "width": "7pt",
+            "height": "13pt",
+            "right": 0
+        },
+        "safePromise": {
+            "height": "30pt",
+            "alignItems": "center",
+            "paddingTop": 0,
+            "paddingBottom": 0,
+            "paddingRight": "15pt",
+            "paddingLeft": "15pt",
+            "position": "relative",
+            "display": "flex",
+            "flexDirection": "row",
+            "backgroundColor": "#fef7ea"
+        },
+        "safePromise-item": {
+            "display": "flex",
+            "flexDirection": "row",
+            "marginRight": "15pt",
+            "alignItems": "center"
+        },
+        "safePromise-item-img": {
+            "width": "12pt",
+            "height": "12pt",
+            "marginRight": "6pt"
+        },
+        "safePromise-item-text": {
+            "fontSize": "10pt",
+            "color": "#808080"
+        },
+        "safePromise-next": {
+            "position": "absolute",
+            "right": "15pt"
+        },
+        "sendInfo": {
+            "backgroundColor": "#fff",
+            "marginTop": "9pt",
+            "paddingTop": "12pt",
+            "paddingBottom": "12pt",
+            "paddingRight": "15pt",
+            "paddingLeft": "15pt",
+            "position": "relative"
+        },
+        "sendInfo-add": {
+            "display": "flex",
+            "flexDirection": "row",
+            "alignItems": "center"
+        },
+        "sendInfo-add-song": {
+            "fontSize": "13pt",
+            "color": "#ff6900",
+            "marginRight": "15pt"
+        },
+        "sendInfo-add-img": {
+            "width": "11pt",
+            "height": "13pt",
+            "marginRight": "6pt"
+        },
+        "sendInfo-add-detail": {
+            "fontSize": "14pt",
+            "color": "#333"
+        },
+        "sendInfo-time": {
+            "marginTop": "9pt",
+            "paddingLeft": "40pt"
+        },
+        "sendInfo-time-text": {
+            "color": "#808080",
+            "fontSize": "12pt"
+        },
+        "sendInfo-next": {
+            "position": "absolute",
+            "right": "15pt",
+            "top": "25pt"
+        },
+        "evaluate": {
+            "marginTop": "9pt",
+            "backgroundColor": "#fff"
+        },
+        "evaluate-top": {
+            "height": "44pt",
+            "backgroundColor": "#fff",
+            "display": "flex",
+            "flexDirection": "row",
+            "paddingTop": 0,
+            "paddingBottom": 0,
+            "paddingRight": "15pt",
+            "paddingLeft": "15pt",
+            "alignItems": "center",
+            "justifyContent": "space-between",
+            "borderBottomWidth": ".5pt",
+            "borderStyle": "solid",
+            "borderBottomColor": "#808080"
+        },
+        "evaluate-top-text": {
+            "fontSize": "12pt",
+            "color": "#808080"
+        },
+        "evaluate-top-right": {
+            "display": "flex",
+            "flexDirection": "row",
+            "alignItems": "center"
+        },
+        "evaluate-top-right-name": {
+            "fontSize": "12pt",
+            "color": "#333",
+            "marginRight": "9pt"
+        },
+        "evaluate-top-right-rotate": {
+            "fontSize": "12pt",
+            "color": "#ff6900",
+            "marginRight": "12pt"
+        },
+        "evaluate-content": {
+            "paddingTop": 0,
+            "paddingBottom": 0,
+            "paddingRight": "15pt",
+            "paddingLeft": "15pt",
+            "borderBottomWidth": "0.5pt",
+            "borderStyle": "solid",
+            "borderBottomColor": "#808080"
+        },
+        "evaluate-content-item": {
+            "paddingBottom": "9pt"
+        },
+        "evaluate-content-item-top": {
+            "display": "flex",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "alignItems": "center",
+            "marginTop": "15pt"
+        },
+        "evaluate-content-item-top-imgContent": {
+            "display": "flex",
+            "flexDirection": "row"
+        },
+        "evaluate-content-item-top-imgContent-img": {
+            "marginRight": "9pt"
+        },
+        "evaluate-content-item-top-name-text": {
+            "fontSize": "12pt",
+            "color": "#b2b2b2"
+        },
+        "evaluate-content-item-content": {
+            "marginTop": "12pt"
+        },
+        "evaluate-content-item-content-text": {
+            "fontSize": "14pt",
+            "color": "#333"
+        },
+        "evaluate-content-item-imgContent": {
+            "marginTop": "9pt"
+        },
+        "evaluate-content-item-imgContent-img": {
+            "width": "60pt",
+            "height": "60pt",
+            "marginRight": "9pt"
+        },
+        "evaluate-content-item-time": {
+            "marginTop": "9pt"
+        },
+        "evaluate-content-item-time-text": {
+            "color": "#b2b2b2",
+            "fontSize": "12pt",
+            "textAlign": "right"
+        },
+        "evaluate-all": {
+            "height": "44pt",
+            "alignItems": "center",
+            "justifyContent": "center"
+        },
+        "evaluate-all-text": {
+            "color": "#333",
+            "fontSize": "14pt",
+            "textAlign": "center"
+        },
+        "desc": {
+            "paddingTop": 0,
+            "paddingBottom": 0,
+            "paddingRight": "10pt",
+            "paddingLeft": "10pt"
+        },
+        "footer": {
+            "position": "absolute",
+            "bottom": 0,
+            "width": "100vw",
+            "height": "49pt",
+            "backgroundColor": "#fff",
+            "display": "flex",
+            "flexDirection": "row",
+            "alignItems": "center"
+        },
+        "footer-label": {
+            "width": "77pt",
+            "justifyContent": "center",
+            "alignItems": "center"
+        },
+        "footer-label-text": {
+            "marginTop": "6pt",
+            "color": "#333",
+            "fontSize": "10pt"
+        },
+        "footer-addCart": {
+            "width": "calc(100vw - 231pt)",
+            "backgroundColor": "#ff6900",
+            "justifyContent": "center",
+            "height": "49pt"
+        },
+        "footer-addCart-text": {
+            "color": "#fff",
+            "fontSize": "18pt",
+            "textAlign": "center"
+        }
+    },
+    "guess-style": {
+        "guess": {
+            "width": "100vw",
+            "paddingTop": 0,
+            "paddingBottom": 0,
+            "paddingRight": "15pt",
+            "paddingLeft": "15pt"
+        },
+        "guess-top": {
+            "height": "36pt",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "position": "relative"
+        },
+        "guess-top-line": {
+            "height": ".5pt",
+            "position": "absolute",
+            "backgroundColor": "#e5e5e5"
+        },
+        "guess-top-content": {
+            "display": "flex",
+            "flexDirection": "row",
+            "paddingTop": 0,
+            "paddingBottom": 0,
+            "paddingRight": "9pt",
+            "paddingLeft": "9pt",
+            "backgroundColor": "#f0f0f0"
+        },
+        "guess-top-content-img": {
+            "marginRight": "6pt"
+        },
+        "guess-top-content-text": {
+            "fontSize": "12pt",
+            "color": "#333"
+        },
+        "guess-pro": {
+            "display": "flex",
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "height": "552pt",
+            "justifyContent": "space-between",
+            "backgroundColor": "#f0f0f0",
+            "position": "relative"
+        },
+        "guess-pro-li": {
+            "backgroundColor": "#fff",
+            "width": "45vw",
+            "alignContent": "center",
+            "marginBottom": "10pt",
+            "paddingLeft": "9pt",
+            "paddingRight": "9pt",
+            "paddingTop": "9pt",
+            "paddingBottom": "12pt"
+        },
+        "guess-pro-li-img": {
+            "height": "150pt"
+        },
+        "guess-pro-li-title": {
+            "color": "#333",
+            "fontSize": "13pt",
+            "marginTop": "15pt"
+        },
+        "guess-pro-li-promotion": {
+            "height": "27pt",
+            "alignContent": "center",
+            "display": "flex",
+            "flexDirection": "row"
+        },
+        "guess-pro-li-promotion-icon": {
+            "height": "15pt",
+            "width": "27pt",
+            "marginRight": "3pt",
+            "marginTop": "6pt"
+        },
+        "guess-pro-li-comment": {
+            "display": "flex",
+            "flexDirection": "row",
+            "marginTop": "6pt"
+        },
+        "guess-pro-li-comment-item": {
+            "display": "flex",
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "alignItems": "center"
+        },
+        "guess-pro-li-comment-item-ber": {
+            "color": "#ff6900",
+            "fontSize": "10pt"
+        },
+        "guess-pro-li-comment-item-text": {
+            "color": "#999",
+            "fontSize": "10pt"
+        },
+        "guess-pro-li-addCart": {
+            "position": "absolute",
+            "bottom": "9pt",
+            "right": "8pt"
         }
     }
 });

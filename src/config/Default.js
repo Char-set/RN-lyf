@@ -4,6 +4,7 @@ var Config = {
   companyId:30,
   appName:'lyf',
   platformId:3,
+  areaCode:310101,
   css:{
     themeColor:'#ff6900'
   }

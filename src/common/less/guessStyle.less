@@ -1,0 +1,100 @@
+@import "./variable.less";
+.guess-style{
+    .guess{
+        width: ~'100vw';
+        padding: 0 15pt;
+        &-top{
+            height: 36pt;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            &-line{
+                height: .5pt;
+                position: absolute;
+                background: #e5e5e5;
+            }
+            &-content{
+                display: flex;
+                flex-direction: row;
+                padding: 0 9pt;
+                background: #f0f0f0;
+                &-img{
+                    margin-right: 6pt;
+                }
+                &-text{
+                    font-size: 12pt;
+                    color: #333;
+                }
+            }
+        }
+        &-pro{
+            // margin-top: 10pt;
+            // margin: 10pt 4vw;
+            // margin-bottom: 0;
+            // margin: 0 15pt;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            // width: 92vw;
+            height: 552pt;
+            justify-content: space-between;
+            background-color: #f0f0f0;
+            position: relative;
+            // top: -10;
+            &-li{
+                background-color: #fff;
+                width: 45vw;
+                // height: 249pt;
+                align-content: center;
+                margin-bottom: 10pt;
+                padding: 9pt 9pt 12pt;
+                // flex: 1;
+                &-img{
+                    height: 150pt;
+                }
+                &-title{
+                    color: #333;
+                    font-size: 13pt;
+                    margin-top: 15pt;
+                }
+                &-promotion{
+                    height: 27pt;
+                    // justify-content: center;
+                    align-content: center;
+                    display: flex;
+                    flex-direction: row;
+                    &-icon{
+                        height: 15pt;
+                        width: 27pt;
+                        margin-right: 3pt;
+                        margin-top: 6pt;
+                    }
+                }
+                &-comment{
+                    display: flex;
+                    flex-direction: row;
+                    margin-top: 6pt;
+                    &-item{
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        &-ber{
+                            color: @themeColor;
+                            font-size: 10pt;
+                        }
+                        &-text{
+                            color: #999;
+                            font-size: 10pt;
+                        }
+                    }
+                }
+                &-addCart{
+                    position: absolute;
+                    bottom: 9pt;
+                    right: 8pt;
+                }
+            }
+        }
+    }
+}
