@@ -216,6 +216,15 @@ module.exports = SmartStyleSheet.create({
             "borderBottomWidth": ".5pt",
             "borderStyle": "solid",
             "borderBottomColor": "#808080"
+        },
+        "ipxScrollHeight": {
+            "height": "calc(100vh - 139pt)"
+        },
+        "scrollHeight": {
+            "height": "calc(100vh - 114pt)"
+        },
+        "bgf0": {
+            "backgroundColor": "#f0f0f0"
         }
     },
     "user-style": {
@@ -522,11 +531,23 @@ module.exports = SmartStyleSheet.create({
         "pdB100": {
             "paddingBottom": "100pt"
         },
+        "pd012": {
+            "paddingTop": 0,
+            "paddingBottom": 0,
+            "paddingRight": "12pt",
+            "paddingLeft": "12pt"
+        },
         "ipxScrollHeight": {
             "height": "calc(100vh - 139pt)"
         },
         "scrollHeight": {
             "height": "calc(100vh - 114pt)"
+        },
+        "ipxCommentContentHeight": {
+            "height": "calc(100vh - 225pt)"
+        },
+        "commentContentHeight": {
+            "height": "calc(100vh - 200pt)"
         },
         "next": {
             "position": "absolute",
@@ -872,6 +893,52 @@ module.exports = SmartStyleSheet.create({
             "paddingRight": "10pt",
             "paddingLeft": "10pt"
         },
+        "comment": {
+            "width": "100vw"
+        },
+        "comment-top": {
+            "paddingLeft": "12pt",
+            "paddingRight": "12pt",
+            "paddingTop": "12pt",
+            "paddingBottom": "3pt",
+            "backgroundColor": "#fff",
+            "display": "flex",
+            "flexDirection": "row",
+            "flexWrap": "wrap"
+        },
+        "comment-top-item": {
+            "paddingTop": "5pt",
+            "paddingBottom": "5pt",
+            "paddingRight": "10pt",
+            "paddingLeft": "10pt",
+            "backgroundColor": "#fff5ed",
+            "borderWidth": "0.5pt",
+            "borderStyle": "solid",
+            "borderColor": "#ffc399",
+            "borderRadius": "4pt",
+            "marginRight": "15pt",
+            "marginBottom": "9pt"
+        },
+        "comment-top-item-text": {
+            "fontSize": "12pt",
+            "color": "#666"
+        },
+        "comment-top-item-text-active": {
+            "color": "#fff"
+        },
+        "comment-top-item-active": {
+            "backgroundColor": "#ff6900"
+        },
+        "comment-content": {
+            "backgroundColor": "#fff",
+            "marginTop": "12pt"
+        },
+        "comment-content-item": {
+            "paddingTop": 0,
+            "paddingBottom": 0,
+            "paddingRight": "12pt",
+            "paddingLeft": "12pt"
+        },
         "footer": {
             "position": "absolute",
             "bottom": 0,
@@ -1001,6 +1068,165 @@ module.exports = SmartStyleSheet.create({
             "position": "absolute",
             "bottom": "9pt",
             "right": "8pt"
+        }
+    },
+    "header-style": {
+        "header": {
+            "height": "44pt",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "backgroundColor": "#fff",
+            "position": "relative"
+        },
+        "header-back": {
+            "position": "absolute",
+            "left": "10pt"
+        },
+        "header-title-text": {
+            "fontSize": "18pt",
+            "color": "#333"
+        }
+    },
+    "cart-style": {
+        "ipxScrollHeight": {
+            "height": "calc(100vh - 173pt)"
+        },
+        "scrollHeight": {
+            "height": "calc(100vh - 148pt)"
+        },
+        "noData": {
+            "backgroundColor": "#f1f1f1",
+            "justifyContent": "center",
+            "alignItems": "center"
+        },
+        "noData-text": {
+            "fontSize": "13pt",
+            "color": "#333",
+            "marginTop": "20pt",
+            "marginBottom": "20pt",
+            "marginRight": "auto",
+            "marginLeft": "auto"
+        },
+        "noData-btn": {
+            "width": "35vw",
+            "height": "35pt",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "backgroundColor": "#ff6900",
+            "borderRadius": "3pt"
+        },
+        "noData-btn-text": {
+            "fontSize": "14pt",
+            "color": "#fff",
+            "fontWeight": "bold"
+        },
+        "merchant": {
+            "marginTop": "12px",
+            "backgroundColor": "#fff"
+        },
+        "merchant-top": {
+            "height": "42pt",
+            "alignItems": "center",
+            "display": "flex",
+            "flexDirection": "row",
+            "position": "relative",
+            "backgroundColor": "#fafafa"
+        },
+        "merchant-top-check": {
+            "marginLeft": "15pt"
+        },
+        "merchant-top-icon": {
+            "marginLeft": "12pt"
+        },
+        "merchant-top-title": {
+            "marginLeft": "9pt",
+            "fontSize": "14pt",
+            "color": "#333"
+        },
+        "merchant-content": {
+            "paddingTop": 0,
+            "paddingBottom": 0,
+            "paddingRight": "15pt",
+            "paddingLeft": "15pt"
+        },
+        "merchant-content-list-item": {
+            "paddingTop": "10pt",
+            "paddingBottom": "10pt",
+            "paddingRight": 0,
+            "paddingLeft": 0,
+            "display": "flex",
+            "flexDirection": "row",
+            "position": "relative"
+        },
+        "merchant-content-list-item-check": {
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "paddingRight": "21pt"
+        },
+        "merchant-content-list-item-img": {
+            "width": "80pt",
+            "height": "80pt",
+            "marginRight": "12pt",
+            "borderWidth": "1px",
+            "borderStyle": "solid",
+            "borderColor": "#e5e5e5"
+        },
+        "merchant-content-list-item-pro": {
+            "flex": 1,
+            "height": "80pt",
+            "overflow": "hidden",
+            "position": "relative"
+        },
+        "merchant-content-list-item-pro-name": {
+            "fontSize": "14pt",
+            "color": "#333",
+            "marginTop": "5pt"
+        },
+        "merchant-content-list-item-pro-attr": {
+            "fontSize": "12pt",
+            "color": "#808080",
+            "marginTop": "12pt"
+        },
+        "merchant-content-list-item-pro-price": {
+            "position": "absolute",
+            "bottom": 0,
+            "left": 0,
+            "fontSize": "15pt",
+            "color": "#ff6900"
+        },
+        "merchant-content-list-item-pro-btn": {
+            "position": "absolute",
+            "right": 0,
+            "bottom": 0,
+            "display": "flex",
+            "flexDirection": "row",
+            "borderWidth": "1pt",
+            "borderStyle": "solid",
+            "borderColor": "#e5e5e5"
+        },
+        "merchant-content-list-item-pro-btn-reduce": {
+            "width": "25pt",
+            "height": "25pt",
+            "borderRightWidth": "1pt",
+            "borderStyle": "solid",
+            "borderRightColor": "#e5e5e5",
+            "justifyContent": "center",
+            "alignItems": "center"
+        },
+        "merchant-content-list-item-pro-btn-input": {
+            "width": "45pt",
+            "justifyContent": "center",
+            "alignItems": "center"
+        },
+        "merchant-content-list-item-pro-btn-add": {
+            "width": "25pt",
+            "height": "25pt",
+            "borderLeftWidth": "1pt",
+            "borderStyle": "solid",
+            "borderLeftColor": "#e5e5e5",
+            "justifyContent": "center",
+            "alignItems": "center"
         }
     }
 });

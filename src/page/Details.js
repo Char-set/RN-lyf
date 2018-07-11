@@ -11,6 +11,7 @@ import {
   Image,
   TouchableWithoutFeedback,
   WebView,
+  DeviceEventEmitter,
   TextInput,
   UIManager,
   findNodeHandle
@@ -52,7 +53,7 @@ class Detail extends Component {
     super(props);
     this.state = {
       mpId:'',//商品id
-      currentTab:1,//1、商品，2、详情，3、评价
+      currentTab:0,//0、商品，1、详情，2、评价
       baseInfo:{},//商品详情信息
       lunboImage:[],//轮播数组
       swiperShow:false,
@@ -62,22 +63,34 @@ class Detail extends Component {
         rateFlag:0,//0:全部;1:好评;2:中评;3:差评;4:有图
         pageNo:1
       },
+      commentList:[],//评论数组
       proDesc:'',//商品详情，html
+      swiper:null
     }
   }
   componentDidMount() {
     // console.log(this.props.params)
     if(this.props.params && this.props.params.mpId){
-      this.setState({
-        mpId:this.props.params.mpId
-      },() => {
-        this._getBaseInfo();
-        this._getProInfo();
-        this._getMpComment();
-      })
+      this._initState(this.props.params.mpId);
     }
+    this.upDateMpidListener = DeviceEventEmitter.addListener('updateMpId',(mpId) => {
+      this._initState(mpId);
+    });
+  }
+  componentWillUnmount() {
+    //此生命周期内，去掉监听
+    this.upDateMpidListener && this.upDateMpidListener.remove();
   }
   componentWillUpdate(){
+  }
+  _initState(mpId){
+    this.setState({
+      mpId:mpId
+    },() => {
+      this._getBaseInfo();
+      this._getProInfo();
+      this._getMpComment();
+    });
   }
   // 获取商品基础信息
   _getBaseInfo(){
@@ -129,7 +142,7 @@ class Detail extends Component {
       }
     });
   }
-  // 获取商品评价信息
+  // 获取商品评价信息,第一次
   _getMpComment(){
     let url = Config.apiHost + '/api/social/mpComment/get';
     let params = {
@@ -143,16 +156,44 @@ class Detail extends Component {
       platformId:Config.platformId
     };
     NetUtil.get(url,params,res => {
+      let tempArr = this.state.commentList || [];
+      tempArr = tempArr.concat(res.data.mpcList.listObj || []);
       this.setState({
-        comment:res.data
+        comment:res.data,
+        commentList:tempArr
       });
     })
   }
   // 切换顶部tab 
-  _swtichTab(tab){
-    if(this.state.currentTab == tab) return;
+  _swtichTab(index){
+    if(this.state.currentTab == index) return;
+    
+    let resultIndex = '';
+    switch (this.state.currentTab) {
+      case 0:
+        resultIndex = index;
+        break;
+      case 1:
+        if(index == 0){
+          resultIndex = -1;
+        } else{
+          resultIndex = 1;
+        }
+        break;
+      case 2:
+        if(index == 1){
+          resultIndex = -1;
+        } else{
+          resultIndex = -2;
+        }
+        break;
+
+      default:
+        break;
+    }
+    this.swiper.scrollBy(resultIndex,true);
     this.setState({
-      currentTab:tab
+      currentTab:index
     });
   }
   // 渲染轮播子组件
@@ -227,9 +268,9 @@ class Detail extends Component {
     if(this.state.comment.mpcList && this.state.comment.mpcList.total > 0){
       let list =  [];
       if(type == 'little'){
-        list = this.state.comment.mpcList.listObj.slice(0,3);
+        list = this.state.commentList.slice(0,3);
       } else{
-        list = this.state.comment.mpcList.listObj;
+        list = this.state.commentList;
       }
       list.forEach((item,index) => {
         let img = [],pic = [];
@@ -277,12 +318,106 @@ class Detail extends Component {
       return comment;
     }
   }
-  _holdBigSwiperChange(e,state,context){
-    debugger
-    console.log(state)
-    this.setState({
-      currentTab:state.index + 1
+  _renderCommentList(commentItem){
+    let item = commentItem.item;
+    let index = commentItem.index;
+    let img = [],pic = [];
+    for(let i = 0; i < item.rate; i++){
+      img.push(
+        <Image style={s.evaluateContentItemTopImgContentImg} key={i + '_renderCommentListImg'} source={require('../images/detail_ic_comment_s.png')}/>
+      );
+    }
+    (item.mpShinePicList || []).forEach((p,v) => {
+      pic.push(
+        <Image style={s.evaluateContentItemImgContentImg} key={v + 'mpShinePicList'} source={{uri:p}} />
+      );
     });
+    return (
+      <View key={index + '_renderCommentList'} style={[s.pd012,s.evaluateContentItem,(index != this.state.commentList.length - 1) ? commonStyle.borderB:'']}>
+        <View style={s.evaluateContentItemTop}>
+          <View style={s.evaluateContentItemTopImgContent}>
+            {img}
+          </View>
+          <View style={s.evaluateContentItemTopName}>
+            <Text style={s.evaluateContentItemTopNameText}>{item.userUsername}</Text>
+          </View>
+        </View>
+        {item.content?
+          <View style={s.evaluateContentItemContent}>
+            <Text style={s.evaluateContentItemContentText}>{item.content}</Text>
+          </View>
+          :
+          null
+        }
+        
+        {pic.length > 0 ?
+          <View style={s.evaluateContentItemImgContent}>
+            {pic}
+          </View>
+          :
+          null
+        }
+        <View style={s.evaluateContentItemTime}>
+          <Text style={s.evaluateContentItemTimeText}>{Utils.filterDate(item.orderCreateTime,'yyyy-MM-dd')}</Text>
+        </View>
+      </View>
+    )
+  }
+  _holdBigSwiperChange(e,state,context){
+    this.setState({
+      currentTab:state.index
+    });
+  }
+  // 切换mpId，重新加载本页面
+  _reload(mpId){
+    this.setState({
+      mpId:mpId
+    },() => {
+      this._getBaseInfo();
+      this._getProInfo();
+      this._getMpComment();
+      this.refs.detailScrollView.scrollTo({x: 0, y: 0, animated: true});
+    });
+  }
+  // 评论下拉加载更多
+  _loadMoreComment(){
+    if(this.state.comment.mpcList.total > this.state.commentList.length){
+      let tempObj = this.state.commentSearch;
+      tempObj.pageNo += 1;
+      this.setState({
+        commentSearch:tempObj
+      },() => {
+        this._getMpComment();
+      });
+    }
+  }
+  // 渲染评价页的tab栏
+  _renderCommentTab(){
+    let arr = [];
+    (this.state.comment.mpLabelList || []).forEach(item => {
+      arr.push(
+        <TouchableWithoutFeedback key={item.labelName} onPress={() => this._switchCommentTab(item.labelflag)}>
+          <View style={[s.commentTopItem,this.state.commentSearch.rateFlag == item.labelflag ? s.commentTopItemActive : '']}>
+            <Text style={[s.commentTopItemText,this.state.commentSearch.rateFlag == item.labelflag ? s.commentTopItemTextActive : '']}>{item.labelName}({item.labelNum})</Text>
+          </View>
+        </TouchableWithoutFeedback>
+      )
+    });
+    return arr;
+  }
+  // 切换评论tab
+  _switchCommentTab(flag){
+    if(this.state.commentSearch.rateFlag != flag){
+      this.setState({
+        commentList:[],
+        commentSearch:{
+          pageNo:1,
+          rateFlag:flag
+        }
+      },() => {
+        this._getMpComment();
+      });
+    }
   }
   render () {
     return (
@@ -291,39 +426,45 @@ class Detail extends Component {
           <TouchableWithoutFeedback onPress={() => this.props.navigation.goBack()}>
             <Image style={s.topTabBack} source={require('../images/common_btn_back.png')} />
           </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={() => { this._swtichTab(0) }}>
+            <View style={[s.topTabView,s.topTabR49]}>
+              <Text style={[s.topTabTitle,this.state.currentTab == 0? s.topTabTitleActive : '']}>商品</Text>
+              {this.state.currentTab == 0 ? <View style={[s.topTabBor,styles.percent]}></View> :<View></View>}
+            </View>
+          </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={() => { this._swtichTab(1) }}>
             <View style={[s.topTabView,s.topTabR49]}>
-              <Text style={[s.topTabTitle,this.state.currentTab == 1? s.topTabTitleActive : '']}>商品</Text>
+              <Text style={[s.topTabTitle,this.state.currentTab == 1? s.topTabTitleActive : '']}>详情</Text>
               {this.state.currentTab == 1 ? <View style={[s.topTabBor,styles.percent]}></View> :<View></View>}
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={() => { this._swtichTab(2) }}>
-            <View style={[s.topTabView,s.topTabR49]}>
-              <Text style={[s.topTabTitle,this.state.currentTab == 2? s.topTabTitleActive : '']}>详情</Text>
-              {this.state.currentTab == 2 ? <View style={[s.topTabBor,styles.percent]}></View> :<View></View>}
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={() => { this._swtichTab(3) }}>
             <View style={[s.topTabView]}>
-              <Text style={[s.topTabTitle,this.state.currentTab == 3? s.topTabTitleActive : '']}>评价</Text>
-              {this.state.currentTab == 3 ? <View style={[s.topTabBor,styles.percent]}></View> :<View></View>}
+              <Text style={[s.topTabTitle,this.state.currentTab == 2? s.topTabTitleActive : '']}>评价</Text>
+              {this.state.currentTab == 2 ? <View style={[s.topTabBor,styles.percent]}></View> :<View></View>}
             </View> 
           </TouchableWithoutFeedback>
         </View>
         <View style={isIphoneX()?s.ipxScrollHeight:s.scrollHeight}>
-          <Swiper autoplay={false} index={0} showsPagination={false} onMomentumScrollEnd={(e, state, context) => {this._holdBigSwiperChange(e, state, context)}}>
+          <Swiper ref={(swiper) => {this.swiper = swiper}} autoplay={false} loop={false} showsPagination={false} onMomentumScrollEnd={(e, state, context) => {this._holdBigSwiperChange(e, state, context)}}>
+          
             <Animated.View>
-              <ScrollView style={isIphoneX()?s.ipxScrollHeight:s.scrollHeight}>
-                {this.state.swiperShow?<View style={s.swiperView}>
+              <ScrollView showsVerticalScrollIndicator={false} ref='detailScrollView' style={isIphoneX()?s.ipxScrollHeight:s.scrollHeight}>
+                <View style={s.swiperView}>
+                  {this.state.swiperShow?
                     <Swiper
                         autoplay={true}
+                        loop={false}
                         paginationStyle={{bottom:18,justifyContent:'center'}}
                         dotStyle={{backgroundColor:'rgba(0, 0, 0, 0.2)',width:10,height:10,borderRadius:5}}
                         activeDotStyle={{backgroundColor:'#ff6900',width:10,height:10,borderRadius:5}}
                         >
                         {this._renderSwiperItem()}
                     </Swiper>
-                </View>:<View></View>}
+                    :
+                    null
+                  }
+                </View>
                 <View style={s.info}>
                   <View style={s.infoTitle}>
                     <View style={s.infoTitleIcon}><Text style={s.infoTitleIconText}>自营</Text></View>
@@ -376,7 +517,7 @@ class Detail extends Component {
                     <Text style={s.evaluateAllText}>查看全部评价</Text>
                   </View>
                 </View>
-                <GuessComponent navigation={this.props.navigation} mpId={this.state.mpId} ut={this.props.ut} />
+                <GuessComponent navigation={this.props.navigation} holdItemClick={this._reload} mpId={this.state.mpId} ut={this.props.ut} />
                 {this.state.baseInfo.h5DetailUrl?
                   <View style={isIphoneX()?s.ipxScrollHeight:s.scrollHeight}>
                       <WebView 
@@ -391,18 +532,37 @@ class Detail extends Component {
                 }
               </ScrollView>
             </Animated.View>
-            {this.state.baseInfo.h5DetailUrl?
-              <View style={isIphoneX()?s.ipxScrollHeight:s.scrollHeight}>
-                  <WebView 
-                    source = {{url:this.state.baseInfo.h5DetailUrl,method:"GET"}}
-                    javaScriptEnabled = {true}
-                    domStorageEnabled={true}
-                    scalesPageToFit={false}
-                  />
+            <View style={isIphoneX()?s.ipxScrollHeight:s.scrollHeight}>
+                <WebView 
+                  source = {{url:this.state.baseInfo.h5DetailUrl,method:"GET"}}
+                  javaScriptEnabled = {true}
+                  domStorageEnabled={true}
+                  scalesPageToFit={false}
+                />
+            </View>
+            <View style={s.comment}>
+              <View style={s.commentTop}>
+                {this._renderCommentTab()}
               </View>
-              :
-              null
-            }
+              <View style={[s.commentContent,isIphoneX()?s.ipxCommentContentHeight:s.commentContentHeight]}>
+                {this.state.comment.mpcList && this.state.commentList ?
+                  <FlatList
+                    ref="pro_list"
+                    horizontal={false} 
+                    showsVerticalScrollIndicator={false}
+                    numColumns={1}
+                    initialNumToRender={6}
+                    keyExtractor={(item,index) => index} 
+                    data={this.state.commentList} 
+                    renderItem={(item) => this._renderCommentList(item)}
+                    onEndReachedThreshold={0.1}
+                    onEndReached={(event) => this._loadMoreComment(event)}
+                  />
+                  :
+                  null
+                }
+              </View>
+            </View>
           </Swiper>
         </View>
         

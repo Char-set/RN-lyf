@@ -10,6 +10,7 @@ import Index from './page/Index';
 import My from './page/My';
 import Category from './page/Category'
 import Search from './page/Search';
+import Cart from './page/Cart';
 import WebViewContent from './component/WebViewContent'
 import LoginCompoent from './component/Login'
 import Detail from './page/Details';
@@ -34,7 +35,7 @@ const FindScreen = ({ navigation }) => (
   <WebViewContent params={{webUrl:'http://m.laiyifen.com/view/h5/30.html'}} navigation={navigation} />
 );
 FindScreen.navigationOptions = {
-  tabBarLabel: '',
+  tabBarLabel: '全球尖货',
   tabBarIcon: ({ tintColor, focused }) => (
     <Image 
     source={{uri:!focused?'http://ojc83pmmg.bkt.clouddn.com/home_nav_-btn_discover_n@2x.png':'http://ojc83pmmg.bkt.clouddn.com/home_nav_-btn_discover_s@2x.png'}} 
@@ -45,7 +46,7 @@ const CateScreen = ({ navigation }) => (
   <Category banner="Home Tab" navigation={navigation} />
 );
 CateScreen.navigationOptions = {
-  tabBarLabel: '',
+  tabBarLabel: '分类',
   tabBarIcon: ({ tintColor, focused }) => (
     <Image 
     source={{uri:!focused?'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_classification_n@2x.png':'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_classification_s@2x.png'}} 
@@ -54,10 +55,10 @@ CateScreen.navigationOptions = {
 };
 const CartScreen = ({ navigation }) => (
   // <Search params={navigation.state.params} navigation={navigation} />
-  <WebViewContent params={{webUrl:'http://m.laiyifen.com/cart.html'}} navigation={navigation} />
+  <Cart navigation={navigation} />
 );
 CartScreen.navigationOptions = {
-  tabBarLabel: '',
+  tabBarLabel: '购物车',
   tabBarIcon: ({ tintColor, focused }) => (
     <Image 
     source={{uri:!focused?'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_shopping_n@2x.png':'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_shopping_s@2x.png'}} 
@@ -68,7 +69,7 @@ const MyScreen = ({ navigation }) => (
   <My banner="Home Tab" navigation={navigation} />
 );
 MyScreen.navigationOptions = {
-  tabBarLabel: '',
+  tabBarLabel: '我',
   tabBarIcon: ({ tintColor, focused }) => (
     <Image 
     source={{uri:!focused?'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_my_n@2x.png':'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_my_s@2x.png'}} 
@@ -78,33 +79,38 @@ MyScreen.navigationOptions = {
 
 
 IndexScreen.navigationOptions = {
-  tabBarLabel: '',
+  tabBarLabel: '首页',
   tabBarIcon: ({ tintColor, focused }) => (
     <Image 
     source={{uri:!focused?'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_home_n@2x.png':'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_home_s@2x.png'}} 
     style={{height:25,width:25}}/>
   ),
+  tabBarOnPress:(item) => {
+    console.log(1111111,item);
+    item.jumpToIndex(item.scene.index);    
+  }
 };
 
 const mainTab = TabNavigator(
   {
-    "首页": {
-      screen: IndexScreen,
-      path: '',
-    },
-    "分类": {
-      screen: CateScreen,
-      path: 'My',
-    },
-    "全球尖货": {
-      screen: FindScreen,
-      path: 'My',
-    },
-    "购物车": {
+    Cart: {
       screen: CartScreen,
       path: 'My',
     },
-    "我": {
+    Index: {
+      screen: IndexScreen,
+      path: '',
+    },
+    Category: {
+      screen: CateScreen,
+      path: 'My',
+    },
+    all: {
+      screen: FindScreen,
+      path: 'My',
+    },
+    
+    Mine: {
       screen: MyScreen,
       path: 'My',
     }

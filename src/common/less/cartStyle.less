@@ -1,0 +1,136 @@
+@import "./variable.less";
+.cart-style{
+    .ipxScrollHeight{
+        height: calc(~'100vh - 173pt');
+    }
+    .scrollHeight{
+        height: calc(~'100vh - 114pt');
+    }
+    .noData{
+        background: #f1f1f1;
+        justify-content: center;
+        align-items: center;
+        // &-img{
+        //     width: 145pt;
+        //     height: 131pt;
+        // }
+        &-text{
+            font-size: 13pt;
+            color: #333;
+            margin: 20pt auto;
+        }
+        &-btn{
+            width: 35vw;
+            height: 35pt;
+            justify-content: center;
+            align-items: center;
+            background: @themeColor;
+            border-radius: 3pt;
+            &-text{
+                font-size: 14pt;
+                color: #fff;
+                font-weight: bold;
+            }
+        }
+    }
+    .merchant{
+        margin-top: 12px;
+        background: #fff;
+        &-top{
+            height: 42pt;
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            position: relative;
+            background: #fafafa;
+            &-check{
+                margin-left: 15pt;
+            }
+            &-icon{
+                // position: absolute;
+                margin-left: 12pt;
+            }
+            &-title{
+                margin-left: 9pt;
+                font-size: 14pt;
+                color: #333;
+            }
+        }
+        &-content{
+            padding: 0 15pt;
+            &-list{
+                
+                &-item{
+                    padding: 10pt 0;
+                    display: flex;
+                    flex-direction: row;
+                    position: relative;
+                    &-check{
+                        // flex: 1;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding-right: 21pt;
+                    }
+                    &-img{
+                        width: 80pt;
+                        height: 80pt;
+                        margin-right: 12pt;
+                        border: 1px solid #e5e5e5;
+                    }
+                    &-pro{
+                        flex: 1;
+                        height: 80pt;
+                        overflow: hidden;
+                        position: relative;
+                        &-name{
+                            font-size: 14pt;
+                            color: #333;
+                            margin-top: 5pt;
+                        }
+                        &-attr{
+                            font-size: 12pt;
+                            color: #808080;
+                            margin-top: 12pt;
+                        }
+                        &-price{
+                            position: absolute;
+                            bottom: 0;
+                            left: 0;
+                            font-size: 15pt;
+                            color: @themeColor;
+                        }
+                        &-btn{
+                            position: absolute;
+                            right: 0;
+                            bottom: 0;
+                            display: flex;
+                            flex-direction: row;
+                            border: 1pt solid #e5e5e5;
+                            &-reduce{
+                                width: 25pt;
+                                height: 25pt;
+                                border-right: 1pt solid #e5e5e5;
+                                justify-content: center;
+                                align-items: center;
+                            }
+                            &-input{
+                                width: 45pt;
+                                justify-content: center;
+                                align-items: center;
+                                
+                            }
+                            &-add{
+                                width: 25pt;
+                                height: 25pt;
+                                border-left: 1pt solid #e5e5e5;
+                                justify-content: center;
+                                align-items: center;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

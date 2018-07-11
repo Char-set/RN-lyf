@@ -4,7 +4,8 @@ import {
     Text,
     Image,
     View,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    DeviceEventEmitter
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import {commonStyle,guessStyle} from '../styles';//样式文件引入
@@ -32,10 +33,7 @@ export default class GuessLike extends Component{
     super(props);
     this.state = {
       mpId:'',
-      dataList:[],
-      item:
-        {"productId":1007020801002534,"mpId":1007020801002535,"mpsId":1007020801002535,"code":"6933211482461","name":"天天坚果（活力派）25g","subTitle":null,"type":1,"brandId":1008020801002649,"brandName":"来伊份","brandImgUrl":null,"categoryId":1008020801000003,"categoryName":"果仁","categoryTreeNodeId":null,"merchantSeriesId":0,"companyId":30,"merchantId":101,"merchantName":"来伊份","merchantType":"10","freightAttribute":null,"grossWeight":null,"merchantProdVolume":null,"shopId":9,"shopName":"来伊份","shopType":null,"freightTemplateId":null,"warehouseNo":null,"calculationUnit":"DAI","standard":"1X30包","saleType":1,"saleIconUrl":null,"mpSource":null,"isBargain":null,"isRent":null,"isSeries":null,"status":null,"remark":null,"managementState":null,"price":5.90,"marketPrice":6.44,"tax":0,"stockNum":2024,"lackOfStock":0,"promotionType":0,"promotionPrice":null,"preferentialPrice":null,"promotionId":null,"promotionIconUrl":null,"promotionIconUrls":[],"promotionIconTexts":[],"promotionStartTime":null,"promotionEndTime":null,"titleIconTexts":[],"titleIconUrls":[],"mpSalesVolume":336112,"volume4sale":336112,"isAreaSale":1,"isSeckill":0,"isForcast":0,"forcastPromotionId":null,"forcastPromotionType":null,"forcastPromotionPrice":null,"forcastPreferentialPrice":null,"forcastPromotionStartTime":null,"forcastPromotionEndTime":null,"isPresell":0,"presellFinalStartTime":null,"presellFinalEndTime":null,"deliveryTime":null,"presellDownPrice":null,"presellOffsetPrice":null,"presellTotalPrice":null,"balancePayment":null,"presellBookedNum":null,"individualLimitNum":-1,"totalLimitNum":-1,"warehouseName":null,"picUrl":"http://images.laiyifen.com/trailbreaker/product/20160810/8a213aa0-8693-47ce-9672-4e854f2ee8e3.jpg","commentInfo":{"mpid":null,"commentNum":4582,"goodRate":98},"promotionInfo":[{"mpId":1007020801002535,"iconText":null,"iconUrl":null,"promotions":[{"id":null,"description":"全场8折","promotionId":1023069800007665,"promotionType":3,"frontPromotionType":1003,"contentType":2,"url":null,"iconText":"满折","iconUrl":"http://cdn.oudianyun.com/lyf-local/branch/back-promotion/1487661428991_3559_77.png","weight":4,"startTime":1530149950000,"endTime":1530374399000,"promotionRuleList":[{"promotionId":1023069800007665,"conditionType":2,"conditionValue":1,"contentType":2,"contentValue":80,"description":"满1件8.0折","merchantId":null,"merchantName":null,"flag":true,"level":1,"iconUrl":null}],"promotionGiftDetailList":null,"isJumpPage":1,"jumpPageUrl":null,"individualLimitNum":-1,"totalLimitNum":-1},{"id":null,"description":"APP专享换购","promotionId":1023069700002909,"promotionType":11,"frontPromotionType":1018,"contentType":14,"url":null,"iconText":"换购","iconUrl":"http://cdn.oudianyun.com/lyf-local/branch/back-promotion/1487661389371_6583_94.png","weight":6,"startTime":1528387200000,"endTime":1531583999000,"promotionRuleList":[{"promotionId":1023069700002909,"conditionType":1,"conditionValue":12800,"contentType":14,"contentValue":1,"description":"满128.0元换购商品","merchantId":null,"merchantName":null,"flag":true,"level":1,"iconUrl":null}],"promotionGiftDetailList":null,"isJumpPage":1,"jumpPageUrl":null,"individualLimitNum":-1,"totalLimitNum":-1}]}],"scripts":null,"nowDate":1530272382692,"availablePrice":5.90,"valid":true,"url60x60":"http://images.laiyifen.com/trailbreaker/product/20160810/8a213aa0-8693-47ce-9672-4e854f2ee8e3_s.jpg","url100x100":"http://images.laiyifen.com/trailbreaker/product/20160810/8a213aa0-8693-47ce-9672-4e854f2ee8e3_s.jpg","url120x120":"http://images.laiyifen.com/trailbreaker/product/20160810/8a213aa0-8693-47ce-9672-4e854f2ee8e3_s.jpg","url160x160":"http://images.laiyifen.com/trailbreaker/product/20160810/8a213aa0-8693-47ce-9672-4e854f2ee8e3_s.jpg","url220x220":"http://images.laiyifen.com/trailbreaker/product/20160810/8a213aa0-8693-47ce-9672-4e854f2ee8e3_m.jpg","url300x300":"http://images.laiyifen.com/trailbreaker/product/20160810/8a213aa0-8693-47ce-9672-4e854f2ee8e3_m.jpg","url400x400":"http://images.laiyifen.com/trailbreaker/product/20160810/8a213aa0-8693-47ce-9672-4e854f2ee8e3_l.jpg","url500x500":"http://images.laiyifen.com/trailbreaker/product/20160810/8a213aa0-8693-47ce-9672-4e854f2ee8e3_l.jpg","url800x800":"http://images.laiyifen.com/trailbreaker/product/20160810/8a213aa0-8693-47ce-9672-4e854f2ee8e3_l.jpg"}
-      
+      dataList:[]
     }
   }
   componentDidMount(){
@@ -44,7 +42,17 @@ export default class GuessLike extends Component{
         mpId
     },() => {
         this._getRecommend();
-    })
+    });
+    this.updateGuessMpIdListener = DeviceEventEmitter.addListener('updateGuessMpId',(mpIds) => {
+        this.setState({
+            mpId:mpIds
+        },() => {
+            this._getRecommend();
+        });
+    });
+  }
+  componentWillUnmount(){
+    this.updateGuessMpIdListener && this.updateGuessMpIdListener.remove();
   }
   //组件是否需要更新
   shouldComponentUpdate(nextProps, nextState){
@@ -58,7 +66,7 @@ export default class GuessLike extends Component{
   }
   componentWillReceiveProps(nextProps){
     if(this.state.mpId != nextProps.mpId){
-        let {mpId} = this.props;
+        let {mpId} = nextProps;
         this.setState({
             mpId
         },() => {
@@ -110,6 +118,7 @@ export default class GuessLike extends Component{
         });
   }
   _goDetais(p){
+    // DeviceEventEmitter.emit('updateMpId',p.mpId);
     this.props.navigation.navigate('DetailView',{mpId:p.mpId});
   }
   _buildPromotionIcon(promotion){
@@ -117,7 +126,7 @@ export default class GuessLike extends Component{
     var arrPro=[];
     (promotion || []).forEach((item,index) => {
       arrPro.push(
-        <Image key={'promotion' + index} style={s.guessProLiPromotionIcon} source={{uri:item.tagUrl}} />
+        <Image key={'promotion' + item.tagUrl} style={s.guessProLiPromotionIcon} source={{uri:item.tagUrl}} />
       )
     });
     return arrPro;
@@ -166,7 +175,7 @@ export default class GuessLike extends Component{
         let proItem = [];
         (item || []).forEach((p,i) => {
             proItem.push(
-                <View key={'renderItem' + i} style={s.guessProLi}>
+                <View key={'renderItem' + p.mpId} style={s.guessProLi}>
                     <TouchableWithoutFeedback onPress={() => this._goDetais(p)}>
                         <Image style={s.guessProLiImg} source={{uri:p.url300x300}} />
                     </TouchableWithoutFeedback>
@@ -194,7 +203,7 @@ export default class GuessLike extends Component{
             )
         });
         swiperItem.push(
-            <View style={s.guessPro}>
+            <View style={s.guessPro} key={'swiper' + index}>
                 {proItem}
             </View>
         );

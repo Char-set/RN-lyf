@@ -3,11 +3,20 @@
     .pdB100{
         padding-bottom: 100pt;
     }
+    .pd012{
+        padding: 0 12pt;
+    }
     .ipxScrollHeight{
         height: calc(~'100vh - 139pt');
     }
     .scrollHeight{
         height: calc(~'100vh - 114pt');
+    }
+    .ipxCommentContentHeight{
+        height: calc(~'100vh - 225pt');
+    }
+    .commentContentHeight{
+        height: calc(~'100vh - 200pt');
     }
     .next{
         position: absolute;
@@ -328,6 +337,41 @@
     }
     .desc{
         padding: 0 10pt;
+    }
+    .comment{
+        width: 100vw;
+        &-top{
+            padding: 12pt 12pt 3pt;
+            background: #fff;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            &-item{
+                padding: 5pt 10pt;
+                background: #fff5ed;
+                border: 0.5pt solid #ffc399;
+                border-radius: 4pt;
+                margin-right: 15pt;
+                margin-bottom: 9pt;
+                &-text{
+                    font-size: 12pt;
+                    color: #666;
+                    &-active{
+                        color: #fff;
+                    }
+                }
+                &-active{
+                    background: @themeColor;
+                }
+            }
+        }
+        &-content{
+            background: #fff;
+            margin-top: 12pt;
+            &-item{
+                padding: 0 12pt;
+            }
+        }
     }
     .footer{
         position: absolute;

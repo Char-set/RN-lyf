@@ -31,6 +31,7 @@ import Utils from '../utils/ComUtils';//网络请求
 import timeFormat from '../utils/TimeFormat';//时间格式化
 import Config from '../config/Default';//默认配置
 import Cookie from '../utils/Cookies';
+import Session from '../utils/Session';
 /**
  * 自定义组件引入
  */
@@ -342,10 +343,10 @@ class Search extends Component {
   _addCart(mpId){
     // Utils.showTips(JSON.stringify(item));
     // console.info(item);
-    Cookie.getAllCookie('sessionId').then(res => {
+    Session.getSessionId().then(sid => {
       let url = Config.apiHost + '/api/cart/addItem';
       let params = {
-        sessionId:res,
+        sessionId:sid,
         mpId:mpId,
         num:1,
         ut:this.state.ut || ''
