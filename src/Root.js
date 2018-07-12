@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Platform, ScrollView, StyleSheet, Image } from 'react-native';
+import { Button, Platform, ScrollView, StyleSheet, Image, DeviceEventEmitter} from 'react-native';
 import { TabNavigator, StackNavigator} from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
@@ -64,6 +64,11 @@ CartScreen.navigationOptions = {
     source={{uri:!focused?'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_shopping_n@2x.png':'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_shopping_s@2x.png'}} 
     style={{height:25,width:25}}/>
   ),
+  tabBarOnPress:(item) => {
+    if(item.scene.focused) return;
+    item.jumpToIndex(item.scene.index);    
+    DeviceEventEmitter.emit('updateCartScreen');
+  }
 };
 const MyScreen = ({ navigation }) => (
   <My banner="Home Tab" navigation={navigation} />
@@ -93,29 +98,30 @@ IndexScreen.navigationOptions = {
 
 const mainTab = TabNavigator(
   {
-    Cart: {
-      screen: CartScreen,
-      path: 'My',
-    },
     Index: {
       screen: IndexScreen,
-      path: '',
+      path: 'Index',
     },
     Category: {
       screen: CateScreen,
-      path: 'My',
+      path: 'Category',
     },
-    all: {
+    All: {
       screen: FindScreen,
-      path: 'My',
+      path: 'All',
     },
-    
+    Cart: {
+      screen: CartScreen,
+      path: 'Cart',
+    },
     Mine: {
       screen: MyScreen,
-      path: 'My',
+      path: 'Mine',
     }
   },
   {
+    lazy:false,
+    initialRouteName:'Cart',
     tabBarPosition: 'bottom',
     tabBarOptions: {
       activeTintColor: Platform.OS === 'ios' ? '#ff6900' : '#fff',

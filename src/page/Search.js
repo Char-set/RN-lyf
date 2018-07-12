@@ -12,7 +12,8 @@ import {
   TouchableWithoutFeedback,
   TextInput,
   UIManager,
-  findNodeHandle
+  findNodeHandle,
+  DeviceEventEmitter
 } from 'react-native';
 import { connect } from 'react-redux';
 import Toast from 'react-native-root-toast';
@@ -53,6 +54,7 @@ class Search extends Component {
       brandIds:[],//促销活动Id
       searchWord:'',//搜索关键词
       sortType:'10',//排序字段，默认10（综合）
+      sortByList:[],//排序列表
       priceRange:'',//价格区间筛选
       filterType:'',//筛选字段
       shoppingGuideJson:'',//系列属性筛选
@@ -63,26 +65,66 @@ class Search extends Component {
       disabledScroll:false,//正在下拉中，禁用其他操作
       dragEndFlag:false,//下拉结束标识
       refreshLastTime:'12-13 19:33',//页面最后刷新时间
+      promotionDetail:{},//促销活动详情
+      cartPromotion:{},//促销顶部计算信息
     }
   }
   componentDidMount() {
-    if(this.props.params && this.props.params.categoryId){
-      this.setState({
-        categoryId:this.props.params.categoryId
-      },() => {
-        this._loadSearch();
-      })
-    }
+    Session.getSessionId().then(sid => {
+      if(this.props.params){
+        this.setState({
+          categoryId:this.props.params.categoryId || '',
+          promotionId:this.props.params.promotionId || '',
+          sessionId:sid
+        },() => {
+          this._loadSearch();
+          if(this.state.promotionId){
+            this._getPromotionDetail();
+            this._getPromotionExt();
+          }
+        })
+      }
+    });
+    
   }
   componentWillUpdate(){
   }
+  // 获取促销信息
+  _getPromotionDetail = () => {
+    let url = '/api/product/promotionDetail';
+    let params = {
+      promotionId:this.state.promotionId,
+      platformId:Config.platformId
+    };
+    NetUtil.get(url,params,res => {
+      this.setState({
+        promotionDetail:res.data || {}
+      })
+    });
+  }
+  // 获取促销计算信息
+  _getPromotionExt = () => {
+    let url = '/api/cart/ext';
+    let params = {
+      ut:this.state.ut || '',
+      sessionId:this.state.sessionId,
+      companyId:Config.companyId,
+      promotionId:this.state.promotionId,
+      platformId:Config.platformId
+    };
+    NetUtil.get(url,params,res => {
+      this.setState({
+        cartPromotion:res.data || {}
+      });
+    });
+  }
   //flag为真是，表示是滚动加载
   _loadSearch(flag){
-    if(!this.state.categoryId && !this.state.searchWord){
+    if(!this.state.categoryId && !this.state.searchWord && !this.state.promotionId){
       Utils.showTips('请输入搜索词');
       return;
     }
-    let url = Config.apiHost + '/api/search/searchList';
+    let url = '/api/search/searchList';
     let params = {
       ut:this.state.ut,
       merchantId: this.state.merchantId,
@@ -107,40 +149,36 @@ class Search extends Component {
     }
     NetUtil.get(url,params,(res) => {
       if(res.data && res.data.totalCount > 0){
+        let productList = [];
         switch(flag){
           case true:
-            let productList = this.state.proList.concat(res.data.productList);
-            this.setState({
-              proList:productList
-            });
+            productList = this.state.proList.concat(res.data.productList);
             break;
           case false:
-            this.setState({
-              proList:res.data.productList
-            });
+            productList = res.data.productList;
             break;
           default:
-            this.setState({
-              proList:res.data.productList
-            });
+            productList = res.data.productList;
             break;
         }
+        this.setState({
+          proList:productList,
+          sortByList:res.data.sortByList
+        });
         if(this.state.refreshStatus == 3){
+          let timeStr = '';
+          timeStr = timeFormat.dateformat(new Date(),'MM-dd hh:mm');
           this.setState({
             refreshStatus:1,
             disabledScroll:false,
-            dragEndFlag:false
+            dragEndFlag:false,
+            refreshLastTime:timeStr
           });
           timing(
             this.state.scrollDistance,
             { toValue: 0, duration: 200, useNativeDriver: true }
           ).start()
         }
-        let timeStr = '';
-        timeStr = timeFormat.dateformat(new Date(),'MM-dd hh:mm');
-        this.setState({
-          refreshLastTime:timeStr
-        })
       } else{
         Utils.showTips('没有找到搜索结果');
         this.setState({
@@ -188,6 +226,10 @@ class Search extends Component {
   }
   _goDetais(item){
     this.props.navigation.navigate('DetailView',{mpId:item.mpId});
+  }
+  _searchBack = () => {
+    this.props.navigation.goBack();
+    DeviceEventEmitter.emit('updateCartScreen');
   }
   _buildProItem(proItem){
     let item = proItem.item;
@@ -301,7 +343,7 @@ class Search extends Component {
     return arrPro;
   }
   _openLink(item){
-    var url = Config.apiHost + '/search.html?from=c&categoryId=' + item.categoryId;
+    var url = '/search.html?from=c&categoryId=' + item.categoryId;
     this.props.navigation.navigate('WebView',{webUrl:url})
   }
   _pullUp(event){
@@ -320,7 +362,7 @@ class Search extends Component {
   }
   //检查是否是系列品
   _checkSerialPro(item){
-    let url = Config.apiHost + '/api/product/baseInfo';
+    let url = '/api/product/baseInfo';
     let params = {
       mpIds:item.mpId
     };
@@ -343,44 +385,102 @@ class Search extends Component {
   _addCart(mpId){
     // Utils.showTips(JSON.stringify(item));
     // console.info(item);
-    Session.getSessionId().then(sid => {
-      let url = Config.apiHost + '/api/cart/addItem';
-      let params = {
-        sessionId:sid,
-        mpId:mpId,
-        num:1,
-        ut:this.state.ut || ''
-      };
-      NetUtil.postForm(url,params,res => {
-        Utils.showTips('添加成功');
-      })
-    });
+    let url = '/api/cart/addItem';
+    let params = {
+      sessionId:this.state.sessionId,
+      mpId:mpId,
+      num:1,
+      ut:this.state.ut || ''
+    };
+    NetUtil.postForm(url,params,res => {
+      Utils.showTips('添加成功');
+      if(this.state.promotionId){
+        this._getPromotionExt();
+      }
+    })
 
   }
   render () {
     return (
       <View style={[commonStyle.container,isIphoneX()?commonStyle.pdT45:'']}>
-        <View style={s.topSearch}>
-          <TouchableWithoutFeedback onPress={() => this.props.navigation.goBack()}>
-            <Image style={s.topSearchBack} source={require('../images/common_btn_back.png')} />
-          </TouchableWithoutFeedback>
-          <View style={s.topSearchView} >
-            <Image style={s.topSearchViewIcon} source={require('../images/common_ic_search.png')} />
-            <TextInput style={s.topSearchInput} 
-              autoCapitalize={'none'}
-              placeholder={'来伊份'}
-              onChangeText={(searchWord) => {this.setState({searchWord})}}
-              value={this.state.searchWord}
-            />
-          </View>
-          <TouchableWithoutFeedback onPress={() => this._loadSearch()}>
-            <View style={s.topSearchConfirm}>
-              <Text style={s.topSearchConfirmText}>搜索</Text>
+        {!this.state.promotionId ?
+          <View style={s.topSearch}>
+            <TouchableWithoutFeedback onPress={() => this._searchBack()}>
+              <Image style={s.topSearchBack} source={require('../images/common_btn_back.png')} />
+            </TouchableWithoutFeedback>
+            <View style={s.topSearchView} >
+              <Image style={s.topSearchViewIcon} source={require('../images/common_ic_search.png')} />
+              <TextInput style={s.topSearchInput} 
+                autoCapitalize={'none'}
+                placeholder={'来伊份'}
+                onChangeText={(searchWord) => {this.setState({searchWord})}}
+                value={this.state.searchWord}
+              />
             </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback>
-            <Image style={s.topSearchScan} source={require('../images/search_btn_qrcode.png')} />
-          </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={() => this._loadSearch()}>
+              <View style={s.topSearchConfirm}>
+                <Text style={s.topSearchConfirmText}>搜索</Text>
+              </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback>
+              <Image style={s.topSearchScan} source={require('../images/search_btn_qrcode.png')} />
+            </TouchableWithoutFeedback>
+          </View>:null
+        }
+        {this.state.promotionId ? 
+          <View style={s.topSearch}>
+            <TouchableWithoutFeedback onPress={() => this._searchBack()}>
+              <Image style={s.topSearchBack} source={require('../images/common_btn_back.png')} />
+            </TouchableWithoutFeedback>
+            <Text style={s.topSearchPromotionText}>活动商品</Text>
+          </View>:null
+        }
+        {this.state.promotionId ? 
+          <View style={s.promotionTips}>
+            <Text style={s.promotionTipsText} numberOfLines={1}>活动说明：{this.state.promotionDetail.description}</Text>
+          </View>:null
+        }
+        {this.state.promotionId?
+          <View style={s.promotionFooter}>
+            <View style={s.promotionFooterInfo}>
+              <Text style={s.promotionFooterInfoTotal}>
+                合计：<Text style={s.promotionFooterInfoTotalMoney}>{Utils.filterPrice(this.state.cartPromotion.totalPrice,'￥',0)}</Text>
+              </Text>
+              <Text style={s.promotionFooterInfoTips} numberOfLines={1}>
+                {this.state.cartPromotion.message}
+              </Text>
+            </View>
+            <View style={s.promotionFooterBtn}>
+              <View style={s.promotionFooterBtnOne}>
+                <Text style={s.promotionFooterBtnOneText}>查看赠品</Text>
+              </View>
+              <TouchableWithoutFeedback onPress={() => this._searchBack()}>
+                <View style={s.promotionFooterBtnTwo}>
+                  <Text style={s.promotionFooterBtnTwoText}>进入购物车</Text>
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+          </View>:null
+        }
+        <View style={s.filterTab}>
+          <View style={s.filterTabOne}>
+            <Text style={[s.filterTabOneText,s.filterTabOneTextActive]}>全部分类</Text>
+            <Image style={s.filterTabOneImg} source={require('../images/icon_Start_red.png')}/>
+          </View>
+          <View style={s.filterTabOne}>
+            <Text style={s.filterTabOneText}>排序</Text>
+            <Image style={s.filterTabOneImg} source={require('../images/common_btn_arrow_greydown.png')}/>
+          </View>
+          <View style={s.filterTabOne}>
+            <Text style={s.filterTabOneText}>筛选</Text>
+            <Image style={s.filterTabOneImg} source={require('../images/search_btn_filter.png')}/>
+          </View>
+          <View style={s.filterTabTwo}>
+            <Image style={s.filterTabTwoImg} source={require('../images/search_btn_list.png')}/>
+          </View>
+        </View>
+        <View style={s.filterStateTab}>
+
         </View>
         {this.state.proList.length>0?<Animated.View style={[s.proScroll,{transform:[{translateY:this.state.scrollDistance}]}]}>
           <FlatList
@@ -398,7 +498,7 @@ class Search extends Component {
             onEndReachedThreshold={0.1}
             onEndReached={(event) => this._pullUp(event)}
           />
-        </Animated.View>:<View></View>}
+        </Animated.View>:null}
       </View>
     )
   }

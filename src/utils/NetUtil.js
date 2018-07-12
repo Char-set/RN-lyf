@@ -8,6 +8,7 @@ import utils from './ComUtils';
 
 import configureStore from '../store/index';
 import { user_logIn, user_logOut } from '../actions/user';
+import Config from '../config/Default';
 let store = configureStore();
 export default class NetUtil extends React.Component{
     /*
@@ -28,7 +29,7 @@ export default class NetUtil extends React.Component{
             }
         }
         //fetch请求
-        fetch(url,{
+        fetch(Config.apiHost + url,{
             method: 'GET',
         })
         .then((response) => response.json())
@@ -59,7 +60,7 @@ export default class NetUtil extends React.Component{
      * */
     static post(url,params,headers,sucCallback,failCallback){
         //fetch请求
-        fetch(url,{
+        fetch(Config.apiHost + url,{
             method: 'POST',
             headers:{
                 'token': headers
@@ -94,7 +95,7 @@ export default class NetUtil extends React.Component{
      * */
     static postForm(url,params,sucCallback,failCallback){
         //fetch请求
-        fetch(url,{
+        fetch(Config.apiHost + url,{
             method: 'POST',
             headers:{
                 'Accept': 'application/json',

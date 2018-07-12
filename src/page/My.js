@@ -53,7 +53,7 @@ class my extends Component {
     this.props.dispatch(user_logOut());
   }
   _getUserInfo () {
-    let url = Config.apiHost + '/api/my/user/info';
+    let url = '/api/my/user/info';
     let params = {
       ut:this.state.ut,
       companyId:Config.companyId,
@@ -120,7 +120,7 @@ class my extends Component {
     })
   }
   _getOrderStatus() {
-    let url = Config.apiHost + '/api/my/order/summary';
+    let url = '/api/my/order/summary';
     let params = {
       ut:this.state.ut
     }
@@ -139,7 +139,7 @@ class my extends Component {
     })
   }
   _getWallet() {
-    let url = Config.apiHost + '/api/my/wallet/summary';
+    let url = '/api/my/wallet/summary';
     let params = {
       ut:this.state.ut,
       isECard:1,

@@ -1,10 +1,10 @@
 @import "./variable.less";
 .cart-style{
     .ipxScrollHeight{
-        height: calc(~'100vh - 173pt');
+        height: calc(~'100vh - 223pt');
     }
     .scrollHeight{
-        height: calc(~'100vh - 114pt');
+        height: calc(~'100vh - 164pt');
     }
     .noData{
         background: #f1f1f1;
@@ -35,7 +35,7 @@
     }
     .merchant{
         margin-top: 12px;
-        background: #fff;
+        // background: #fff;
         &-top{
             height: 42pt;
             align-items: center;
@@ -57,14 +57,48 @@
             }
         }
         &-content{
-            padding: 0 15pt;
+            // padding: 0 15pt;
             &-list{
-                
+                margin-bottom: 3pt;
+                &-promotion{
+                    height: 36pt;
+                    display: flex;
+                    flex-direction: row;
+                    padding: 0 65pt 0 60pt; 
+                    background: #fff;
+                    align-items: center;
+                    position: relative;
+                    &-img{
+                        height: 15pt;
+                        width: 30pt;
+                        border-radius: 3pt;
+                        position: absolute;
+                        left: 16pt;
+                    }
+                    &-text{
+                        color: #333;
+                        font-size: 13pt;
+                    }
+                    &-next{
+                        display: flex;
+                        flex-direction: row;
+                        position: absolute;
+                        right: 15pt;
+                        align-items: center;
+                        // height: 100%;
+                        &-text{
+                            color: @themeColor;
+                            font-size: 12pt;
+                            margin-right: 6pt;
+                        }
+                    }
+                }
                 &-item{
-                    padding: 10pt 0;
+                    padding: 10pt 15pt;
                     display: flex;
                     flex-direction: row;
                     position: relative;
+                    background: #fff;
                     &-check{
                         // flex: 1;
                         display: flex;
@@ -130,6 +164,64 @@
                         }
                     }
                 }
+            }
+        }
+    }
+    .footer{
+        position: absolute;
+        width: 100vw;
+        height: 50pt;
+        background: #333333;
+        bottom: 49pt;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding-left: 15pt;
+        &-select{
+            display: flex;
+            flex-direction: row;
+            height: 50pt;
+            align-items: center;
+            &-text{
+                color: #fff;
+                font-size: 12pt;
+                margin-left: 10pt;
+            }
+        }
+        &-amount{
+            flex: 1;
+            padding-right: 120pt;
+            &-total{
+                color: #fff;
+                font-size: 15pt;
+                font-weight: bold;
+                text-align: right;
+                padding-right: 15pt;
+            }
+            &-discount{
+                color: #fff;
+                font-size: 10pt;
+                text-align: right;
+                padding-right: 15pt;
+                margin-top: 2pt;
+            }
+        }
+        &-confirm{
+            width: 120pt;
+            height: 50pt;
+            align-items: center;
+            justify-content: center;
+            background: @themeColor;
+            position: absolute;
+            right: 0;
+            top: 0;
+            &-dis{
+                background: gray;
+            }
+            &-text{
+                color: #fff;
+                font-size: 18pt;
+                font-weight: bold;
             }
         }
     }

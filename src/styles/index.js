@@ -383,7 +383,8 @@ module.exports = SmartStyleSheet.create({
         },
         "topSearch-back": {
             "position": "absolute",
-            "marginLeft": "8pt"
+            "marginLeft": "8pt",
+            "zIndex": 100
         },
         "topSearch-scan": {
             "position": "absolute",
@@ -419,6 +420,116 @@ module.exports = SmartStyleSheet.create({
         },
         "topSearch-confirm-text": {
             "textAlign": "center"
+        },
+        "topSearch-promotionText": {
+            "textAlign": "center",
+            "fontSize": "18pt",
+            "color": "#333"
+        },
+        "promotionTips": {
+            "height": "25pt",
+            "justifyContent": "center",
+            "paddingTop": 0,
+            "paddingBottom": 0,
+            "paddingRight": "15pt",
+            "paddingLeft": "15pt",
+            "backgroundColor": "#fef7f1",
+            "zIndex": 10
+        },
+        "promotionTips-text": {
+            "fontSize": "10pt",
+            "color": "#888"
+        },
+        "promotionFooter": {
+            "position": "absolute",
+            "width": "100vw",
+            "height": "50pt",
+            "backgroundColor": "#fff",
+            "display": "flex",
+            "flexDirection": "row",
+            "bottom": 0,
+            "left": 0,
+            "zIndex": 10
+        },
+        "promotionFooter-info": {
+            "width": "50vw",
+            "paddingLeft": "15pt",
+            "justifyContent": "center"
+        },
+        "promotionFooter-info-total": {
+            "fontSize": "16pt",
+            "color": "#333"
+        },
+        "promotionFooter-info-total-money": {
+            "color": "#ff6900"
+        },
+        "promotionFooter-info-tips": {
+            "fontSize": "12pt",
+            "color": "#999",
+            "marginTop": "3pt"
+        },
+        "promotionFooter-info-tips-money": {
+            "color": "#ff6900"
+        },
+        "promotionFooter-btn": {
+            "width": "50vw",
+            "display": "flex",
+            "flexDirection": "row"
+        },
+        "promotionFooter-btn-one": {
+            "width": "25vw",
+            "backgroundColor": "#ffb400",
+            "justifyContent": "center",
+            "alignItems": "center"
+        },
+        "promotionFooter-btn-one-text": {
+            "fontSize": "16pt",
+            "color": "#fff"
+        },
+        "promotionFooter-btn-two": {
+            "width": "25vw",
+            "backgroundColor": "#ff6900",
+            "justifyContent": "center",
+            "alignItems": "center"
+        },
+        "promotionFooter-btn-two-text": {
+            "fontSize": "16pt",
+            "color": "#fff"
+        },
+        "filterTab": {
+            "height": "35pt",
+            "paddingTop": "7pt",
+            "paddingBottom": "7pt",
+            "paddingRight": 0,
+            "paddingLeft": 0,
+            "display": "flex",
+            "flexDirection": "row",
+            "backgroundColor": "#fff",
+            "alignItems": "center",
+            "zIndex": 10
+        },
+        "filterTab-one": {
+            "width": "29vw",
+            "display": "flex",
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "alignItems": "center"
+        },
+        "filterTab-one-text": {
+            "fontSize": "13pt",
+            "color": "#333",
+            "marginRight": "5pt"
+        },
+        "filterTab-one-text-active": {
+            "color": "#ff6900"
+        },
+        "filterTab-two": {
+            "width": "13vw",
+            "borderLeftWidth": "1px",
+            "borderStyle": "solid",
+            "borderLeftColor": "#808080",
+            "justifyContent": "center",
+            "alignItems": "center"
         },
         "proScroll": {
             "width": "100vw",
@@ -1089,10 +1200,10 @@ module.exports = SmartStyleSheet.create({
     },
     "cart-style": {
         "ipxScrollHeight": {
-            "height": "calc(100vh - 173pt)"
+            "height": "calc(100vh - 223pt)"
         },
         "scrollHeight": {
-            "height": "calc(100vh - 148pt)"
+            "height": "calc(100vh - 164pt)"
         },
         "noData": {
             "backgroundColor": "#f1f1f1",
@@ -1121,8 +1232,7 @@ module.exports = SmartStyleSheet.create({
             "fontWeight": "bold"
         },
         "merchant": {
-            "marginTop": "12px",
-            "backgroundColor": "#fff"
+            "marginTop": "12px"
         },
         "merchant-top": {
             "height": "42pt",
@@ -1143,20 +1253,53 @@ module.exports = SmartStyleSheet.create({
             "fontSize": "14pt",
             "color": "#333"
         },
-        "merchant-content": {
+        "merchant-content-list": {
+            "marginBottom": "3pt"
+        },
+        "merchant-content-list-promotion": {
+            "height": "36pt",
+            "display": "flex",
+            "flexDirection": "row",
             "paddingTop": 0,
+            "paddingRight": "65pt",
             "paddingBottom": 0,
-            "paddingRight": "15pt",
-            "paddingLeft": "15pt"
+            "paddingLeft": "60pt",
+            "backgroundColor": "#fff",
+            "alignItems": "center",
+            "position": "relative"
+        },
+        "merchant-content-list-promotion-img": {
+            "height": "15pt",
+            "width": "30pt",
+            "borderRadius": "3pt",
+            "position": "absolute",
+            "left": "16pt"
+        },
+        "merchant-content-list-promotion-text": {
+            "color": "#333",
+            "fontSize": "13pt"
+        },
+        "merchant-content-list-promotion-next": {
+            "display": "flex",
+            "flexDirection": "row",
+            "position": "absolute",
+            "right": "15pt",
+            "alignItems": "center"
+        },
+        "merchant-content-list-promotion-next-text": {
+            "color": "#ff6900",
+            "fontSize": "12pt",
+            "marginRight": "6pt"
         },
         "merchant-content-list-item": {
             "paddingTop": "10pt",
             "paddingBottom": "10pt",
-            "paddingRight": 0,
-            "paddingLeft": 0,
+            "paddingRight": "15pt",
+            "paddingLeft": "15pt",
             "display": "flex",
             "flexDirection": "row",
-            "position": "relative"
+            "position": "relative",
+            "backgroundColor": "#fff"
         },
         "merchant-content-list-item-check": {
             "display": "flex",
@@ -1227,6 +1370,80 @@ module.exports = SmartStyleSheet.create({
             "borderLeftColor": "#e5e5e5",
             "justifyContent": "center",
             "alignItems": "center"
+        },
+        "footer": {
+            "position": "absolute",
+            "width": "100vw",
+            "height": "50pt",
+            "backgroundColor": "#333333",
+            "bottom": "49pt",
+            "display": "flex",
+            "flexDirection": "row",
+            "alignItems": "center",
+            "paddingLeft": "15pt"
+        },
+        "footer-select": {
+            "display": "flex",
+            "flexDirection": "row",
+            "height": "50pt",
+            "alignItems": "center"
+        },
+        "footer-select-text": {
+            "color": "#fff",
+            "fontSize": "12pt",
+            "marginLeft": "10pt"
+        },
+        "footer-amount": {
+            "flex": 1,
+            "paddingRight": "120pt"
+        },
+        "footer-amount-total": {
+            "color": "#fff",
+            "fontSize": "15pt",
+            "fontWeight": "bold",
+            "textAlign": "right",
+            "paddingRight": "15pt"
+        },
+        "footer-amount-discount": {
+            "color": "#fff",
+            "fontSize": "10pt",
+            "textAlign": "right",
+            "paddingRight": "15pt",
+            "marginTop": "2pt"
+        },
+        "footer-confirm": {
+            "width": "120pt",
+            "height": "50pt",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "backgroundColor": "#ff6900",
+            "position": "absolute",
+            "right": 0,
+            "top": 0
+        },
+        "footer-confirm-dis": {
+            "backgroundColor": "gray"
+        },
+        "footer-confirm-text": {
+            "color": "#fff",
+            "fontSize": "18pt",
+            "fontWeight": "bold"
+        }
+    },
+    "loading-style": {
+        "loading": {
+            "flex": 1,
+            "position": "absolute",
+            "height": "80pt",
+            "width": "80pt",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "zIndex": 10000,
+            "top": "50vh",
+            "left": "50vw",
+            "marginLeft": -40,
+            "marginTop": -40,
+            "borderRadius": 40
         }
     }
 });

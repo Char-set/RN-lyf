@@ -28,7 +28,7 @@ let skipUser = {
 export function user_logIn(opt,navigation){
 	return (dispatch) => {
     dispatch({'type': TYPES.LOGGED_DOING});
-    let url = Config.apiHost + '/ouser-web/mobileLogin/loginForm.do';
+    let url = '/ouser-web/mobileLogin/loginForm.do';
     let params = {
         companyId:30,
         username:opt.username,

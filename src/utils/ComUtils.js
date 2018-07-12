@@ -171,7 +171,7 @@ export default class CommonUtils extends React.Component{
      */
     static getPriceAndStock(mpIds,mpArr,promotionId,callBack){
         if((mpIds.length || '').length == 0) return;
-        let url = Config.apiHost + '/api/realTime/getPriceStockList';
+        let url = '/api/realTime/getPriceStockList';
         let params = {
             mpIds: mpIds,
             promotionId: promotionId || ''

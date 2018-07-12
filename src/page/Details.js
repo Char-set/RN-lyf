@@ -14,7 +14,8 @@ import {
   DeviceEventEmitter,
   TextInput,
   UIManager,
-  findNodeHandle
+  findNodeHandle,
+  InteractionManager
 } from 'react-native';
 import { connect } from 'react-redux';
 import Swiper from 'react-native-swiper';
@@ -70,11 +71,13 @@ class Detail extends Component {
   }
   componentDidMount() {
     // console.log(this.props.params)
-    if(this.props.params && this.props.params.mpId){
-      this._initState(this.props.params.mpId);
-    }
-    this.upDateMpidListener = DeviceEventEmitter.addListener('updateMpId',(mpId) => {
-      this._initState(mpId);
+    InteractionManager.runAfterInteractions(() => {
+      if(this.props.params && this.props.params.mpId){
+        this._initState(this.props.params.mpId);
+      }
+      this.upDateMpidListener = DeviceEventEmitter.addListener('updateMpId',(mpId) => {
+        this._initState(mpId);
+      });
     });
   }
   componentWillUnmount() {
@@ -94,7 +97,7 @@ class Detail extends Component {
   }
   // 获取商品基础信息
   _getBaseInfo(){
-    let url = Config.apiHost + '/api/product/baseInfo';
+    let url = '/api/product/baseInfo';
     let params = {
       mpsIds:this.state.mpId,
       platformId:Config.platformId,
@@ -128,7 +131,7 @@ class Detail extends Component {
   }
   // 获取商品的促销信息
   _getProInfo(){
-    let url = Config.apiHost + '/api/product/promotionInfo';
+    let url = '/api/product/promotionInfo';
     let params = {
       mpIds:this.state.mpId,
       companyId:Config.companyId,
@@ -144,7 +147,7 @@ class Detail extends Component {
   }
   // 获取商品评价信息,第一次
   _getMpComment(){
-    let url = Config.apiHost + '/api/social/mpComment/get';
+    let url = '/api/social/mpComment/get';
     let params = {
       companyId:Config.companyId,
       ut:this.props.ut,
@@ -221,7 +224,7 @@ class Detail extends Component {
     (this.state.promotionInfo || []).forEach((item,i) => {
       (item.promotions || []).forEach((proItem,v) => {
         pro.push(
-          <View style={[s.promoItem,!(i == this.state.promotionInfo.length - 1 && v == item.promotions.length - 1)?s.promoItemBorderB:'']}>
+          <View key={proItem.promotionId} style={[s.promoItem,!(i == this.state.promotionInfo.length - 1 && v == item.promotions.length - 1)?s.promoItemBorderB:'']}>
             <View style={[s.promoItemIcon,Utils.filterProBg(commonStyle,proItem.frontPromotionType)]}>
               <Text style={s.promoItemIconText}>{proItem.iconText}</Text> 
             </View>

@@ -34,7 +34,7 @@ export default class Category extends Component {
     this.getCategory();
   }
   getCategory () {
-    var url = Config.apiHost + '/api/category/list';
+    var url = '/api/category/list';
     var params = {
       "parentId":0,
       "level":1,
@@ -65,7 +65,7 @@ export default class Category extends Component {
     }
 
 
-    let url = Config.apiHost + '/api/category/list';
+    let url = '/api/category/list';
     var params = {
       "parentId":parentId,
       "level":2,
@@ -82,7 +82,7 @@ export default class Category extends Component {
     })
   }
   _openLink(item){
-    var url = Config.apiHost + '/search.html?from=c&categoryId=' + item.categoryId;
+    var url = '/search.html?from=c&categoryId=' + item.categoryId;
     this.props.navigation.navigate('SearchView',{categoryId:item.categoryId})
 }
   _switch(item){

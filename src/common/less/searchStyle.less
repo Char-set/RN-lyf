@@ -11,6 +11,7 @@
     &-back{
       position: absolute;
       margin-left: 8pt;
+      z-index: 100;
     }
     &-scan{
       position: absolute;
@@ -45,6 +46,108 @@
       &-text{
         text-align: center;
       }
+    }
+    &-promotionText{
+      text-align: center;
+      font-size: 18pt;
+      color: #333;
+    }
+  }
+  .promotionTips{
+    height: 25pt;
+    justify-content: center;
+    padding: 0 15pt;
+    background: #fef7f1;
+    z-index: 10;
+    &-text{
+      font-size: 10pt;
+      color: #888;
+    }
+  }
+  .promotionFooter{
+    position: absolute;
+    width: 100vw;
+    height: 50pt;
+    background: #fff;
+    display: flex;
+    flex-direction: row;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    &-info{
+      width: 50vw;
+      padding-left: 15pt;
+      justify-content: center;
+      &-total{
+        font-size: 16pt;
+        color: #333;
+        &-money{
+          color: @themeColor;
+        }
+      }
+      &-tips{
+        font-size: 12pt;
+        color: #999;
+        margin-top: 3pt;
+        &-money{
+          color: @themeColor;
+        }
+      }
+    }
+    &-btn{
+      width: 50vw;
+      display: flex;
+      flex-direction: row;
+      &-one{
+        width: 25vw;
+        background: #ffb400;
+        justify-content: center;
+        align-items: center;
+        &-text{
+          font-size: 16pt;
+          color: #fff;
+        }
+      }
+      &-two{
+        width: 25vw;
+        background: @themeColor;
+        justify-content: center;
+        align-items: center;
+        &-text{
+          font-size: 16pt;
+          color: #fff;
+        }
+      }
+    }
+  }
+  .filterTab{
+    height: 35pt;
+    padding: 7pt 0;
+    display: flex;
+    flex-direction: row;
+    background: #fff;
+    align-items: center;
+    z-index: 10;
+    &-one{
+      width: 29vw;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      &-text{
+        font-size: 13pt;
+        color: #333;
+        margin-right: 5pt;
+        &-active{
+          color: @themeColor;
+        }
+      }
+    }
+    &-two{
+      width: 13vw;
+      border-left: 1px solid #808080;
+      justify-content: center;
+      align-items: center;
     }
   }
   .proScroll{

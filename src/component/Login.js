@@ -37,7 +37,7 @@ class LoginCompoent extends Component {
         if(!this.state.canSubmit){
             return;
         }
-        // let url = Config.apiHost + '/ouser-web/mobileLogin/loginForm.do';
+        // let url = '/ouser-web/mobileLogin/loginForm.do';
         let params = {
             companyId:30,
             username:this.state.mobile,

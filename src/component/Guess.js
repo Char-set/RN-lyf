@@ -88,7 +88,7 @@ export default class GuessLike extends Component{
 //   获取推荐商品列表
   _getRecommend(){
         if(!this.state.mpId) return;
-        let url = Config.apiHost + '/api/read/product/recommendProductList';
+        let url = '/api/read/product/recommendProductList';
         let params = {
         sceneNo:1,
         ut:this.props.ut || '',
@@ -133,7 +133,7 @@ export default class GuessLike extends Component{
   }
   //检查是否是系列品
   _checkSerialPro(item){
-    let url = Config.apiHost + '/api/product/baseInfo';
+    let url = '/api/product/baseInfo';
     let params = {
       mpIds:item.mpId
     };
@@ -153,11 +153,16 @@ export default class GuessLike extends Component{
       };
     })
   }
+  _afterAddCart = () => {
+    if(typeof this.props.afterAddCart == 'function'){
+        this.props.afterAddCart();
+    }
+  }
   _addCart(mpId){
     // Utils.showTips(JSON.stringify(item));
     // console.info(item);
     Cookie.getAllCookie('sessionId').then(res => {
-      let url = Config.apiHost + '/api/cart/addItem';
+      let url = '/api/cart/addItem';
       let params = {
         sessionId:res,
         mpId:mpId,
@@ -166,6 +171,7 @@ export default class GuessLike extends Component{
       };
       NetUtil.postForm(url,params,res => {
         Utils.showTips('添加成功');
+        this._afterAddCart();
       })
     });
   }

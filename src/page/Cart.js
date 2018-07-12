@@ -38,6 +38,7 @@ import Session from '../utils/Session';
  */
 import Header from '../component/Header';
 import GuessComponent from '../component/Guess';
+import Loading from '../component/Loading';
 import { debug } from 'util';
 
 const styles = StyleSheet.create({
@@ -57,7 +58,9 @@ class Cart extends Component {
             merchantList:[],//商家列表
             summary:{},//购物车统计
             failureProducts:[],//无效商品
-            allMpId:[]
+            allMpId:[],//购物车所有的商品id
+            showLoading:false,//显示loading图
+            isSelectAll:false,//全选了购物车的所有商品
         }
     }
   //组件将要被加载
@@ -83,6 +86,7 @@ class Cart extends Component {
   //组件呗卸载
   componentWillUnmount() {
       console.log('---------componentWillUnmount----------');
+      this.updateCartScreen && this.updateCartScreen.remove();
   }
   componentDidMount () {
     console.log('---------componentDidMount----------')
@@ -92,7 +96,16 @@ class Cart extends Component {
         },() => {
             this._getCartList();
         });
-    })
+    });
+    this.updateCartScreen = DeviceEventEmitter.addListener('updateCartScreen',() => {
+        Session.getSessionId().then(sid => {
+            this.setState({
+                sessionId:sid
+            },() => {
+                this._getCartList();
+            });
+        });
+    });
       
   }
   _goIndex(){
@@ -103,29 +116,36 @@ class Cart extends Component {
       this.props.navigation.dispatch(backAction);
     // this.props.navigation.navigate('IndexView')
   }
-  _getCartList(){
-    let url = Config.apiHost + '/api/cart/list';
+  _getCartList = () => {
+
+    let url = '/api/cart/list';
     let params ={
         v:1.2,
         areaCode:Config.areaCode,
         platformId:Config.platformId,
         sessionId:this.state.sessionId
     }
+    this.setState({
+        showLoading:true
+    });
     NetUtil.get(url,params,res => {
         let {failureProducts,merchantList,summary} = res.data;
-        let allMpId = [];
+        let allMpId = [],isSelectAll = true;
         (merchantList || []).forEach(item => {
             item.productGroups.forEach(v => {
                 v.productList.forEach(s => {
                     allMpId.push(s.mpId);
+                    if(!s.checked) isSelectAll = false;
                 });
             })
-        })
+        });
         this.setState({
             failureProducts:res.data.failureProducts || [],
             merchantList:res.data.merchantList || [],
             summary:res.data.summary || {},
-            allMpId
+            allMpId,
+            showLoading:false,
+            isSelectAll:isSelectAll
         });
     });
   }
@@ -143,7 +163,7 @@ class Cart extends Component {
     }
   }
   _editProNum(mpId,num){
-      let url = Config.apiHost + '/api/cart/editItemNum';
+      let url = '/api/cart/editItemNum';
       let params = {
           ut:this.props.ut || '',
           sessionId:this.state.sessionId,
@@ -157,7 +177,7 @@ class Cart extends Component {
   }
 //   选中商品
   _editItemCheck(product){
-    let url = Config.apiHost + "/api/cart/editItemCheck";
+    let url = "/api/cart/editItemCheck";
     let params={
         ut: this.props.ut || '',
         sessionId:this.state.sessionId,
@@ -167,15 +187,26 @@ class Cart extends Component {
         this._getCartList();
     });
   }
-//   全选、取消商家下的商品
+//   全选、取消商家下的商品,若未给参数merchant，标识全选购物车的所有商品
   _selectMerchant(merchant){
     let arr = [];
-    merchant.productGroups.forEach(group => {
-        group.productList.forEach(pro => {
-            arr.push(pro.mpId + '-' + (merchant.merchantCheckFlag?0:1) + '-' + pro.itemType + '-' + pro.objectId);
+    if(merchant){
+        merchant.productGroups.forEach(group => {
+            group.productList.forEach(pro => {
+                arr.push(pro.mpId + '-' + (merchant.merchantCheckFlag?0:1) + '-' + pro.itemType + '-' + pro.objectId);
+            });
         });
-    });
-    let url = Config.apiHost + "/api/cart/editItemCheck";
+    } else{
+        this.state.merchantList.forEach(item => {
+            item.productGroups.forEach(group => {
+                group.productList.forEach(pro => {
+                    arr.push(pro.mpId + '-' + (this.state.isSelectAll?0:1) + '-' + pro.itemType + '-' + pro.objectId);
+                });
+            });
+        });
+    }
+    
+    let url = "/api/cart/editItemCheck";
     let params={
         ut: this.props.ut || '',
         sessionId:this.state.sessionId,
@@ -185,8 +216,10 @@ class Cart extends Component {
         this._getCartList();
     });   
   }
+  _goPromotion(promotion){
+      this.props.navigation.navigate('SearchView',{promotionId:promotion.promotionId});
+  }
   _renderMerchantList(){
-      debugger
       if(!this.state.merchantList || this.state.merchantList.length == 0) return;
       let merchantList = [],allMpId = [];
       this.state.merchantList.forEach((item,index) => {
@@ -224,7 +257,7 @@ class Cart extends Component {
                                 </View>
                                 <TouchableWithoutFeedback onPress={() =>{this._proBtnClick(pro,true)}}>
                                     <View style={s.merchantContentListItemProBtnAdd}>
-                                        <Image source={pro.num <= pro.stockNum ? require('../images/increase_s.png') : require('../images/increase_s-dis.png')} />
+                                        <Image source={pro.num < pro.stockNum ? require('../images/increase_s.png') : require('../images/increase_s-dis.png')} />
                                     </View>
                                 </TouchableWithoutFeedback>
                             </View>
@@ -234,6 +267,22 @@ class Cart extends Component {
               })
             groupList.push(
                 <View style={s.merchantContentList} key={'merchantGroup' + v}>
+                    {group.promotion?
+                        <View style={s.merchantContentListPromotion}>
+                            <Image style={s.merchantContentListPromotionImg} source={{uri:group.promotion.promIconUrl}}/>
+                            <Text style={s.merchantContentListPromotionText} numberOfLines={1}>{group.promotion.displayName}</Text>
+                            {group.promotion.isReachCondition == 0 ?
+                                <TouchableWithoutFeedback onPress={() => this._goPromotion(group.promotion)}>
+                                    <View style={s.merchantContentListPromotionNext}>
+                                        <Text style={s.merchantContentListPromotionNextText}>去凑单</Text>
+                                        <Image style={s.merchantContentListPromotionNextImg} source={require('../images/next.png')} />
+                                    </View>
+                                </TouchableWithoutFeedback>
+                                :null
+                            }
+                        </View>
+                        :null
+                    }
                     {productList}
                 </View>
             )
@@ -260,6 +309,7 @@ class Cart extends Component {
   render() {
     return(
       <View style={[commonStyle.container,isIphoneX()?commonStyle.pdT45:'',commonStyle.bgf0]}>
+        <Loading isShow={this.state.showLoading} />
         <Header title="购物车" showBack={false} navigation={this.props.navigation} />
         <View style={isIphoneX()?s.ipxScrollHeight:s.scrollHeight}>
             <ScrollView style={isIphoneX()?commonStyle.ipxScrollHeight:commonStyle.scrollHeight} showsVerticalScrollIndicator={false} >
@@ -276,10 +326,27 @@ class Cart extends Component {
                     :null
                 }
                 {this._renderMerchantList()}
-                <GuessComponent navigation={this.props.navigation} mpId={(this.state.allMpId || []).join(',')} ut={this.props.ut} />
+                <GuessComponent navigation={this.props.navigation} afterAddCart={this._getCartList.bind(this)} mpId={(this.state.allMpId || []).join(',')} ut={this.props.ut} />
             </ScrollView>
         </View>
-        
+        {this.state.merchantList.length > 0 ?
+            <View style={s.footer}>
+                <TouchableWithoutFeedback onPress={() => this._selectMerchant()}>
+                    <View style={s.footerSelect}>
+                            <Image style={s.footerSelectImg} source={this.state.isSelectAll ? require('../images/cart_edit_chose_all_selected.png') : require('../images/cart_edit_chose_all_unselected.png')}/>
+                            <Text style={s.footerSelectText}>全选</Text>
+                    </View>
+                </TouchableWithoutFeedback>
+                <View style={s.footerAmount}>
+                    <Text style={s.footerAmountTotal}>合计：{Utils.filterPrice(this.state.summary.amount,'￥')}</Text>
+                    <Text style={s.footerAmountDiscount}>{this.state.summary.discount > 0 ?<Text>已优惠：{Utils.filterPrice(this.state.summary.discount,'￥')}</Text> : null}  不含运费</Text>
+                </View>
+                <View style={[s.footerConfirm,this.state.summary.totalNum > 0 ? '' : s.footerConfirmDis]}>
+                    <Text style={s.footerConfirmText}>去结算{this.state.summary.totalNum > 0 ? ('('+ this.state.summary.totalNum + ')'):''}</Text>
+                </View>
+            </View>
+            :null
+        }
       </View>
     )
   }

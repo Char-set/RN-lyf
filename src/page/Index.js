@@ -42,8 +42,8 @@ export default class index extends Component {
     this.getImagesData();
   }
   getImagesData(){
-    // var url = Config.apiHost + '/mockData/images.json';
-    var url = Config.apiHost + '/api/dolphin/list'
+    // var url = '/mockData/images.json';
+    var url = '/api/dolphin/list'
     var params = {
       platform:2,
       pageCode:"H5_HOME",
