@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Toast from 'react-native-root-toast';
 import NetUtil from './NetUtil';
 import Config from '../config/Default';
+import CryptoJS from 'crypto-js/crypto-js';
 export default class CommonUtils extends React.Component{
    /**
     * 路由跳转
@@ -195,5 +196,17 @@ export default class CommonUtils extends React.Component{
         },res => {
             this.showTips(res.message);
         })
+    }
+    /**
+     * 来伊份专用，加密手机号
+     */
+    static CryptoJSMobile (mobile) {
+        let endData = CryptoJS.enc.Utf8.parse(mobile);
+        let key = CryptoJS.enc.Utf8.parse("1fi;qPa7utddahWy");
+        let encryptResult = CryptoJS.AES.encrypt(endData,key, {   //  AES加密
+            mode: CryptoJS.mode.ECB,
+            padding: CryptoJS.pad.Pkcs7  // 后台用的是pad.Pkcs5,前台对应为Pkcs7
+        });
+        return "@%^*" + encryptResult.toString();
     }
 }

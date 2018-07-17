@@ -225,6 +225,9 @@ module.exports = SmartStyleSheet.create({
         },
         "bgf0": {
             "backgroundColor": "#f0f0f0"
+        },
+        "bgf": {
+            "backgroundColor": "#fff"
         }
     },
     "user-style": {
@@ -530,6 +533,41 @@ module.exports = SmartStyleSheet.create({
             "borderLeftColor": "#808080",
             "justifyContent": "center",
             "alignItems": "center"
+        },
+        "filterStateTab": {
+            "position": "absolute",
+            "top": "105pt",
+            "width": "100vw",
+            "left": 0,
+            "bottom": 0,
+            "zIndex": 10,
+            "borderTopWidth": "1pt",
+            "borderStyle": "solid",
+            "borderTopColor": "#e5e5e5"
+        },
+        "filterStateTab-promotionHeight": {
+            "top": "130pt"
+        },
+        "filterStateTab-content": {
+            "backgroundColor": "#fff",
+            "paddingTop": "15pt",
+            "paddingBottom": "15pt",
+            "paddingRight": "15pt",
+            "paddingLeft": "15pt"
+        },
+        "filterStateTab-content-item": {
+            "display": "flex",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "alignItems": "center",
+            "paddingBottom": "18pt"
+        },
+        "filterStateTab-content-item-text": {
+            "fontSize": "14pt",
+            "color": "#333"
+        },
+        "filterStateTab-content-item-text-active": {
+            "color": "#ff6900"
         },
         "proScroll": {
             "width": "100vw",
@@ -1202,8 +1240,14 @@ module.exports = SmartStyleSheet.create({
         "ipxScrollHeight": {
             "height": "calc(100vh - 223pt)"
         },
+        "ipxScrollNoFooterHeight": {
+            "height": "calc(100vh - 173pt)"
+        },
         "scrollHeight": {
             "height": "calc(100vh - 164pt)"
+        },
+        "scrollNoFooterHeight": {
+            "height": "calc(100vh - 114pt)"
         },
         "noData": {
             "backgroundColor": "#f1f1f1",
@@ -1376,7 +1420,6 @@ module.exports = SmartStyleSheet.create({
             "width": "100vw",
             "height": "50pt",
             "backgroundColor": "#333333",
-            "bottom": "49pt",
             "display": "flex",
             "flexDirection": "row",
             "alignItems": "center",
@@ -1444,6 +1487,94 @@ module.exports = SmartStyleSheet.create({
             "marginLeft": -40,
             "marginTop": -40,
             "borderRadius": 40
+        }
+    },
+    "login-style": {
+        "login-with-captcha": {
+            "bgededed": {
+                "backgroundColor": "#ededed"
+            },
+            "login": {
+                "backgroundColor": "#f0f0f0",
+                "height": "calc(100vh - 50pt)",
+                "alignItems": "center",
+                "paddingTop": "35pt"
+            },
+            "login-item": {
+                "width": "calc(100vw - 40pt)",
+                "height": "45pt",
+                "borderWidth": "0.5pt",
+                "borderStyle": "solid",
+                "borderColor": "#d4d4d4",
+                "backgroundColor": "#fff",
+                "paddingLeft": "85pt",
+                "position": "relative",
+                "display": "flex",
+                "flexDirection": "row",
+                "alignItems": "center",
+                "borderRadius": "3pt",
+                "marginBottom": "20pt"
+            },
+            "login-item-text": {
+                "position": "absolute",
+                "fontSize": "16pt",
+                "color": "#333",
+                "width": "85pt",
+                "paddingLeft": "22pt"
+            },
+            "login-item-input": {
+                "height": "25pt",
+                "width": "calc(100vw - 156pt)"
+            },
+            "login-item-captchaInput": {
+                "height": "25pt",
+                "width": "calc(100vw - 272pt)"
+            },
+            "login-item-send": {
+                "position": "absolute",
+                "right": "6pt",
+                "width": "84pt",
+                "height": "29pt",
+                "borderWidth": "1pt",
+                "borderStyle": "solid",
+                "borderColor": "#ff6900",
+                "alignItems": "center",
+                "justifyContent": "center",
+                "borderRadius": "2pt"
+            },
+            "login-item-send-dis": {
+                "borderWidth": "1pt",
+                "borderStyle": "solid",
+                "borderColor": "#ccc"
+            },
+            "login-item-send-text": {
+                "color": "#ff6900",
+                "fontSize": "13pt"
+            },
+            "login-item-send-text-dis": {
+                "color": "#ccc"
+            },
+            "login-confirm": {
+                "width": "calc(100vw - 40pt)",
+                "height": "45pt",
+                "borderWidth": "0.5pt",
+                "borderStyle": "solid",
+                "borderColor": "#d4d4d4",
+                "backgroundColor": "#ff6900",
+                "justifyContent": "center",
+                "alignItems": "center",
+                "borderRadius": "5pt"
+            },
+            "login-confirm-dis": {
+                "backgroundColor": "#ddd"
+            },
+            "login-confirm-text": {
+                "color": "#ffb88c",
+                "fontSize": "16pt"
+            },
+            "login-confirm-text-dis": {
+                "color": "#fff"
+            }
         }
     }
 });

@@ -16,14 +16,19 @@ import {
   DeviceEventEmitter
 } from 'react-native';
 import { connect } from 'react-redux';
-import Toast from 'react-native-root-toast';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { NavigationActions } from 'react-navigation';
 import { ifIphoneX, isIphoneX } from 'react-native-iphone-x-helper';
 import {commonStyle,searchStyle} from '../styles';//样式文件引入
 
 const s = searchStyle;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const { timing } = Animated
+
+const styles = StyleSheet.create({
+  filterStateTab:{
+    backgroundColor:'rgba(0,0,0,0.5)'
+  }
+});
 /**
  * 自定义工具引入
  */
@@ -67,6 +72,8 @@ class Search extends Component {
       refreshLastTime:'12-13 19:33',//页面最后刷新时间
       promotionDetail:{},//促销活动详情
       cartPromotion:{},//促销顶部计算信息
+      currentFilter:{},//选中的排序信息
+      showFilterState:false,//显示排序列表
     }
   }
   componentDidMount() {
@@ -161,9 +168,17 @@ class Search extends Component {
             productList = res.data.productList;
             break;
         }
+        let currentFilter = this.state.currentFilter;
+        if (res.data.sortByList) {
+            for(let sort of res.data.sortByList){
+                if(sort.sortTypeCode==this.state.sortType)
+                currentFilter=sort;
+            }
+        }
         this.setState({
           proList:productList,
-          sortByList:res.data.sortByList
+          sortByList:res.data.sortByList || [],
+          currentFilter:currentFilter,
         });
         if(this.state.refreshStatus == 3){
           let timeStr = '';
@@ -230,6 +245,12 @@ class Search extends Component {
   _searchBack = () => {
     this.props.navigation.goBack();
     DeviceEventEmitter.emit('updateCartScreen');
+  }
+  _goCart = () => {
+    const backAction = NavigationActions.back({
+      key: 'IndexView',
+    });
+    this.props.navigation.dispatch(backAction);
   }
   _buildProItem(proItem){
     let item = proItem.item;
@@ -400,6 +421,41 @@ class Search extends Component {
     })
 
   }
+  _renderFilterState = () => {
+    let arr = [];
+    (this.state.sortByList || []).forEach(item => {
+      arr.push(
+        <TouchableWithoutFeedback onPress={() => this._chooseSort(item)}>
+          <View style={s.filterStateTabContentItem}>
+            <Text style={[s.filterStateTabContentItemText,item.sortTypeCode == this.state.sortType ? s.filterStateTabContentItemTextActive : '']}>{item.sortTypeDesc}</Text>
+            {item.sortTypeCode == this.state.sortType ? 
+            <Image style={s.filterStateTabContentItemImg} source={require('../images/common_ic_select.png')} />
+            :null
+            }
+          </View>
+        </TouchableWithoutFeedback>
+      )
+    });
+    return arr;
+  }
+  // 选择排序方式
+  _chooseSort = (item) => {
+    this.setState({
+      sortType:item.sortTypeCode,
+      showFilterState:false,
+      currentFilter:item
+    },() => {
+      this._loadSearch();
+    });
+  }
+  //设置排序方式为销量优先
+  _setSortByVo = () => {
+    this.setState({
+      sortType:'volume4sale_desc'
+    },() => {
+      this._loadSearch();
+    })
+  }
   render () {
     return (
       <View style={[commonStyle.container,isIphoneX()?commonStyle.pdT45:'']}>
@@ -454,7 +510,7 @@ class Search extends Component {
               <View style={s.promotionFooterBtnOne}>
                 <Text style={s.promotionFooterBtnOneText}>查看赠品</Text>
               </View>
-              <TouchableWithoutFeedback onPress={() => this._searchBack()}>
+              <TouchableWithoutFeedback onPress={() => this._goCart()}>
                 <View style={s.promotionFooterBtnTwo}>
                   <Text style={s.promotionFooterBtnTwoText}>进入购物车</Text>
                 </View>
@@ -462,26 +518,39 @@ class Search extends Component {
             </View>
           </View>:null
         }
-        <View style={s.filterTab}>
-          <View style={s.filterTabOne}>
-            <Text style={[s.filterTabOneText,s.filterTabOneTextActive]}>全部分类</Text>
-            <Image style={s.filterTabOneImg} source={require('../images/icon_Start_red.png')}/>
+        {this.state.proList.length > 0 ? 
+          <View style={[s.filterTab]}>
+            <TouchableWithoutFeedback onPress={() => this.setState({showFilterState:true})}>
+              <View style={s.filterTabOne}>
+                <Text style={[s.filterTabOneText,this.state.sortType == this.state.currentFilter.sortTypeCode ? s.filterTabOneTextActive:'']}>{this.state.currentFilter.sortTypeShort}</Text>
+                <Image style={s.filterTabOneImg} source={this.state.sortType == this.state.currentFilter.sortTypeCode ? require('../images/icon_Start_red.png') : require('../images/icon_Start_gray.png')}/>
+              </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={() => this._setSortByVo()}>
+              <View style={s.filterTabOne}>
+                <Text style={[s.filterTabOneText,this.state.sortType == 'volume4sale_desc' ? s.filterTabOneTextActive : '']}>销量优先</Text>
+              </View>
+            </TouchableWithoutFeedback>
+            <View style={s.filterTabOne}>
+              <Text style={s.filterTabOneText}>筛选</Text>
+              <Image style={s.filterTabOneImg} source={require('../images/search_btn_filter.png')}/>
+            </View>
+            <View style={s.filterTabTwo}>
+              <Image style={s.filterTabTwoImg} source={require('../images/search_btn_list.png')}/>
+            </View>
           </View>
-          <View style={s.filterTabOne}>
-            <Text style={s.filterTabOneText}>排序</Text>
-            <Image style={s.filterTabOneImg} source={require('../images/common_btn_arrow_greydown.png')}/>
-          </View>
-          <View style={s.filterTabOne}>
-            <Text style={s.filterTabOneText}>筛选</Text>
-            <Image style={s.filterTabOneImg} source={require('../images/search_btn_filter.png')}/>
-          </View>
-          <View style={s.filterTabTwo}>
-            <Image style={s.filterTabTwoImg} source={require('../images/search_btn_list.png')}/>
-          </View>
-        </View>
-        <View style={s.filterStateTab}>
-
-        </View>
+          :null
+        }
+        {this.state.showFilterState ? 
+          <TouchableWithoutFeedback onPress={() =>  this.setState({showFilterState:false})}>
+            <View style={[s.filterStateTab,styles.filterStateTab,this.state.promotionId?s.filterStateTabPromotionHeight:'']}>
+              <View style={s.filterStateTabContent}>
+                {this._renderFilterState()}
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+          :null
+        }
         {this.state.proList.length>0?<Animated.View style={[s.proScroll,{transform:[{translateY:this.state.scrollDistance}]}]}>
           <FlatList
             ref="pro_list"

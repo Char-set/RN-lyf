@@ -19,7 +19,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import Swiper from 'react-native-swiper';
-import HTML from 'react-native-render-html';
+import { NavigationActions } from 'react-navigation';
 import { ifIphoneX, isIphoneX } from 'react-native-iphone-x-helper';
 import {commonStyle,detailStyle} from '../styles';//样式文件引入
 
@@ -224,13 +224,15 @@ class Detail extends Component {
     (this.state.promotionInfo || []).forEach((item,i) => {
       (item.promotions || []).forEach((proItem,v) => {
         pro.push(
-          <View key={proItem.promotionId} style={[s.promoItem,!(i == this.state.promotionInfo.length - 1 && v == item.promotions.length - 1)?s.promoItemBorderB:'']}>
-            <View style={[s.promoItemIcon,Utils.filterProBg(commonStyle,proItem.frontPromotionType)]}>
-              <Text style={s.promoItemIconText}>{proItem.iconText}</Text> 
+          <TouchableWithoutFeedback onPress={() => this._goPro(proItem)}>
+            <View key={proItem.promotionId} style={[s.promoItem,!(i == this.state.promotionInfo.length - 1 && v == item.promotions.length - 1)?s.promoItemBorderB:'']}>
+              <View style={[s.promoItemIcon,Utils.filterProBg(commonStyle,proItem.frontPromotionType)]}>
+                <Text style={s.promoItemIconText}>{proItem.iconText}</Text> 
+              </View>
+              <Text style={s.promoItemText}>{proItem.description}</Text>
+              <Image style={s.promoItemNext} source={require('../images/common_ic_next.png')}/>
             </View>
-            <Text style={s.promoItemText}>{proItem.description}</Text>
-            <Image style={s.promoItemNext} source={require('../images/common_ic_next.png')}/>
-          </View>
+          </TouchableWithoutFeedback>
         )
       })
     });
@@ -240,6 +242,29 @@ class Detail extends Component {
           {pro}
         </View>
       )
+    }
+  }
+  _goPro = (item) => {
+    switch(item.frontPromotionType) {
+      case 1:
+      case 7:
+      case 8:
+      case 1022:
+      case 2001:
+      case 2002:
+      case 3001:
+      case 1014:
+      case 1015:
+      case 1007:
+          break;
+      case 1012:
+          // location.href = '${contextPath}/seckill.html';
+          break;
+      case 1013:
+          // location.href = '${contextPath}/flashSales/index.html';
+          break;
+      default:
+        this.props.navigation.navigate('SearchView',{promotionId:item.promotionId});
     }
   }
   // 渲染商品的保障信息
@@ -422,6 +447,16 @@ class Detail extends Component {
       });
     }
   }
+  // 返回购物车页面
+  _backCart = () => {
+    const backAction = NavigationActions.navigate({
+      routeName: 'CartView',
+      params:{
+        noFooter:true
+      }
+    });
+    this.props.navigation.dispatch(backAction);
+  }
   render () {
     return (
       <View style={[commonStyle.container,isIphoneX()?commonStyle.pdT45:'',s.bgf0]}>
@@ -578,10 +613,12 @@ class Detail extends Component {
               <Image style={s.footerLabelIcon} source={require('../images/detail_btn_collect_n.png')} />
               <Text style={s.footerLabelText}>收藏</Text>
             </View>
-            <View style={s.footerLabel}>
-              <Image style={s.footerLabelIcon} source={require('../images/detail_btn_shoppingcart.png')} />
-              <Text style={s.footerLabelText}>购物车</Text>
-            </View>
+            <TouchableWithoutFeedback onPress={() => this._backCart()}>
+              <View style={s.footerLabel}>
+                <Image style={s.footerLabelIcon} source={require('../images/detail_btn_shoppingcart.png')} />
+                <Text style={s.footerLabelText}>购物车</Text>
+              </View>
+            </TouchableWithoutFeedback>
             <View style={s.footerAddCart}>
               <Text style={s.footerAddCartText}>加入购物车</Text>
             </View>

@@ -171,7 +171,7 @@ class my extends Component {
         <View style={userStyle.loginBtn}>
           <Text onPress={() => this.props.navigation.navigate('LoginView')} style={userStyle.loginBtnText}>登录</Text>
           <Text style={userStyle.loginBtnText}>/</Text>
-          <Text style={userStyle.loginBtnText}>注册</Text>
+          <Text onPress={() => this.props.navigation.navigate('LoginWithCaptchaView')} style={userStyle.loginBtnText}>注册</Text>
         </View>
       )
     } else{

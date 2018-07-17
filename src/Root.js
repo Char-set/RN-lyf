@@ -14,6 +14,7 @@ import Cart from './page/Cart';
 import WebViewContent from './component/WebViewContent'
 import LoginCompoent from './component/Login'
 import Detail from './page/Details';
+import LoginWithCaptcha from './page/LoginWithCaptcha';
 
 const IndexScreen = ({ navigation }) => (
   <Index banner="Home Tab" navigation={navigation} />
@@ -175,10 +176,25 @@ const App = StackNavigator(
         // header:null,
         // headerBackTitle:"ds"
       }
+    },
+    CartView:{
+      screen:CartScreen,
+      navigationOptions: {
+        title:'购物车页面',
+        header:null
+      }
+    },
+    LoginWithCaptchaView:{
+      screen:LoginWithCaptcha,
+      navigationOptions: {
+        title:'登录页面',
+        header:null
+      }
     }
   },
   {
     // mode: Platform.OS === 'ios' ? 'modal' : 'card',
+    // initialRouteName:'LoginWithCaptchaView'
   }
 )
 const styles = StyleSheet.create({
@@ -187,7 +203,23 @@ const styles = StyleSheet.create({
     width:25
   }
 })
-
+const defaultGetStateForAction = App.router.getStateForAction;
+App.router.getStateForAction = (action, state) => {
+    // goBack返回指定页面
+    if (state && action.type === 'Navigation/BACK' && action.key) {
+        const backRoute = state.routes.find((route) => route.routeName === action.key);
+        if (backRoute) {
+            const backRouteIndex = state.routes.indexOf(backRoute);
+            const purposeState = {
+                ...state,
+                routes: state.routes.slice(0, backRouteIndex + 1),
+                index: backRouteIndex,
+            };
+            return purposeState;
+        }
+    }
+    return defaultGetStateForAction(action, state)
+};
 // export default App;
 function select(store){
   return {

@@ -150,6 +150,36 @@
       align-items: center;
     }
   }
+  .filterStateTab{
+    position: absolute;
+    top: 105pt;
+    width: 100vw;
+    left: 0;
+    bottom: 0;
+    z-index: 10;
+    border-top: 1pt solid #e5e5e5;
+    &-promotionHeight{
+      top: 130pt;
+    }
+    &-content{
+      background: #fff;
+      padding: 15pt;
+      &-item{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 18pt;
+        &-text{
+          font-size: 14pt;
+          color: #333;
+          &-active{
+            color: @themeColor;
+          }
+        }
+      }
+    }
+  }
   .proScroll{
     // margin: 0 4vw;
     width:100vw;

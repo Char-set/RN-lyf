@@ -14,19 +14,22 @@ export default class Header extends Component{
     super(props);
     this.state = {
         title:'',
-        showBack:true
+        showBack:true,
+        backType:1
     }
   }
   componentWillReceiveProps(nextProps){
     this.setState({
         title:nextProps.title || '',
-        showBack:(typeof nextProps.showBack == 'boolean') ? nextProps.showBack : true
+        showBack:(typeof nextProps.showBack == 'boolean') ? nextProps.showBack : true,
+        backType:nextProps.backType || 1
     });
   }
   componentDidMount(){
     this.setState({
         title:this.props.title || '',
-        showBack:(typeof this.props.showBack == 'boolean') ? this.props.showBack : true
+        showBack:(typeof this.props.showBack == 'boolean') ? this.props.showBack : true,
+        backType:this.props.backType || 1
     });
   }
   render() {
@@ -34,7 +37,7 @@ export default class Header extends Component{
       <View style={s.header}>
         {this.state.showBack?
             <TouchableWithoutFeedback onPress={() => this.props.navigation.goBack()}>
-                <Image style={s.headerBack} source={require('../images/common_btn_back.png')} />
+                <Image style={s.headerBack} source={this.state.backType == 1 ? require('../images/common_btn_back.png') : require('../images/login_btn_delete.png')} />
             </TouchableWithoutFeedback>
             :null
         }

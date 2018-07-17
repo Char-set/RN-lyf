@@ -61,6 +61,7 @@ class Cart extends Component {
             allMpId:[],//购物车所有的商品id
             showLoading:false,//显示loading图
             isSelectAll:false,//全选了购物车的所有商品
+            noFooter:false,//是否是有底部的购物车
         }
     }
   //组件将要被加载
@@ -92,7 +93,8 @@ class Cart extends Component {
     console.log('---------componentDidMount----------')
     Session.getSessionId().then(sid => {
         this.setState({
-            sessionId:sid
+            sessionId:sid,
+            noFooter:(this.props.navigation.state.params && this.props.navigation.state.params.noFooter != undefined) ? this.props.navigation.state.params.noFooter:false
         },() => {
             this._getCartList();
         });
@@ -100,7 +102,8 @@ class Cart extends Component {
     this.updateCartScreen = DeviceEventEmitter.addListener('updateCartScreen',() => {
         Session.getSessionId().then(sid => {
             this.setState({
-                sessionId:sid
+                sessionId:sid,
+                noFooter:(this.props.navigation.state.params && this.props.navigation.state.params.noFooter != undefined) ? this.props.navigation.state.params.noFooter:false
             },() => {
                 this._getCartList();
             });
@@ -241,7 +244,7 @@ class Cart extends Component {
                             <Image style={s.merchantContentListItemImg} source={{uri:pro.picUrl}}/>
                         </TouchableWithoutFeedback>
                         <View style={[s.merchantContentListItemPro]}>
-                            <Text style={s.merchantContentListItemProName}>{pro.name}</Text>
+                            <Text style={s.merchantContentListItemProName} numberOfLines={1}>{pro.name}</Text>
                             <Text style={s.merchantContentListItemProAttr}>
                                 口味：微辣  包装：260克
                             </Text>
@@ -310,8 +313,8 @@ class Cart extends Component {
     return(
       <View style={[commonStyle.container,isIphoneX()?commonStyle.pdT45:'',commonStyle.bgf0]}>
         <Loading isShow={this.state.showLoading} />
-        <Header title="购物车" showBack={false} navigation={this.props.navigation} />
-        <View style={isIphoneX()?s.ipxScrollHeight:s.scrollHeight}>
+        <Header title="购物车" showBack={this.state.noFooter} navigation={this.props.navigation} />
+        <View style={isIphoneX()?(this.state.noFooter?s.ipxScrollNoFooterHeight:s.ipxScrollHeight):(this.state.noFooter?(s.scrollNoFooterHeight):(s.scrollHeight))}>
             <ScrollView style={isIphoneX()?commonStyle.ipxScrollHeight:commonStyle.scrollHeight} showsVerticalScrollIndicator={false} >
                 {this.state.merchantList && this.state.merchantList.length == 0?
                     <View style={[s.noData,isIphoneX()?commonStyle.ipxScrollHeight:commonStyle.scrollHeight]}>
@@ -330,7 +333,7 @@ class Cart extends Component {
             </ScrollView>
         </View>
         {this.state.merchantList.length > 0 ?
-            <View style={s.footer}>
+            <View style={[s.footer,{bottom:this.state.noFooter?0:50}]}>
                 <TouchableWithoutFeedback onPress={() => this._selectMerchant()}>
                     <View style={s.footerSelect}>
                             <Image style={s.footerSelectImg} source={this.state.isSelectAll ? require('../images/cart_edit_chose_all_selected.png') : require('../images/cart_edit_chose_all_unselected.png')}/>

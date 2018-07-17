@@ -1,0 +1,82 @@
+@import "./variable.less";
+.login-style{
+    // 验证码登录样式
+    .login-with-captcha{
+        .bgededed{
+            background: #ededed;
+        }
+        .login{
+            background: #f0f0f0;
+            height: calc(~"100vh - 50pt");
+            align-items: center;
+            padding-top: 35pt;
+            &-item{
+                width: calc(~"100vw - 40pt");
+                height: 45pt;
+                border: 0.5pt solid #d4d4d4;
+                background: #fff;
+                padding-left: 85pt;
+                position: relative;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                border-radius: 3pt;
+                margin-bottom: 20pt;
+                &-text{
+                    position: absolute;
+                    font-size: 16pt;
+                    color: #333;
+                    width: 85pt;
+                    padding-left: 22pt;
+                }
+                &-input{
+                    height: 25pt;
+                    width: calc(~"100vw - 156pt");
+                }
+                &-captchaInput{
+                    height: 25pt;
+                    width: calc(~"100vw - 272pt");
+                }
+                &-send{
+                    position: absolute;
+                    right: 6pt;
+                    width: 84pt;
+                    height: 29pt;
+                    border: 1pt solid @themeColor;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 2pt;
+                    &-dis{
+                        border: 1pt solid #ccc;
+                    }
+                    &-text{
+                        color: @themeColor;
+                        font-size: 13pt;
+                        &-dis{
+                            color: #ccc;
+                        }
+                    }
+                }
+            }
+            &-confirm{
+                width: calc(~"100vw - 40pt");
+                height: 45pt;
+                border: 0.5pt solid #d4d4d4;
+                background: @themeColor;
+                justify-content: center;
+                align-items: center;
+                border-radius: 5pt;
+                &-dis{
+                    background: #ddd;
+                }
+                &-text{
+                    color: #ffb88c;
+                    font-size: 16pt;
+                    &-dis{
+                        color: #fff;
+                    }
+                }
+            }
+        }        
+    }
+}

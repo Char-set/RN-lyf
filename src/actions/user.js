@@ -44,7 +44,11 @@ export function user_logIn(opt,navigation){
 	}
 }
 
-
+export function user_captcha_logIn(opt){
+	return (dispatch) => {
+		dispatch({'type': TYPES.LOGGED_IN, user: {},ut:''});
+	}
+}
 
 // skip login
 export function skipLogin(){
