@@ -213,9 +213,9 @@ module.exports = SmartStyleSheet.create({
             "backgroundColor": "#ff6400"
         },
         "borderB": {
-            "borderBottomWidth": ".5pt",
+            "borderBottomWidth": "0.5pt",
             "borderStyle": "solid",
-            "borderBottomColor": "#808080"
+            "borderBottomColor": "#e0e0e0"
         },
         "ipxScrollHeight": {
             "height": "calc(100vh - 139pt)"
@@ -300,9 +300,9 @@ module.exports = SmartStyleSheet.create({
             "overflow": "hidden",
             "display": "flex",
             "flexDirection": "row",
-            "borderBottomWidth": "1pt",
+            "borderBottomWidth": "1px",
             "borderStyle": "solid",
-            "borderBottomColor": "#ddd"
+            "borderBottomColor": "#e0e0e0"
         },
         "panel-icon": {
             "width": "15pt",
@@ -369,6 +369,62 @@ module.exports = SmartStyleSheet.create({
         "panel-content-li-tips-text": {
             "color": "#fff",
             "fontSize": "12pt"
+        }
+    },
+    "category-style": {
+        "header": {
+            "height": "44pt",
+            "backgroundColor": "#fff",
+            "display": "flex",
+            "flexDirection": "row",
+            "alignItems": "center",
+            "position": "relative"
+        },
+        "header-addr": {
+            "width": "67pt",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "display": "flex",
+            "flexDirection": "row"
+        },
+        "header-addr-text": {
+            "color": "#ff6900",
+            "fontSize": "13pt",
+            "marginRight": "5pt"
+        },
+        "header-input": {
+            "position": "absolute",
+            "left": "67pt",
+            "right": "89pt",
+            "display": "flex",
+            "flexDirection": "row",
+            "backgroundColor": "#f0f0f0",
+            "height": "27pt",
+            "alignItems": "center",
+            "paddingLeft": "12pt",
+            "borderRadius": "3pt"
+        },
+        "header-input-text": {
+            "fontSize": "13pt",
+            "color": "#666",
+            "marginLeft": "5pt"
+        },
+        "header-btn": {
+            "width": "89pt",
+            "display": "flex",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "alignItems": "center",
+            "position": "absolute",
+            "right": 0,
+            "paddingTop": 0,
+            "paddingRight": "12pt",
+            "paddingBottom": 0,
+            "paddingLeft": "20pt"
+        },
+        "category-content": {
+            "display": "flex",
+            "flexDirection": "row"
         }
     },
     "search-style": {
@@ -530,7 +586,7 @@ module.exports = SmartStyleSheet.create({
             "width": "13vw",
             "borderLeftWidth": "1px",
             "borderStyle": "solid",
-            "borderLeftColor": "#808080",
+            "borderLeftColor": "#e0e0e0",
             "justifyContent": "center",
             "alignItems": "center"
         },
@@ -541,9 +597,9 @@ module.exports = SmartStyleSheet.create({
             "left": 0,
             "bottom": 0,
             "zIndex": 10,
-            "borderTopWidth": "1pt",
+            "borderTopWidth": "1px",
             "borderStyle": "solid",
-            "borderTopColor": "#e5e5e5"
+            "borderTopColor": "#e0e0e0"
         },
         "filterStateTab-promotionHeight": {
             "top": "130pt"
@@ -837,9 +893,9 @@ module.exports = SmartStyleSheet.create({
             "position": "relative"
         },
         "promo-item-border-b": {
-            "borderBottomWidth": "1pt",
+            "borderBottomWidth": "1px",
             "borderStyle": "solid",
-            "borderBottomColor": "#ddd"
+            "borderBottomColor": "#e0e0e0"
         },
         "promo-item-icon": {
             "width": "27pt",
@@ -950,9 +1006,9 @@ module.exports = SmartStyleSheet.create({
             "paddingLeft": "15pt",
             "alignItems": "center",
             "justifyContent": "space-between",
-            "borderBottomWidth": ".5pt",
+            "borderBottomWidth": "0.5pt",
             "borderStyle": "solid",
-            "borderBottomColor": "#808080"
+            "borderBottomColor": "#e0e0e0"
         },
         "evaluate-top-text": {
             "fontSize": "12pt",
@@ -980,7 +1036,7 @@ module.exports = SmartStyleSheet.create({
             "paddingLeft": "15pt",
             "borderBottomWidth": "0.5pt",
             "borderStyle": "solid",
-            "borderBottomColor": "#808080"
+            "borderBottomColor": "#e0e0e0"
         },
         "evaluate-content-item": {
             "paddingBottom": "9pt"
@@ -1357,7 +1413,7 @@ module.exports = SmartStyleSheet.create({
             "marginRight": "12pt",
             "borderWidth": "1px",
             "borderStyle": "solid",
-            "borderColor": "#e5e5e5"
+            "borderColor": "#e0e0e0"
         },
         "merchant-content-list-item-pro": {
             "flex": 1,
@@ -1388,16 +1444,16 @@ module.exports = SmartStyleSheet.create({
             "bottom": 0,
             "display": "flex",
             "flexDirection": "row",
-            "borderWidth": "1pt",
+            "borderWidth": "1px",
             "borderStyle": "solid",
-            "borderColor": "#e5e5e5"
+            "borderColor": "#e0e0e0"
         },
         "merchant-content-list-item-pro-btn-reduce": {
             "width": "25pt",
             "height": "25pt",
-            "borderRightWidth": "1pt",
+            "borderRightWidth": "1px",
             "borderStyle": "solid",
-            "borderRightColor": "#e5e5e5",
+            "borderRightColor": "#e0e0e0",
             "justifyContent": "center",
             "alignItems": "center"
         },
@@ -1409,9 +1465,9 @@ module.exports = SmartStyleSheet.create({
         "merchant-content-list-item-pro-btn-add": {
             "width": "25pt",
             "height": "25pt",
-            "borderLeftWidth": "1pt",
+            "borderLeftWidth": "1px",
             "borderStyle": "solid",
-            "borderLeftColor": "#e5e5e5",
+            "borderLeftColor": "#e0e0e0",
             "justifyContent": "center",
             "alignItems": "center"
         },
@@ -1505,7 +1561,7 @@ module.exports = SmartStyleSheet.create({
                 "height": "45pt",
                 "borderWidth": "0.5pt",
                 "borderStyle": "solid",
-                "borderColor": "#d4d4d4",
+                "borderColor": "#e0e0e0",
                 "backgroundColor": "#fff",
                 "paddingLeft": "85pt",
                 "position": "relative",
@@ -1543,9 +1599,9 @@ module.exports = SmartStyleSheet.create({
                 "borderRadius": "2pt"
             },
             "login-item-send-dis": {
-                "borderWidth": "1pt",
+                "borderWidth": "1px",
                 "borderStyle": "solid",
-                "borderColor": "#ccc"
+                "borderColor": "#e0e0e0"
             },
             "login-item-send-text": {
                 "color": "#ff6900",
@@ -1559,7 +1615,7 @@ module.exports = SmartStyleSheet.create({
                 "height": "45pt",
                 "borderWidth": "0.5pt",
                 "borderStyle": "solid",
-                "borderColor": "#d4d4d4",
+                "borderColor": "#e0e0e0",
                 "backgroundColor": "#ff6900",
                 "justifyContent": "center",
                 "alignItems": "center",
@@ -1575,6 +1631,130 @@ module.exports = SmartStyleSheet.create({
             "login-confirm-text-dis": {
                 "color": "#fff"
             }
+        }
+    },
+    "setPosition-style": {
+        "ipxScrollHeight": {
+            "height": "calc(100vh - 89pt)"
+        },
+        "scrollHeight": {
+            "height": "calc(100vh - 64pt)"
+        },
+        "addr-title": {
+            "paddingLeft": "15pt",
+            "paddingRight": "15pt",
+            "paddingTop": "14pt",
+            "paddingBottom": "7pt",
+            "backgroundColor": "#f4f4f4"
+        },
+        "addr-title-text": {
+            "fontSize": "12pt",
+            "color": "#666"
+        },
+        "addr-content": {
+            "paddingLeft": "15pt"
+        },
+        "addr-content:last-child": {
+            "borderBottomWidth": 0
+        },
+        "addr-content-item": {
+            "height": "44pt",
+            "justifyContent": "center"
+        },
+        "addr-content-item-text": {
+            "fontSize": "14pt",
+            "color": "#333"
+        },
+        "addr-content-item-border-b": {
+            "borderBottomWidth": "1px",
+            "borderStyle": "solid",
+            "borderBottomColor": "#e0e0e0"
+        },
+        "citys": {
+            "position": "absolute",
+            "height": "100vh",
+            "width": "100vw"
+        },
+        "citys-gray": {
+            "width": "15vw",
+            "height": "100vh",
+            "position": "absolute",
+            "left": 0
+        },
+        "citys-warp": {
+            "width": "85vw",
+            "height": "100vh",
+            "backgroundColor": "#fff",
+            "position": "absolute",
+            "right": 0,
+            "paddingTop": "20pt"
+        },
+        "citys-warp-title": {
+            "height": "44pt",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "display": "flex",
+            "flexDirection": "row",
+            "borderBottomWidth": "1px",
+            "borderStyle": "solid",
+            "borderBottomColor": "#e0e0e0"
+        },
+        "citys-warp-title-img": {
+            "position": "absolute",
+            "left": "11pt"
+        },
+        "citys-warp-title-text": {
+            "fontSize": "15pt",
+            "color": "#666"
+        },
+        "citys-warp-scrollHeight": {
+            "height": "calc(100vh - 64pt)"
+        },
+        "citys-warp-ipxScrollHeight": {
+            "height": "calc(100vh - 64pt)"
+        },
+        "citys-warp-content-item": {
+            "display": "flex",
+            "flexDirection": "row",
+            "marginLeft": "15pt",
+            "paddingRight": "15pt",
+            "height": "44pt",
+            "justifyContent": "space-between",
+            "alignItems": "center"
+        },
+        "citys-warp-content-item-border-b": {
+            "borderBottomWidth": "1px",
+            "borderStyle": "solid",
+            "borderBottomColor": "#e0e0e0"
+        },
+        "citys-warp-content-item-border-b-active": {
+            "borderBottomWidth": "1px",
+            "borderStyle": "solid",
+            "borderBottomColor": "#ff6900"
+        },
+        "citys-warp-content-regoin": {
+            "marginLeft": "15pt",
+            "borderBottomWidth": "1px",
+            "borderStyle": "solid",
+            "borderBottomColor": "#e0e0e0"
+        },
+        "citys-warp-content-regoin-item": {
+            "height": "44pt",
+            "display": "flex",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "alignItems": "center",
+            "paddingLeft": "25pt",
+            "paddingRight": "15pt"
+        },
+        "citys-warp-content-regoin-item-border-b": {
+            "borderBottomWidth": "1px",
+            "borderStyle": "solid",
+            "borderBottomColor": "#e0e0e0"
+        },
+        "citys-warp-content-regoin-item-text": {
+            "fontSize": "14pt",
+            "color": "#333"
         }
     }
 });

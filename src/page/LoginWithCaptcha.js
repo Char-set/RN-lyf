@@ -45,7 +45,7 @@ import Loading from '../component/Loading';
 import {user_captcha_logIn} from '../actions/user';
 
 const mobileRegexp = /^[0-9]{11}$/;
-const captchaRegexp = /^[0-9]{6}$/;
+const captchaRegexp = /^[0-9]{4,6}$/;
 
 const styles = StyleSheet.create({
     percent: {
@@ -153,7 +153,6 @@ class loginWithCaptcha extends Component {
     });
   }
   _login = () => {
-    this.props.dispatch({'type': 'LOGGED_IN', user: {},ut:''});
     if(this.state.loginDis) return;
     let url = '/ouser-web/mobileLogin/loginForm.do';
     let params = {
@@ -168,30 +167,36 @@ class loginWithCaptcha extends Component {
       this.props.navigation.goBack();
     });
   }
+  _contentClick = () => {
+    this.refs.mobile_input.blur();
+    this.refs.capctha_input.blur();
+  }
   render() {
     return(
-      <View style={[commonStyle.container,isIphoneX()?commonStyle.pdT45:'',commonStyle.bgf]}>
+      <View style={[commonStyle.container,isIphoneX()?commonStyle.pdT45:'',commonStyle.bgf]} >
         <Header title="登录" backType="2" navigation={this.props.navigation}  />
-        <View style={[s.login,s.bgededed]}>
-          <View style={s.loginItem}>
-            <Text style={s.loginItemText}>账户</Text>
-            <TextInput keyboardType="numeric" defaultValue="17319326086" style={s.loginItemInput} onChangeText={(text) => this._mobileChange(text)} placeholder="请输入您的手机号码"/>
-          </View>
-          <View style={s.loginItem}>
-            <Text style={s.loginItemText}>验证码</Text>
-            <TextInput keyboardType="numeric" onChangeText={(text) => this._captchaChange(text)} style={s.loginItemCaptchaInput} placeholder="输入验证码" />
-            <TouchableWithoutFeedback onPress={() => this._sendCaptcha()}>
-              <View style={[s.loginItemSend,this.state.sendDis?s.loginItemSendDis:'']}>
-                <Text style={[s.loginItemSendText,this.state.sendDis?s.loginItemSendTextDis:'']}>{this.state.sendText}</Text>
+        <TouchableWithoutFeedback onPress={() => this._contentClick()}>
+          <View style={[s.login,s.bgededed]}>
+            <View style={s.loginItem}>
+              <Text style={s.loginItemText}>账户</Text>
+              <TextInput ref="mobile_input" keyboardType="decimal-pad" defaultValue="17319326086" style={s.loginItemInput} onChangeText={(text) => this._mobileChange(text)} placeholder="请输入您的手机号码"/>
+            </View>
+            <View style={s.loginItem}>
+              <Text style={s.loginItemText}>验证码</Text>
+              <TextInput ref="capctha_input" keyboardType="numeric" onChangeText={(text) => this._captchaChange(text)} style={s.loginItemCaptchaInput} placeholder="输入验证码" />
+              <TouchableWithoutFeedback onPress={() => this._sendCaptcha()}>
+                <View style={[s.loginItemSend,this.state.sendDis?s.loginItemSendDis:'']}>
+                  <Text style={[s.loginItemSendText,this.state.sendDis?s.loginItemSendTextDis:'']}>{this.state.sendText}</Text>
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+            <TouchableWithoutFeedback onPress={() => this._login()}>
+              <View style={[s.loginConfirm,this.state.loginDis?s.loginConfirmDis:'']}>
+                <Text style={[s.loginConfirmText,this.state.loginDis?s.loginConfirmTextDis:'']}>登录</Text>
               </View>
             </TouchableWithoutFeedback>
           </View>
-          <TouchableWithoutFeedback onPress={() => this._login()}>
-            <View style={[s.loginConfirm,this.state.loginDis?s.loginConfirmDis:'']}>
-              <Text style={[s.loginConfirmText,this.state.loginDis?s.loginConfirmTextDis:'']}>登录</Text>
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
+        </TouchableWithoutFeedback>
       </View>
     )
   }

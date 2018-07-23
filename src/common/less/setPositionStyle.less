@@ -1,0 +1,116 @@
+@import "./variable.less";
+.setPosition-style{
+    .ipxScrollHeight{
+        height: calc(~'100vh - 89pt');
+      }
+    .scrollHeight{
+        height: calc(~'100vh - 64pt');
+    }
+    .addr{
+        &-title{
+            padding: 14pt 15pt 7pt;
+            background: #f4f4f4;
+            &-text{
+                font-size: 12pt;
+                color: #666;
+            }
+        }
+        &-content{
+            padding-left: 15pt;
+            &:last-child{
+                border-bottom: 0;
+            }
+            &-item{
+                height: 44pt;
+                justify-content: center;
+                &-text{
+                    font-size: 14pt;
+                    color: #333;
+                }
+                &-border-b{
+                    border-bottom: 1px solid @borderColor;
+                }
+            }
+        }
+    }
+    .citys{
+        position: absolute;
+        // left: 0;
+        // right: 10pt;
+        height: 100vh;
+        width: 100vw;
+        &-gray{
+            width: 15vw;
+            height: 100vh;
+            position: absolute;
+            left: 0;
+        }
+        &-warp{
+            width: 85vw;
+            height: 100vh;
+            background: #fff;
+            position: absolute;
+            right: 0;
+            padding-top: 20pt;
+            &-title{
+                height: 44pt;
+                justify-content: center;
+                align-items: center;
+                display: flex;
+                flex-direction: row;
+                border-bottom: 1px solid @borderColor;
+                &-img{
+                    position: absolute;
+                    left: 11pt;
+                }
+                &-text{
+                    font-size: 15pt;
+                    color: #666;
+                }
+            }
+            &-scrollHeight{
+                height: calc(~"100vh - 64pt");
+            }
+            &-ipxScrollHeight{
+                height: calc(~"100vh - 64pt");
+            }
+            &-content{
+                &-item{
+                    display: flex;
+                    flex-direction: row;
+                    margin-left: 15pt;
+                    padding-right: 15pt;
+                    height: 44pt;
+                    justify-content: space-between;
+                    align-items: center;
+                    &-border-b{
+                        border-bottom: 1px solid @borderColor;
+                        &-active{
+                            border-bottom: 1px solid @themeColor;
+                        }
+                    }
+                }
+                &-regoin{
+                    margin-left: 15pt;
+                    border-bottom: 1px solid @borderColor;
+                    &-item{
+                        height: 44pt;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding-left: 25pt;
+                        padding-right: 15pt;
+                        &-border-b{
+                            border-bottom: 1px solid @borderColor;
+                        }
+                        &-text{
+                            font-size: 14pt;
+                            color: #333;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

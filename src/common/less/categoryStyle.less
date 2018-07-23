@@ -1,0 +1,54 @@
+@import "./variable.less";
+.category-style{
+    .header{
+        height: 44pt;
+        background: #fff;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        position: relative;
+        &-addr{
+            width: 67pt;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            &-text{
+                color: @themeColor;
+                font-size: 13pt;
+                margin-right: 5pt;
+            }
+        }
+        &-input{
+            position: absolute;
+            left: 67pt;
+            right: 89pt;
+            display: flex;
+            flex-direction: row;
+            background: #f0f0f0;
+            height: 27pt;
+            align-items: center;
+            padding-left: 12pt;
+            border-radius: 3pt;
+            &-text{
+                font-size: 13pt;
+                color: #666;
+                margin-left: 5pt;
+            }
+        }
+        &-btn{
+            width: 89pt;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            right: 0;
+            padding: 0 12pt 0 20pt;
+        }
+    }
+    .category-content{
+        display: flex;
+        flex-direction: row;
+    }
+}

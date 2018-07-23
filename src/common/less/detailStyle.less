@@ -148,7 +148,7 @@
             align-items: center;
             position: relative;
             &-border-b{
-                border-bottom: 1pt solid #ddd;
+                border-bottom: 1px solid @borderColor;
             }
             &-icon{
                 width: 27pt;
@@ -252,7 +252,7 @@
             padding: 0 15pt;
             align-items: center;
             justify-content: space-between;
-            border-bottom: .5pt solid #808080;
+            border-bottom: .5pt solid @borderColor;
             &-text{
                 font-size: 12pt;
                 color: #808080;
@@ -275,10 +275,9 @@
         }
         &-content{
             padding: 0 15pt;
-            border-bottom: 0.5pt solid #808080;
+            border-bottom: 0.5pt solid @borderColor;
             &-item{
                 padding-bottom: 9pt;
-                // border-bottom: .5pt solid #808080;
                 &-top{
                     display: flex;
                     flex-direction: row;

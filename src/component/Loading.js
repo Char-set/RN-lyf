@@ -41,7 +41,7 @@ export default class Loading extends Component{
       Animated.parallel(['size','opacity'].map(item => {
         return Animated.timing(this.state[item],{
             toValue: 0,
-            duration: 1000,
+            duration: 800,
             // useNativeDriver:true,
             easing: Easing.out(Easing.ease)
         });

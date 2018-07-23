@@ -9,9 +9,11 @@ import {
   Image,
   TouchableWithoutFeedback
 } from 'react-native';
+import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { ifIphoneX, isIphoneX } from 'react-native-iphone-x-helper';
-import {commonStyle} from '../styles';//样式文件引入
+import {commonStyle,categoryStyle} from '../styles';//样式文件引入
+const s = categoryStyle;
 /**
  * 自定义工具引入
  */
@@ -20,18 +22,29 @@ import Config from '../config/Default';//默认配置
 
 const {width,height} = Dimensions.get('window');
 
-export default class Category extends Component {
+class Category extends Component {
   constructor (props) {
     super(props);
     this.state = {
       categoryList:[],
       currentCategoryId:'',
       categoryChildList:[],
-      cashWarehouseW:[]
+      cashWarehouseW:[],
+      positionInfo:{}
     }
   }
   componentDidMount() {
     this.getCategory();
+    this.setState({
+      positionInfo:this.props.positionInfo
+    });
+  }
+  componentWillReceiveProps(nextProps){
+    if(this.state.positionInfo != nextProps.positionInfo){
+      this.setState({
+        positionInfo:nextProps.positionInfo
+      });
+    }
   }
   getCategory () {
     var url = '/api/category/list';
@@ -156,16 +169,40 @@ export default class Category extends Component {
   render () {
     return (
       <View style={[styles.container,commonStyle.container,isIphoneX()?commonStyle.pdT45:'']}>
+        <View style={s.header}>
+          <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('SetPositionView')}>
+            <View style={s.headerAddr}>
+              <Text style={s.headerAddrText}>{this.state.positionInfo.province ? this.state.positionInfo.province.areaName : '上海'}</Text>
+              <Image style={s.headerAddrImg} source={require('../images/classify_location_more.png')} />
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('SearchView')}>
+            <View style={s.headerInput}>
+              <Image style={s.headerInputImg} source={require('../images/common_ic_search.png')} />
+              <Text style={s.headerInputText}>搜索小核桃</Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <View style={s.headerBtn}>
+            <TouchableWithoutFeedback>
+              <Image style={s.headerScan} source={require('../images/search_btn_qrcode.png')} />
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback>
+              <Image style={s.headerMsg} source={require('../images/classify_message.png')} />
+            </TouchableWithoutFeedback>
+          </View>
+        </View>
+       <View style={s.categoryContent}>
         <ScrollView showsVerticalScrollIndicator={false} style={styles.categoryView}>
-          <View style={styles.categoryWraper}>
-            {this._buildCategory()}
-          </View>
-        </ScrollView>
-        <ScrollView showsVerticalScrollIndicator={false} style={styles.categoryContentView}>
-          <View style={styles.categoryContent}>
-            {this._buildCategoryChild()}
-          </View>
-        </ScrollView>
+            <View style={styles.categoryWraper}>
+              {this._buildCategory()}
+            </View>
+          </ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false} style={styles.categoryContentView}>
+            <View style={styles.categoryContent}>
+              {this._buildCategoryChild()}
+            </View>
+          </ScrollView>
+       </View>
       </View>
     )
   }
@@ -174,8 +211,6 @@ export default class Category extends Component {
 const styles = StyleSheet.create({
   container:{
     paddingTop:20,
-    display:'flex',
-    flexDirection:'row',
     // overflow:'hidden',
     backgroundColor:'#f0f0f0'
   },
@@ -271,3 +306,11 @@ const styles = StyleSheet.create({
     color:"#666"
   }
 })
+function select(store){
+  return {
+      positionInfo:store.positionStore
+  }
+}
+
+
+export default connect(select)(Category);

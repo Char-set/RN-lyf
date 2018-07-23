@@ -15,6 +15,7 @@ import WebViewContent from './component/WebViewContent'
 import LoginCompoent from './component/Login'
 import Detail from './page/Details';
 import LoginWithCaptcha from './page/LoginWithCaptcha';
+import SetPosition from './page/SetPosition';
 
 const IndexScreen = ({ navigation }) => (
   <Index banner="Home Tab" navigation={navigation} />
@@ -39,7 +40,8 @@ FindScreen.navigationOptions = {
   tabBarLabel: '全球尖货',
   tabBarIcon: ({ tintColor, focused }) => (
     <Image 
-    source={{uri:!focused?'http://ojc83pmmg.bkt.clouddn.com/home_nav_-btn_discover_n@2x.png':'http://ojc83pmmg.bkt.clouddn.com/home_nav_-btn_discover_s@2x.png'}} 
+    // source={{uri:!focused?'http://ojc83pmmg.bkt.clouddn.com/home_nav_-btn_discover_n@2x.png':'http://ojc83pmmg.bkt.clouddn.com/home_nav_-btn_discover_s@2x.png'}} 
+    source={focused?require('./images/home_nav_-btn_discover_s.png'):require('./images/home_nav_-btn_discover_n.png')}
     style={{height:25,width:25}}/>
   ),
 };
@@ -50,7 +52,8 @@ CateScreen.navigationOptions = {
   tabBarLabel: '分类',
   tabBarIcon: ({ tintColor, focused }) => (
     <Image 
-    source={{uri:!focused?'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_classification_n@2x.png':'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_classification_s@2x.png'}} 
+    // source={{uri:!focused?'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_classification_n@2x.png':'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_classification_s@2x.png'}} 
+    source={focused?require('./images/home_nav_btn_classification_s.png'):require('./images/home_nav_btn_classification_n.png')}
     style={{height:25,width:25}}/>
   ),
 };
@@ -62,7 +65,8 @@ CartScreen.navigationOptions = {
   tabBarLabel: '购物车',
   tabBarIcon: ({ tintColor, focused }) => (
     <Image 
-    source={{uri:!focused?'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_shopping_n@2x.png':'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_shopping_s@2x.png'}} 
+    // source={{uri:!focused?'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_shopping_n@2x.png':'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_shopping_s@2x.png'}} 
+    source={focused?require('./images/home_nav_btn_shopping_s.png'):require('./images/home_nav_btn_shopping_n.png')}
     style={{height:25,width:25}}/>
   ),
   tabBarOnPress:(item) => {
@@ -78,7 +82,8 @@ MyScreen.navigationOptions = {
   tabBarLabel: '我',
   tabBarIcon: ({ tintColor, focused }) => (
     <Image 
-    source={{uri:!focused?'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_my_n@2x.png':'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_my_s@2x.png'}} 
+    // source={{uri:!focused?'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_my_n@2x.png':'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_my_s@2x.png'}} 
+    source={focused?require('./images/home_nav_btn_my_s.png'):require('./images/home_nav_btn_my_n.png')}
     style={{height:25,width:25}}/>
   ),
 };
@@ -88,7 +93,8 @@ IndexScreen.navigationOptions = {
   tabBarLabel: '首页',
   tabBarIcon: ({ tintColor, focused }) => (
     <Image 
-    source={{uri:!focused?'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_home_n@2x.png':'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_home_s@2x.png'}} 
+    // source={{uri:!focused?'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_home_n@2x.png':'http://ojc83pmmg.bkt.clouddn.com/home_nav_btn_home_s@2x.png'}} 
+    source={focused?require('./images/home_nav_btn_home_s.png'):require('./images/home_nav_btn_home_n.png')}
     style={{height:25,width:25}}/>
   ),
   tabBarOnPress:(item) => {
@@ -122,7 +128,7 @@ const mainTab = TabNavigator(
   },
   {
     lazy:false,
-    initialRouteName:'Cart',
+    initialRouteName:'Category',
     tabBarPosition: 'bottom',
     tabBarOptions: {
       activeTintColor: Platform.OS === 'ios' ? '#ff6900' : '#fff',
@@ -190,11 +196,18 @@ const App = StackNavigator(
         title:'登录页面',
         header:null
       }
+    },
+    SetPositionView:{
+      screen:SetPosition,
+      navigationOptions: {
+        title:'定位',
+        header:null
+      }
     }
   },
   {
     // mode: Platform.OS === 'ios' ? 'modal' : 'card',
-    // initialRouteName:'LoginWithCaptchaView'
+    // initialRouteName:'SetPositionView'
   }
 )
 const styles = StyleSheet.create({
