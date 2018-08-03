@@ -139,9 +139,11 @@ class setPosition extends Component {
     let arr = [];
     this.state.userAddr.forEach((item,index) => {
         arr.push(
-            <View style={[s.addrContentItem,index != this.state.userAddr.length - 1 ? s.addrContentItemBorderB : '']} key={item.id}>
-                <Text numberOfLines={1}>{item.provinceName}{item.cityName}{item.regionName}{item.detailAddress}</Text>
-            </View>
+            <TouchableWithoutFeedback key={item.id} onPress={() => this._chooseAddr(item)}>
+                <View style={[s.addrContentItem,index != this.state.userAddr.length - 1 ? s.addrContentItemBorderB : '']}>
+                    <Text numberOfLines={1}>{item.provinceName}{item.cityName}{item.regionName}{item.detailAddress}</Text>
+                </View>
+            </TouchableWithoutFeedback>
         );
     });
     if(arr.length > 0){
@@ -218,6 +220,10 @@ class setPosition extends Component {
                 citys:res.data || [],
                 showCity:true
             });
+            timing(
+                this.state.warpRight,
+                { toValue: 0, duration: 300, useNativeDriver: true }
+              ).start()
         } else if(type == 3){
             this.setState({
                 regoin:res.data || []
@@ -307,10 +313,7 @@ class setPosition extends Component {
   _chooseProinvce = (item) => {
     this.state.curProvince = item;
     this._getCitys(item.areaCode,2);
-    timing(
-        this.state.warpRight,
-        { toValue: 0, duration: 300, useNativeDriver: true }
-      ).start()
+    
   }
 //   选择区域
   _chooseRegoin = (item) => {
@@ -322,6 +325,29 @@ class setPosition extends Component {
         regoin:this.state.curRegoin,
     });
     this.props.navigation.goBack();
+  }
+//   选择收货地址
+  _chooseAddr = (item) => {
+      this.props.dispatch({
+          type:'POSITION_SET',
+          province:{
+              areaName:item.provinceName,
+              areaCode:item.provinceCode,
+              areaId:item.provinceId
+          },
+          city:{
+              name:item.cityName,
+              code:item.cityCode,
+              id:item.cityId
+          },
+          regoin:{
+            name:item.regionName,
+            code:item.regionCode,
+            id:item.regionId
+          },
+          receiverId:item.id
+      });
+      this.props.navigation.goBack();
   }
   render() {
     return(
@@ -373,6 +399,7 @@ function select(store){
       curProvince:store.positionStore.province,
       curCity:store.positionStore.city,
       curRegoin:store.positionStore.regoin,
+      ut:store.userStore.ut
   }
 }
 
